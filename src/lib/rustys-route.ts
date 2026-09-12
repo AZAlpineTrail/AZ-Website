@@ -46,8 +46,8 @@ export type RustysRoutePageData = {
 };
 
 export const fallbackRustysRoutePage: RustysRoutePageData = {
-  title: "Rusty's Route 1000",
-  heroKicker: "Rusty's Route 1000",
+  title: "Rusty 1000",
+  heroKicker: "Rusty 1000",
   heroTitle: "Eleven days around the high country.",
   heroCopy: "A hotel-based Arizona Alpine Trail itinerary beginning and ending in Alpine.",
   heroImage: "/azat/photos/735761389_1318522053829180_4711200860303823554_n.jpg",
@@ -87,7 +87,7 @@ export const fallbackRustysRoutePage: RustysRoutePageData = {
     },
     {
       label: "Mileage note",
-      text: "The core AZAT is about 700 miles. Rusty's Route adds town connectors, fuel stops, sightseeing, and side roads.",
+      text: "The core AZAT is about 700 miles. Rusty 1000 adds town connectors, fuel stops, sightseeing, and side roads.",
     },
   ],
   itineraryKicker: "Itinerary",
@@ -111,7 +111,7 @@ export const fallbackRustysRoutePage: RustysRoutePageData = {
   finalCtaImage: "/azat/photos/733890453_1316837243997661_6044422898535499635_n.jpg",
   finalCtaImageAlt: "",
   seo: {
-    title: "Rusty's Route 1000",
+    title: "Rusty 1000",
     description: "An 11-day hotel-based ride around the Arizona Alpine Trail.",
   },
 };

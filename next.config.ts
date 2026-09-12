@@ -98,7 +98,6 @@ const utilityRedirects = [
   { source: "/national-forests", destination: "/resources" },
   { source: "/ohv-safety", destination: "/resources" },
   { source: "/off-highway-vehicle-ohv-information", destination: "/resources" },
-  { source: "/downloads", destination: "/resources" },
   { source: "/protected-download/2113", destination: "/downloads/arizona-alpine-trail-gpx" },
   { source: "/protected-download/2127", destination: "/downloads/azat-shapefile" },
   { source: "/protected-download/2248", destination: "/downloads/azat-segments-v5-kml" },

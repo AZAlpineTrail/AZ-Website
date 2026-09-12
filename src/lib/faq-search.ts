@@ -1,9 +1,8 @@
-import { beforeEveryRide, faqCategories, officialResources, zones, type FaqCategory, type FaqItem } from "@/lib/faq-content";
+import { beforeEveryRide, faqCategories, officialResources, type FaqCategory, type FaqItem } from "@/lib/faq-content";
 
 export type SearchRecord =
   | { type: "checklist"; id: string; title: string; body: string }
   | { type: "faq"; id: string; category: FaqCategory; item: FaqItem; title: string; body: string }
-  | { type: "zone"; id: string; title: string; body: string }
   | { type: "resource"; id: string; title: string; body: string; href: string; external?: boolean };
 
 function buildIndex(): SearchRecord[] {
@@ -17,10 +16,6 @@ function buildIndex(): SearchRecord[] {
     category.items.forEach((item, index) => {
       records.push({ type: "faq", id: `${category.id}-${index}`, category, item, title: item.q, body: item.a });
     });
-  });
-
-  zones.forEach((zone) => {
-    records.push({ type: "zone", id: `zone-${zone.code}`, title: `${zone.code} · ${zone.name}`, body: zone.description });
   });
 
   officialResources.forEach((resource) => {

@@ -2,14 +2,13 @@
 
 import { useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
-import { ArrowUpRight, ChevronDown, PhoneCall, Search, ShieldAlert, X } from "lucide-react";
+import { ArrowUpRight, ChevronDown, PhoneCall, Search, X } from "lucide-react";
 import {
   beforeEveryRide,
   emergencyProcedure,
   faqCategories,
   legalDisclaimer,
   officialResources,
-  zones,
   type FaqCategory,
   type FaqItem,
 } from "@/lib/faq-content";
@@ -152,7 +151,6 @@ export function FaqExplorer() {
   const results = useMemo(() => (isSearching ? search(trimmedQuery) : []), [isSearching, trimmedQuery]);
 
   const faqMatches = results.filter((record): record is Extract<SearchRecord, { type: "faq" }> => record.type === "faq");
-  const zoneMatches = results.filter((record): record is Extract<SearchRecord, { type: "zone" }> => record.type === "zone");
   const resourceMatches = results.filter((record): record is Extract<SearchRecord, { type: "resource" }> => record.type === "resource");
 
   const faqGroups: { category: FaqCategory; items: FaqItem[] }[] = [];
@@ -282,22 +280,6 @@ export function FaqExplorer() {
                   <CategoryBlock key={category.id} category={category} items={items} resetKey={`search-${trimmedQuery}`} tokens={tokens} />
                 ))}
 
-                {zoneMatches.length > 0 ? (
-                  <div>
-                    <h3 className="text-xl font-semibold text-[#13221a] sm:text-2xl">Zones & enforcement</h3>
-                    <dl className="mt-2">
-                      {zoneMatches.map((record) => (
-                        <div key={record.id} className="grid gap-1 border-b border-[#d8ded4] py-4 last:border-b-0 sm:grid-cols-[220px_1fr] sm:gap-6">
-                          <dt className="font-mono text-xs font-bold uppercase tracking-[0.08em] text-[#b74f32]">
-                            {highlightText(record.title, tokens)}
-                          </dt>
-                          <dd className="text-sm leading-relaxed text-[#5f6c63]">{highlightText(record.body, tokens)}</dd>
-                        </div>
-                      ))}
-                    </dl>
-                  </div>
-                ) : null}
-
                 {resourceMatches.length > 0 ? (
                   <div>
                     <h3 className="text-xl font-semibold text-[#13221a] sm:text-2xl">Official resources</h3>
@@ -334,32 +316,6 @@ export function FaqExplorer() {
       <div className="mt-10 lg:hidden">
         <ContactEscapeHatch />
       </div>
-
-      {!isSearching ? (
-        <section aria-labelledby="zones-enforcement" className="mt-16 border-t border-[#d8ded4] pt-10">
-          <div className="flex items-start gap-3">
-            <ShieldAlert aria-hidden="true" size={22} className="mt-1 shrink-0 text-[#b74f32]" />
-            <div>
-              <h2 id="zones-enforcement" className="text-2xl font-semibold text-[#13221a] sm:text-3xl">
-                Zones & enforcement
-              </h2>
-              <p className="mt-2 max-w-[65ch] text-[15px] leading-relaxed text-[#5f6c63]">
-                Some segments carry extra enforcement or stewardship designations.
-              </p>
-            </div>
-          </div>
-          <dl className="mt-6">
-            {zones.map((zone) => (
-              <div key={zone.code} className="grid gap-1 border-b border-[#d8ded4] py-4 last:border-b-0 sm:grid-cols-[220px_1fr] sm:gap-6">
-                <dt className="font-mono text-xs font-bold uppercase tracking-[0.08em] text-[#b74f32]">
-                  {zone.code} &middot; {zone.name}
-                </dt>
-                <dd className="text-sm leading-relaxed text-[#5f6c63]">{zone.description}</dd>
-              </div>
-            ))}
-          </dl>
-        </section>
-      ) : null}
 
       {!isSearching ? (
         <section aria-labelledby="official-resources" className="mt-16 border-t border-[#d8ded4] pb-4 pt-10">

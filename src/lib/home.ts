@@ -156,7 +156,7 @@ export const fallbackHomePage: HomePageData = {
     {
       title: "Alpine trailhead",
       category: "Trailhead",
-      note: "High-country access and the natural anchor for Rusty's Route 1000.",
+      note: "High-country access and the natural anchor for Rusty 1000.",
       icon: "map-pin",
       image: "/azat/photos/735958897_1320343090313743_536962654379825153_n.jpg",
       imageAlt: "Forest road and mountain country near the Arizona Alpine Trail",
@@ -238,17 +238,17 @@ export const fallbackHomePage: HomePageData = {
     { label: "GIS Shapefile", value: "SHP", description: "Planning archive", href: "/downloads/azat-shapefile" },
     { label: "Town Services Guide", value: "Guide", description: "Coming soon", href: "/resources" },
   ],
-  itineraryTitle: "Rusty's Route 1000",
+  itineraryTitle: "Rusty 1000",
   itineraryImage: "/azat/photos/733890453_1316837243997661_6044422898535499635_n.jpg",
-  itineraryImageAlt: "Arizona Alpine Trail route terrain for Rusty's Route 1000 itinerary",
+  itineraryImageAlt: "Arizona Alpine Trail route terrain for Rusty 1000 itinerary",
   itineraryHref: "/rustys-route-1000",
   itineraryCards: [
     {
-      title: "Rusty's Route 1000",
+      title: "Rusty 1000",
       label: "Featured itinerary",
       href: "/rustys-route-1000",
       image: "/azat/photos/733890453_1316837243997661_6044422898535499635_n.jpg",
-      imageAlt: "Arizona Alpine Trail route terrain for Rusty's Route 1000 itinerary",
+      imageAlt: "Arizona Alpine Trail route terrain for Rusty 1000 itinerary",
       miles: "1,000 mi",
       days: "11 days",
       status: "Available",
@@ -431,7 +431,7 @@ function normalizeItineraryCards(data: HomePageData) {
     return [
       {
         ...fallbackHomePage.itineraryCards?.[0],
-        title: data.itineraryTitle || fallbackHomePage.itineraryTitle || "Rusty's Route 1000",
+        title: data.itineraryTitle || fallbackHomePage.itineraryTitle || "Rusty 1000",
         href: data.itineraryHref || fallbackHomePage.itineraryHref,
         image: data.itineraryImage || fallbackHomePage.itineraryImage,
         imageAlt: data.itineraryImageAlt || fallbackHomePage.itineraryImageAlt,

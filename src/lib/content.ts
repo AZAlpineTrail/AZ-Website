@@ -15,7 +15,7 @@ import {
 
 export const navItems = [
   { label: "Trail", href: "/trail" },
-  { label: "Route 1000", href: "/rustys-route-1000" },
+  { label: "Rusty 1000", href: "/rustys-route-1000" },
   { label: "Resources", href: "/resources" },
   { label: "News", href: "/news" },
   { label: "Contact", href: "/contact" },
@@ -53,7 +53,7 @@ export const towns = [
     title: "Alpine",
     slug: "alpine",
     services: ["Trail Access", "Fuel", "Food", "Lodging"],
-    description: "The high-country anchor for AZAT and Rusty's Route 1000.",
+    description: "The high-country anchor for AZAT and Rusty 1000.",
   },
   {
     title: "Greer",
@@ -282,7 +282,7 @@ export const news: NewsPost[] = [
     category: "Trail Updates",
     excerpt:
       "AZAT's Master Plan grant has been approved and funded by Arizona State Parks and Trails, laying the groundwork for a 700–800 mile OHV loop trail.",
-    heroImage: "/news/azat-logo-512.png",
+    heroImage: "/azat/brand/azat-logo.png",
     heroImageAlt: "Arizona Alpine Trail logo.",
     heroImageFit: "contain",
     body: [

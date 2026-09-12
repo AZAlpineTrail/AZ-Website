@@ -329,7 +329,7 @@ export const route = defineType({
     slug,
     defineField({ name: "description", type: "text", rows: 4 }),
     defineField({ name: "stats", type: "routeStats" }),
-    defineField({ name: "routeFamily", type: "string", options: { list: ["A Route", "B Route", "Rusty's Route 1000", "Custom"] } }),
+    defineField({ name: "routeFamily", type: "string", options: { list: ["A Route", "B Route", "Rusty 1000", "Custom"] } }),
     defineField({ name: "segments", type: "array", of: [{ type: "reference", to: [{ type: "trailSegment" }] }] }),
     defineField({ name: "itineraryDays", type: "array", of: [{ type: "reference", to: [{ type: "itineraryDay" }] }] }),
     defineField({ name: "downloads", type: "array", of: [{ type: "reference", to: [{ type: "downloadFile" }] }] }),
@@ -343,7 +343,7 @@ export const rustysRoutePage = defineType({
   title: "Rusty's Route Page",
   type: "document",
   fields: [
-    defineField({ name: "title", type: "string", initialValue: "Rusty's Route 1000" }),
+    defineField({ name: "title", type: "string", initialValue: "Rusty 1000" }),
     defineField({ name: "heroKicker", title: "Hero Kicker", type: "string" }),
     defineField({ name: "heroTitle", title: "Hero Title", type: "string", validation: (Rule) => Rule.required() }),
     defineField({ name: "heroCopy", title: "Hero Copy", type: "text", rows: 2 }),

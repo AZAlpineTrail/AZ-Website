@@ -11,6 +11,7 @@ type ProtectedDownloadLinkProps = {
   className?: string;
   children: ReactNode;
   onClick?: () => void;
+  ariaLabel?: string;
 };
 
 export function ProtectedDownloadLink({
@@ -18,6 +19,7 @@ export function ProtectedDownloadLink({
   className,
   children,
   onClick,
+  ariaLabel,
 }: ProtectedDownloadLinkProps) {
   const router = useRouter();
 
@@ -57,7 +59,7 @@ export function ProtectedDownloadLink({
   }
 
   return (
-    <Link href={href} className={className} onClick={handleClick}>
+    <Link href={href} className={className} onClick={handleClick} aria-label={ariaLabel}>
       {children}
     </Link>
   );

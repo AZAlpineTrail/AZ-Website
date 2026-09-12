@@ -137,9 +137,9 @@ export const faqCategories: FaqCategory[] = [
         a: "Begin in any community where you've confirmed lawful staging, parking, fuel, lodging, and access to the current route. Don't leave trucks or trailers on private property, at a business, or on State Trust land without permission or the required permit.",
       },
       {
-        q: "What is Rusty's Route 1000?",
+        q: "What is Rusty 1000?",
         a: "AZAT's featured 11-day, hotel-based itinerary beginning and ending in Alpine. It uses the AZAT as a backbone while leaving room for fuel, food, photography, town stops, scenic overlooks, and side exploration beyond the core network mileage. Verify its route file, lodging, fuel, conditions, and seasonal access before departure.",
-        link: { label: "Rusty's Route 1000", href: "/rustys-route-1000" },
+        link: { label: "Rusty 1000", href: "/rustys-route-1000" },
       },
       {
         q: "Can I ride the entire network as one trip?",
@@ -339,39 +339,6 @@ export const faqCategories: FaqCategory[] = [
         link: { label: "Contact AZAT", href: "/contact" },
       },
     ],
-  },
-];
-
-export const zones = [
-  {
-    code: "EEZ",
-    name: "Enhanced Enforcement Zone",
-    description: "Signage marks increased law-enforcement presence and stricter penalties.",
-  },
-  {
-    code: "HISA",
-    name: "High Impact Stewardship Area",
-    description: "An environmentally sensitive area where human impact must be minimized.",
-  },
-  {
-    code: "EPZ",
-    name: "Environmental Protection Zone",
-    description: "Ecological or air-quality (dust) sensitivities.",
-  },
-  {
-    code: "PPA",
-    name: "Priority Patrol Area",
-    description: "Heightened law-enforcement or ranger focus.",
-  },
-  {
-    code: "ZTZ",
-    name: "Zero Tolerance Zone",
-    description: "Strict, no-warning enforcement covering alcohol/drug use, fire bans, speeding, and similar violations.",
-  },
-  {
-    code: "OHV Corridor",
-    name: "OHV Compliance Corridor",
-    description: "A segment under active compliance oversight, where OHVs may be inspected and fined.",
   },
 ];
 

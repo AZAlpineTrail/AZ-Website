@@ -23,9 +23,9 @@ function getCardId(card: HomeItineraryCard, index: number) {
 }
 
 export function ItineraryFeature({
-  title = "Rusty's Route 1000",
+  title = "Rusty 1000",
   image = routeBannerImage,
-  imageAlt = "Arizona Alpine Trail route terrain for Rusty's Route 1000 itinerary",
+  imageAlt = "Arizona Alpine Trail route terrain for Rusty 1000 itinerary",
   href = "/rustys-route-1000",
   cards = [],
 }: ItineraryFeatureProps) {

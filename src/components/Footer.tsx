@@ -4,7 +4,7 @@ import { ExternalLink, Mail, UsersRound } from "lucide-react";
 const footerLinks = [
   { label: "Trail", href: "/trail" },
   { label: "Map", href: "/#trail-map" },
-  { label: "Downloads", href: "/#downloads" },
+  { label: "Downloads", href: "/downloads" },
   { label: "Itineraries", href: "/#itineraries" },
   { label: "FAQ", href: "/faq" },
   { label: "Shop", href: "/shop" },
@@ -14,7 +14,7 @@ const socialLinks = [
   { label: "Facebook", href: "https://www.facebook.com/azalpinetrail" },
   {
     label: "Facebook group",
-    href: "https://www.facebook.com/groups/search/groups/?q=Arizona%20Alpine%20Trail",
+    href: "https://www.facebook.com/groups/1324603116216826/",
   },
 ];
 

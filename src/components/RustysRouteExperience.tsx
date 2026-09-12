@@ -128,7 +128,7 @@ export function RustysRouteExperience({ data = fallbackRustysRoutePage }: { data
         >
           <div className="grid gap-5 lg:grid-cols-[minmax(0,0.72fr)_minmax(320px,0.28fr)] lg:items-end">
             <motion.div variants={quietReveal} transition={{ duration: 0.36, ease: "easeOut" }}>
-              <p className="az-kicker text-[#9b5d2e]">{data.heroKicker || "Rusty's Route 1000"}</p>
+              <p className="az-kicker text-[#9b5d2e]">{data.heroKicker || "Rusty 1000"}</p>
               <h1 className="mt-3 max-w-4xl font-serif text-[clamp(2.7rem,5.8vw,5.8rem)] font-semibold leading-[0.92] tracking-normal text-[#13221a]">
                 {data.heroTitle}
               </h1>

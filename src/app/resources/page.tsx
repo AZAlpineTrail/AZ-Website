@@ -1,19 +1,18 @@
 import type { Metadata } from "next";
-import { ExternalLink } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, ExternalLink } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
-import { ProtectedDownloadLink } from "@/components/auth/ProtectedDownloadLink";
-import { downloads, resourceCards } from "@/lib/content";
+import { resourceCards } from "@/lib/content";
 import { officialResources } from "@/lib/faq-content";
 
 export const metadata: Metadata = {
   title: "Resources",
   description:
-    "Download current Arizona Alpine Trail route files and find official OHV safety, permit, forest, and highway condition resources.",
+    "Official OHV safety, permit, forest, and highway condition resources for Arizona Alpine Trail riders.",
   alternates: { canonical: "/resources" },
   openGraph: {
     title: "Arizona Alpine Trail Resources",
-    description:
-      "Current AZAT downloads plus official OHV safety, permit, forest, and highway condition resources.",
+    description: "Official OHV safety, permit, forest, and highway condition resources.",
     url: "/resources",
   },
 };
@@ -22,23 +21,15 @@ export default function ResourcesPage() {
   return (
     <PageShell
       title="Resources"
-      description="Download the current trail files, then verify permits, closures, weather, forest rules, and highway conditions before you ride."
+      description="Verify permits, closures, weather, forest rules, and highway conditions before you ride."
     >
-      <div className="grid gap-4 md:grid-cols-3">
-        {downloads.map((item) => (
-          <article key={item.label} className="rounded-sm border border-[#d8ded4] bg-[#fffdf7] p-5">
-            <p className="font-mono text-sm text-[#b74f32]">{item.type}</p>
-            <h2 className="mt-8 text-2xl font-semibold">{item.label}</h2>
-            <p className="mt-2 text-[#5f6c63]">{item.version}</p>
-            <ProtectedDownloadLink
-              href={item.href}
-              className="mt-6 inline-flex min-h-11 items-center rounded-full bg-[#13221a] px-4 text-xs font-black uppercase tracking-[0.12em] text-white transition hover:bg-[#b74f32] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b74f32]"
-            >
-              Download
-            </ProtectedDownloadLink>
-          </article>
-        ))}
-      </div>
+      <Link
+        href="/downloads"
+        className="group inline-flex min-h-11 items-center gap-2 rounded-full border border-[#d8ded4] bg-[#fffdf7] px-4 text-sm font-semibold text-[#13221a] transition hover:border-[#b74f32] hover:text-[#b74f32] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b74f32]"
+      >
+        Looking for GPX/KML/SHP files? See Downloads.
+        <ArrowUpRight size={16} className="shrink-0 transition group-hover:translate-x-0.5" aria-hidden="true" />
+      </Link>
       <section className="mt-10 border-t border-[#d8ded4] pt-10" aria-labelledby="official-resources">
         <div className="max-w-3xl">
           <h2 id="official-resources" className="text-3xl font-semibold tracking-tight text-[#13221a]">

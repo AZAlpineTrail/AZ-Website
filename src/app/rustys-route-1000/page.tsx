@@ -9,7 +9,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const page = await getRustysRoutePageData();
 
   return {
-    title: page.seo?.title || page.title || "Rusty's Route 1000",
+    title: page.seo?.title || page.title || "Rusty 1000",
     description: page.seo?.description || "An 11-day hotel-based ride around the Arizona Alpine Trail.",
   };
 }
