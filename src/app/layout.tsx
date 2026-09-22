@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Analytics } from "@vercel/analytics/next";
 import { AuthModalProvider } from "@/components/auth/AuthModal";
+import { QuickContact } from "@/components/QuickContact";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -58,6 +59,7 @@ export default function RootLayout({
         {children}
         <Suspense fallback={null}>
           <AuthModalProvider />
+          <QuickContact />
         </Suspense>
         <Analytics />
       </body>

@@ -49,10 +49,10 @@ export function Footer() {
           <div className="mt-4 grid gap-3">
             <Link
               href="/contact"
-              className="inline-flex min-h-10 items-center gap-2 text-white/72 transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-sm border border-[#e5b96f]/60 bg-[#e5b96f] px-4 font-bold text-[#13221a] transition hover:border-[#f1c77f] hover:bg-[#f1c77f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
             >
               <Mail size={16} aria-hidden="true" />
-              Contact
+              Contact AZAT
             </Link>
             {socialLinks.map((item) => (
               <a

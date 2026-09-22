@@ -5,8 +5,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Menu, Mountain, X } from "lucide-react";
+import { Mail, Menu, Mountain, X } from "lucide-react";
 import { AuthHeaderControls } from "@/components/auth/AuthHeaderControls";
+import { openQuickContact } from "@/components/QuickContact";
 // Fire advisory disabled for now — see note near <FireAlertBanner> below.
 // import { FireAlertBanner } from "@/components/FireAlertBanner";
 
@@ -241,6 +242,17 @@ export function Header() {
                 <Mountain size={14} aria-hidden="true" />
                 3D Map
               </Link>
+              <button
+                type="button"
+                onClick={() => {
+                  setMenuOpen(false);
+                  window.setTimeout(openQuickContact, 280);
+                }}
+                className="mt-3 flex min-h-14 items-center justify-center gap-2 rounded-sm bg-[#173d2b] px-4 font-bold text-white transition hover:bg-[#24563e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b74f32]"
+              >
+                <Mail size={18} aria-hidden="true" />
+                Send us a message
+              </button>
             </nav>
             <div className="mt-auto border-t border-[#d8ded4] px-3 py-4">
               <AuthHeaderControls variant="drawer" onNavigate={() => setMenuOpen(false)} />
