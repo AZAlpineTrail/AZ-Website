@@ -6,23 +6,44 @@ Deploy the Next.js app on Vercel and set the environment variables from `.env.ex
 
 ## Supabase Auth
 
-This site uses immediate email/password registration without Supabase email
-verification. The server action creates confirmed users with the Supabase Admin
-API, then signs them in with email/password so SSR auth cookies are set.
+This site uses Supabase email/password auth plus one-time email codes for
+existing accounts. Registration sends a confirmation email through the standard
+Supabase Auth signup endpoint. Password recovery sends a reset email and then
+uses the recovery session to update the user's password.
 
 Set these variables in Vercel:
 
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
+NEXT_PUBLIC_SITE_URL=
 ```
 
-`SUPABASE_SERVICE_ROLE_KEY` must stay server-only. Do not expose it with a
-`NEXT_PUBLIC_` prefix.
+`NEXT_PUBLIC_SITE_URL` must be the canonical production origin, for example
+`https://azalpinetrail.org`, so confirmation and password recovery emails return
+to the website.
 
 In Supabase Dashboard, go to Authentication > Providers > Email and keep Email
-enabled. The Confirm email toggle does not control this registration flow.
+enabled. Enable Confirm email before launch. In Authentication > URL
+Configuration, set the Site URL and allow these redirect URLs:
+
+- `https://azalpinetrail.org/auth/callback`
+- The local development callback URL, such as
+  `http://localhost:3000/auth/callback`
+- Any preview deployment callback URLs used for QA
+
+Configure custom SMTP before production traffic. Supabase's default sender is
+rate-limited and best-effort, which is not sufficient for confirmation or
+password-reset delivery. Email-code requests also depend on this SMTP setup.
+
+For email-code sign-in, open Authentication > Email Templates > Magic Link in
+Supabase and include `{{ .Token }}` in the message body (for example,
+`Your AZAT sign-in code: {{ .Token }}`). The default template sends a link,
+not a visible code. Keep confirmation and recovery templates intact. Test a
+pre-existing Supabase account end to end before inviting migrated members;
+code sign-in intentionally does not create accounts. Supabase limits repeated
+code requests, so wait before retrying a test address. Importing WordPress
+members is a separate, not-yet-completed step.
 
 ## Sanity
 
@@ -51,6 +72,23 @@ SANITY_AUTH_TOKEN="..." npm run sanity:seed
 ```
 
 Do not commit `SANITY_AUTH_TOKEN`; it is only for local or CI write operations.
+
+## Contact Form Email
+
+The contact form should use Resend for transactional delivery.
+
+Set these server-only variables on the Linode host before launch:
+
+```bash
+RESEND_API_KEY=
+CONTACT_TO_EMAIL=
+CONTACT_FROM_EMAIL=
+```
+
+`RESEND_API_KEY` must stay server-only. Verify the sending domain in Resend
+before pointing production traffic at the new contact form. Use a separate
+sending-only Resend key for the website contact form rather than reusing the
+Supabase SMTP key.
 
 ## Redirects
 
