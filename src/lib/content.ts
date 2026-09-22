@@ -31,7 +31,6 @@ export const oldSiteRoutes = [
   "/shop",
   "/cart",
   "/login",
-  "/privacy-policy",
 ];
 
 export const trailFilters = [

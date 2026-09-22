@@ -94,7 +94,6 @@ const utilityRedirects = [
   { source: "/economic-benefits", destination: "/about" },
   { source: "/contact-us", destination: "/contact" },
   { source: "/frequently-asked-questions", destination: "/faq" },
-  { source: "/privacy-policy", destination: "/privacy" },
   { source: "/national-forests", destination: "/resources" },
   { source: "/ohv-safety", destination: "/resources" },
   { source: "/off-highway-vehicle-ohv-information", destination: "/resources" },
