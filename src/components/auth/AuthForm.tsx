@@ -9,6 +9,7 @@ import {
   signUpAction,
   type AuthFormState,
 } from "@/app/auth/actions";
+import { EmailCodeForm } from "@/components/auth/EmailCodeForm";
 
 const initialState: AuthFormState = { status: "idle", message: "" };
 
@@ -31,13 +32,19 @@ const passwordRequirements = [
   },
 ];
 
-function SubmitButton({ mode }: { mode: "sign-in" | "sign-up" }) {
+function SubmitButton({
+  mode,
+  disabled = false,
+}: {
+  mode: "sign-in" | "sign-up";
+  disabled?: boolean;
+}) {
   const { pending } = useFormStatus();
 
   return (
     <button
       type="submit"
-      disabled={pending}
+      disabled={pending || disabled}
       className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-[#b74f32] px-5 text-sm font-black uppercase tracking-[0.12em] text-white transition hover:bg-[#9f432b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b74f32] disabled:cursor-wait disabled:opacity-70"
     >
       {mode === "sign-up" ? (
@@ -64,6 +71,7 @@ export function AuthForm({
     initialState,
   );
   const isSignUp = mode === "sign-up";
+  const [signInMethod, setSignInMethod] = useState<"code" | "password">("code");
   const [password, setPassword] = useState("");
   const passwordChecks = useMemo(
     () =>
@@ -84,6 +92,26 @@ export function AuthForm({
           {isSignUp ? "Create your trail account" : "Log in to continue"}
         </h2>
       </div>
+      {!isSignUp ? (
+        <div className="flex border-b border-[#d8ded4] px-5 pt-4 sm:px-6" role="group" aria-label="Sign-in method">
+          {(["code", "password"] as const).map((method) => (
+            <button key={method} type="button" onClick={() => setSignInMethod(method)} aria-pressed={signInMethod === method} className={`min-h-11 border-b-2 px-4 text-sm font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b74f32] ${signInMethod === method ? "border-[#b74f32] text-[#13221a]" : "border-transparent text-[#5f6c63] hover:text-[#13221a]"}`}>
+              {method === "code" ? "Email code" : "Password"}
+            </button>
+          ))}
+        </div>
+      ) : null}
+      {!isSignUp && signInMethod === "code" ? <EmailCodeForm nextPath={nextPath} /> : null}
+      {!isSignUp && signInMethod === "code" ? (
+        <div className="px-5 pb-5 sm:px-6 sm:pb-6">
+          {onModeChange ? (
+            <button type="button" onClick={() => onModeChange("sign-up")} className="text-sm font-bold text-[#235840] underline underline-offset-4 hover:text-[#b74f32]">Need an account? Register</button>
+          ) : (
+            <Link href={`/sign-up?next=${encodeURIComponent(nextPath)}`} className="text-sm font-bold text-[#235840] underline underline-offset-4 hover:text-[#b74f32]">Need an account? Register</Link>
+          )}
+        </div>
+      ) : null}
+      {isSignUp || signInMethod === "password" ? (
       <form
         action={formAction}
         className={`grid gap-4 p-5 sm:p-6 ${isSignUp ? "sm:grid-cols-2" : ""}`}
@@ -144,6 +172,14 @@ export function AuthForm({
             className="min-h-12 rounded-[6px] border border-[#d8ded4] bg-white px-4 text-base font-medium outline-none transition focus:border-[#b74f32] focus:ring-2 focus:ring-[#b74f32]/18"
           />
         </label>
+        {!isSignUp ? (
+          <Link
+            href="/forgot-password"
+            className="inline-flex min-h-8 items-center justify-self-start text-sm font-bold text-[#235840] underline decoration-[#b87939]/40 underline-offset-4 transition hover:text-[#b74f32] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b74f32] sm:col-span-2"
+          >
+            Forgot password?
+          </Link>
+        ) : null}
         {isSignUp ? (
           <div
             className="grid gap-2 border-y border-[#d8ded4] py-4 text-sm sm:col-span-2"
@@ -176,7 +212,10 @@ export function AuthForm({
           </p>
         ) : null}
         <div className="grid gap-4 pt-1 sm:col-span-2 sm:max-w-sm">
-          <SubmitButton mode={mode} />
+          <SubmitButton
+            mode={mode}
+            disabled={isSignUp && state.status === "success"}
+          />
           {onModeChange ? (
             <button
               type="button"
@@ -199,6 +238,7 @@ export function AuthForm({
           )}
         </div>
       </form>
+      ) : null}
     </section>
   );
 }
