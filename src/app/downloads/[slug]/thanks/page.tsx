@@ -46,7 +46,7 @@ export default async function DownloadThanksPage({
   return (
     <>
       <Header />
-      <main className="bg-[#f4f1e8] text-[#13221a]">
+      <main id="main" className="bg-[#f4f1e8] text-[#13221a]">
         <section className="mx-auto flex max-w-[1320px] items-start justify-center px-5 pb-20 pt-28 sm:px-8 lg:pt-32">
             <div className="w-full max-w-2xl overflow-hidden rounded-[6px] border border-[#d8ded4] bg-[#fffdf7] text-[#13221a] shadow-[0_18px_44px_rgba(19,34,26,0.12)]">
               <div className="border-b border-[#d8ded4] bg-[#f8f4e8] p-5">

@@ -73,6 +73,12 @@ export function AuthForm({
   const isSignUp = mode === "sign-up";
   const [signInMethod, setSignInMethod] = useState<"code" | "password">("code");
   const [password, setPassword] = useState("");
+  const [lastState, setLastState] = useState(state);
+  if (state !== lastState) {
+    // React resets the form after each submit, clearing the password field; keep the checklist in sync.
+    setLastState(state);
+    setPassword("");
+  }
   const passwordChecks = useMemo(
     () =>
       passwordRequirements.map((requirement) => ({
@@ -123,6 +129,7 @@ export function AuthForm({
               First name
               <input
                 name="firstName"
+                defaultValue={state.fields?.firstName}
                 autoComplete="given-name"
                 required
                 className="min-h-12 rounded-[6px] border border-[#d8ded4] bg-white px-4 text-base font-medium outline-none transition focus:border-[#b74f32] focus:ring-2 focus:ring-[#b74f32]/18"
@@ -132,6 +139,7 @@ export function AuthForm({
               Last name
               <input
                 name="lastName"
+                defaultValue={state.fields?.lastName}
                 autoComplete="family-name"
                 required
                 className="min-h-12 rounded-[6px] border border-[#d8ded4] bg-white px-4 text-base font-medium outline-none transition focus:border-[#b74f32] focus:ring-2 focus:ring-[#b74f32]/18"
@@ -141,6 +149,7 @@ export function AuthForm({
               ZIP code
               <input
                 name="zipCode"
+                defaultValue={state.fields?.zipCode}
                 autoComplete="postal-code"
                 inputMode="numeric"
                 pattern="[0-9]{5}(-[0-9]{4})?"
@@ -155,6 +164,7 @@ export function AuthForm({
           <input
             name="email"
             type="email"
+            defaultValue={state.fields?.email}
             autoComplete="email"
             required
             className="min-h-12 rounded-[6px] border border-[#d8ded4] bg-white px-4 text-base font-medium outline-none transition focus:border-[#b74f32] focus:ring-2 focus:ring-[#b74f32]/18"

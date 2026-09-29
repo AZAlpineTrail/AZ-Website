@@ -343,10 +343,9 @@ export const faqCategories: FaqCategory[] = [
 ];
 
 export const officialResources: FaqLink[] = [
-  { label: "AZAT: OHV information", href: "https://azalpinetrail.org/off-highway-vehicle-ohv-information/", external: true },
   { label: "Arizona Game and Fish: OHV decals", href: "https://www.azgfd.com/off-highway-vehicle/ohv-register-and-renew-your-license/ohv-decals/", external: true },
   { label: "Arizona Game and Fish: OHV education", href: "https://www.azgfd.com/education/off-highway-vehicle-education/", external: true },
-  { label: "Arizona DOT: OHV information", href: "https://azdot.gov/mvd/services/vehicle-services/vehicle-registration/ohv-and-boating", external: true },
+  { label: "Arizona DOT: OHV information", href: "https://azdot.gov/mvd/services/vehicle-services/vehicle-registration/ohv-and-boating-registration", external: true },
   { label: "Arizona State Land Dept: recreational permits & OHV FAQ", href: "https://land.az.gov/faqs", external: true },
   { label: "Arizona State Land Dept: permit terms", href: "https://land.az.gov/recreational-permits-terms-and-conditions", external: true },
   { label: "US Forest Service: Motor Vehicle Use Maps", href: "https://www.fs.usda.gov/visit/maps", external: true },

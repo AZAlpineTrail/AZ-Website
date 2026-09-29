@@ -360,6 +360,21 @@ body {
   opacity: 0.78;
 }
 
+/* 44px touch targets for map zoom/compass controls on touch devices. */
+@media (pointer: coarse) {
+  .mapboxgl-ctrl-group button {
+    height: 44px;
+    width: 44px;
+  }
+
+  .leaflet-touch .leaflet-bar a {
+    font-size: 22px;
+    height: 44px;
+    line-height: 44px;
+    width: 44px;
+  }
+}
+
 .az-photo-sequence article {
   isolation: isolate;
 }

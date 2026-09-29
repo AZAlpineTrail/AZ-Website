@@ -3,8 +3,9 @@
 import { X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AuthForm } from "@/components/auth/AuthForm";
+import { useFocusTrap } from "@/lib/useFocusTrap";
 
 type AuthMode = "sign-in" | "sign-up";
 
@@ -52,6 +53,9 @@ export function AuthModalProvider() {
     ? safeNextPath(queryNext, fallbackNext)
     : manualState.nextPath;
   const open = queryIsOpen || manualState.open;
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useFocusTrap(panelRef, open, { autoFocus: true, restoreFocus: true });
 
   useEffect(() => {
     const handleOpen = (event: Event) => {
@@ -158,6 +162,7 @@ export function AuthModalProvider() {
           }}
         >
           <motion.div
+            ref={panelRef}
             className="relative w-full max-w-2xl"
             initial={prefersReducedMotion ? false : { y: 18, scale: 0.975, opacity: 0 }}
             animate={{ y: 0, scale: 1, opacity: 1 }}

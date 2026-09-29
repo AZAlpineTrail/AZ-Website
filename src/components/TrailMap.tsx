@@ -55,7 +55,7 @@ export function TrailMap({
             <LeafletRouteMap highlights={highlights} />
           </div>
 
-          <div className="absolute right-3 top-3 z-[420]">
+          <div className="absolute left-16 top-3 z-[420] sm:left-auto sm:right-3">
             <motion.div whileHover={prefersReducedMotion ? undefined : { y: -2 }} whileTap={prefersReducedMotion ? undefined : { scale: 0.96 }}>
               <Link
                 href="/trail/3d"

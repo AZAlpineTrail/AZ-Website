@@ -19,11 +19,13 @@ export async function generateMetadata({
   return {
     title: post.seo?.title || `${post.title} | Arizona Alpine Trail News`,
     description: post.seo?.description || post.excerpt,
+    alternates: { canonical: `/news/${slug}` },
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: "article",
       publishedTime: post.date,
+      url: `/news/${slug}`,
       images: post.seo?.image || post.heroImage ? [post.seo?.image || post.heroImage!] : undefined,
     },
   };

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useFocusTrap } from "@/lib/useFocusTrap";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Mail, Menu, Mountain, X } from "lucide-react";
 import { AuthHeaderControls } from "@/components/auth/AuthHeaderControls";
@@ -19,6 +20,7 @@ export function Header() {
   const prefersReducedMotion = useReducedMotion();
   const menuTriggerRef = useRef<HTMLButtonElement>(null);
   const menuCloseRef = useRef<HTMLButtonElement>(null);
+  const menuPanelRef = useRef<HTMLDivElement>(null);
   const isInitialMenuRender = useRef(true);
   const useSolidHeader = pathname !== "/" || scrolled || menuOpen;
 
@@ -64,6 +66,8 @@ export function Header() {
       window.removeEventListener("scroll", updateHeaderState);
     };
   }, []);
+
+  useFocusTrap(menuPanelRef, menuOpen);
 
   useEffect(() => {
     if (isInitialMenuRender.current) {
@@ -122,7 +126,7 @@ export function Header() {
         Skip to main content
       </a>
       <div className="mx-auto flex min-h-15 max-w-[1320px] items-center justify-between gap-2 px-3 sm:gap-6 sm:px-8">
-        <Link href="/" className="group flex items-center gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" aria-label="Arizona Alpine Trail home">
+        <Link href="/" className="group flex items-center gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
           <span className={`grid size-11 place-items-center rounded-full p-1 transition duration-300 ${
             useSolidHeader ? "bg-white/88 shadow-[0_8px_22px_rgba(0,0,0,0.16)]" : "bg-white/70 shadow-none"
           }`} aria-hidden="true">
@@ -196,6 +200,7 @@ export function Header() {
             aria-hidden="true"
           />
           <motion.div
+            ref={menuPanelRef}
             id="mobile-menu"
             role="dialog"
             aria-modal="true"

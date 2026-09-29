@@ -118,7 +118,7 @@ export function RustysRouteExperience({ data = fallbackRustysRoutePage }: { data
   const mapHighlights = data.mapHighlights?.length ? data.mapHighlights : fallbackRustysRoutePage.mapHighlights || [];
 
   return (
-    <main className="overflow-hidden bg-[#f8f4e8] text-[#13221a]">
+    <main id="main" className="overflow-hidden bg-[#f8f4e8] text-[#13221a]">
       <section className="relative isolate bg-[#f8f4e8] px-5 pb-5 pt-24 sm:px-8 lg:pt-28">
         <motion.div
           variants={quietContainer}

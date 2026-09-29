@@ -19,6 +19,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${data.title} — Arizona Alpine Trail Segment ${getTrailSegmentDisplayNumber(data.segmentNumber)}`,
     description: data.seo?.description,
+    alternates: { canonical: `/trail/${slug}` },
+    openGraph: {
+      url: `/trail/${slug}`,
+    },
   };
 }
 

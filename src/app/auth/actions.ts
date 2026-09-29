@@ -6,6 +6,8 @@ import { createSupabaseServerClient } from "@/supabase/server";
 export type AuthFormState = {
   status: "idle" | "error" | "success";
   message: string;
+  // Non-secret values echoed back so the form can repopulate after React resets it.
+  fields?: Partial<Record<"firstName" | "lastName" | "zipCode" | "email", string>>;
 };
 
 const idleState: AuthFormState = { status: "idle", message: "" };
@@ -53,17 +55,18 @@ export async function signUpAction(
   const password = String(formData.get("password") ?? "");
   const next = safeNextPath(formData);
   const passwordError = validatePassword(password);
+  const fields = { firstName, lastName, zipCode, email };
 
   if (!firstName || !lastName || !zipCode || !email || !password) {
-    return { status: "error", message: "Complete all fields to register." };
+    return { status: "error", fields, message: "Complete all fields to register." };
   }
 
   if (!/^\d{5}(?:-\d{4})?$/.test(zipCode)) {
-    return { status: "error", message: "Enter a valid ZIP code." };
+    return { status: "error", fields, message: "Enter a valid ZIP code." };
   }
 
   if (passwordError) {
-    return { status: "error", message: passwordError };
+    return { status: "error", fields, message: passwordError };
   }
 
   const supabase = await createSupabaseServerClient();
@@ -71,6 +74,7 @@ export async function signUpAction(
   if (!supabase) {
     return {
       status: "error",
+      fields,
       message: "Supabase is not configured yet. Add the project URL and anon key.",
     };
   }
@@ -102,7 +106,7 @@ export async function signUpAction(
       };
     }
 
-    return { status: "error", message: createUserError.message };
+    return { status: "error", fields, message: createUserError.message };
   }
 
   return {
@@ -120,9 +124,10 @@ export async function signInAction(
   const email = stringValue(formData, "email").toLowerCase();
   const password = String(formData.get("password") ?? "");
   const next = safeNextPath(formData);
+  const fields = { email };
 
   if (!email || !password) {
-    return { status: "error", message: "Enter your email and password." };
+    return { status: "error", fields, message: "Enter your email and password." };
   }
 
   const supabase = await createSupabaseServerClient();
@@ -130,6 +135,7 @@ export async function signInAction(
   if (!supabase) {
     return {
       status: "error",
+      fields,
       message: "Supabase is not configured yet. Add the project URL and anon key.",
     };
   }
@@ -137,7 +143,7 @@ export async function signInAction(
   const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
-    return { status: "error", message: error.message };
+    return { status: "error", fields, message: error.message };
   }
 
   redirect(next);

@@ -23,7 +23,7 @@ export default async function AccountPage() {
     return (
       <>
         <Header />
-        <main className="mx-auto max-w-7xl px-5 pb-20 pt-36 sm:px-8">
+        <main id="main" className="mx-auto max-w-7xl px-5 pb-20 pt-36 sm:px-8">
           <h1 className="max-w-4xl text-5xl font-semibold tracking-tight sm:text-7xl">Account</h1>
           <p className="mt-6 max-w-3xl text-lg leading-8 text-[#5f6c63]">
             Supabase is not configured yet. Add your project URL and anon key to enable member accounts.
@@ -64,7 +64,7 @@ export default async function AccountPage() {
   return (
     <>
       <Header />
-      <main className="bg-[#f4f1e8] text-[#13221a]">
+      <main id="main" className="bg-[#f4f1e8] text-[#13221a]">
         <section className="mx-auto max-w-[1320px] px-5 pb-16 pt-28 sm:px-8 lg:pt-32">
           <div className="mb-6">
             <h1 className="font-serif text-4xl font-semibold leading-[0.98] tracking-normal sm:text-5xl">

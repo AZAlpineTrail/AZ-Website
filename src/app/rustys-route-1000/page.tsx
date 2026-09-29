@@ -11,6 +11,10 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: page.seo?.title || page.title || "Rusty 1000",
     description: page.seo?.description || "An 11-day hotel-based ride around the Arizona Alpine Trail.",
+    alternates: { canonical: "/rustys-route-1000" },
+    openGraph: {
+      url: "/rustys-route-1000",
+    },
   };
 }
 

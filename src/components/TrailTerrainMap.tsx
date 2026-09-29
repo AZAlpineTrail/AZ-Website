@@ -210,18 +210,25 @@ export function TrailTerrainMap({ embedded = false, activeSegmentId, onSegmentSe
 
     mapboxgl.accessToken = token;
 
-    const map = new mapboxgl.Map({
-      container: mapContainerRef.current,
-      style: "mapbox://styles/mapbox/satellite-streets-v12",
-      center: [-110.38, 34.12],
-      zoom: 7.35,
-      pitch: 68,
-      bearing: -28,
-      antialias: true,
-      attributionControl: true,
-      logoPosition: "bottom-right",
-      projection: "mercator",
-    });
+    let map: mapboxgl.Map;
+    try {
+      map = new mapboxgl.Map({
+        container: mapContainerRef.current,
+        style: "mapbox://styles/mapbox/satellite-streets-v12",
+        center: [-110.38, 34.12],
+        zoom: 7.35,
+        pitch: 68,
+        bearing: -28,
+        antialias: true,
+        attributionControl: true,
+        logoPosition: "bottom-right",
+        projection: "mercator",
+      });
+    } catch {
+      // Mapbox throws synchronously when WebGL is unavailable; show the fallback instead of crashing the page.
+      queueMicrotask(() => setStatus("error"));
+      return;
+    }
 
     mapRef.current = map;
 

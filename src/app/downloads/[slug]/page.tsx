@@ -53,7 +53,7 @@ export default async function DownloadTermsPage({
     return (
       <>
         <Header />
-        <main className="min-h-[calc(100svh-60px)] bg-[#f4f1e8] text-[#13221a]" />
+        <main id="main" className="min-h-[calc(100svh-60px)] bg-[#f4f1e8] text-[#13221a]" />
         <Footer />
       </>
     );
@@ -62,7 +62,7 @@ export default async function DownloadTermsPage({
   return (
     <>
       <Header />
-      <main className="bg-[#f4f1e8] text-[#13221a]">
+      <main id="main" className="bg-[#f4f1e8] text-[#13221a]">
         <section className="mx-auto max-w-[1320px] px-5 pb-2 pt-28 sm:px-8 lg:pt-32">
             <h1 className="max-w-4xl font-serif text-4xl font-semibold leading-[0.98] tracking-normal text-[#13221a] sm:text-5xl">
               Terms and Conditions of Use

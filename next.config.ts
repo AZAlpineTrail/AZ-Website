@@ -74,12 +74,16 @@ const commerceRedirects = [
 ];
 
 const newsRedirects = [
+  {
+    source: "/the-rusty-1000-where-every-mile-tells-a-story",
+    destination: "/news/rusty-1000-ambassador-ride",
+  },
   { source: "/a-word-from-our-president", destination: "/news/a-word-from-our-president" },
   { source: "/kick-off-meeting-with-logan-simpson", destination: "/news/kick-off-meeting-with-logan-simpson" },
   { source: "/donation-from-waste-management-of-arizona", destination: "/news/donation-from-waste-management-of-arizona" },
   { source: "/alpine-open-house-meeting", destination: "/news/alpine-open-house-meeting" },
   { source: "/outdoors-sw-magazine-article-july-2023", destination: "/news/outdoors-sw-magazine-article-july-2023" },
-  { source: "/azat-goals-and-objectives-workshop", destination: "/news/azat-goals-and-objectives-workshop" },
+  { source: "/azat-goals-and-objectives-workshop", destination: "/news" },
   { source: "/az-game-fish-outdoor-expo", destination: "/news/az-game-fish-outdoor-expo" },
   { source: "/category/:slug", destination: "/news" },
   { source: "/author/azalpinetrailit", destination: "/news" },
@@ -154,6 +158,12 @@ const nextConfig: NextConfig = {
             value: "camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()",
           },
         ],
+      },
+      {
+        // Keep vercel.app and any other non-canonical host out of search results.
+        source: "/:path*",
+        missing: [{ type: "host", value: "(www\\.)?azalpinetrail\\.org" }],
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
       },
     ];
   },

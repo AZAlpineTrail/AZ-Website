@@ -147,7 +147,7 @@ export function TrailSegmentExperience({
   ];
 
   return (
-    <main className="overflow-hidden bg-[#f8f4e8] text-[#13221a]">
+    <main id="main" className="overflow-hidden bg-[#f8f4e8] text-[#13221a]">
       <section className="relative isolate bg-[#08130d] px-5 pb-8 pt-28 text-white sm:px-8 lg:pt-32">
         <motion.div
           initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
