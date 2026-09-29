@@ -1,7 +1,16 @@
+import type { Metadata } from "next";
 import { SanityStudio } from "@/components/SanityStudio";
 import { hasConfiguredSanityProject } from "@/sanity/env";
 
 export const dynamic = "force-static";
+
+export const metadata: Metadata = {
+  title: "Content Studio",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function StudioPage() {
   if (!hasConfiguredSanityProject) {
