@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { PageShell } from "@/components/PageShell";
 import { ProtectedDownloadLink } from "@/components/auth/ProtectedDownloadLink";
 import { gatedDownloadHref, listActiveDownloads, type DownloadFile } from "@/lib/downloads";
-import { trailSegmentIndex } from "@/lib/trail-segment-index";
+import { getTrailSegmentDisplayNumber, trailSegmentIndex } from "@/lib/trail-segment-index";
 
 export const metadata: Metadata = {
   title: "Downloads",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/downloads" },
   openGraph: {
     title: "Arizona Alpine Trail Downloads",
-    description: "The complete trail GPX/KML/SHP files plus every individual segment's GPX file.",
+    description: "The complete trail GPX and KML files plus every individual segment's GPX file.",
     url: "/downloads",
   },
 };
@@ -79,15 +79,18 @@ export default async function DownloadsPage() {
         </h2>
         {segmentFiles.length ? (
           <div className="mt-6 grid gap-4 md:grid-cols-3">
-            {segmentFiles.map(({ file, segment }) => (
-              <DownloadCard
-                key={file.id}
-                item={file}
-                title={`${segment.number} · ${segment.name}`}
-                subtitle={file.version ?? undefined}
-                ariaLabel={`Download segment ${segment.number}, ${segment.name}`}
-              />
-            ))}
+            {segmentFiles.map(({ file, segment }) => {
+              const displayNumber = getTrailSegmentDisplayNumber(segment.number);
+              return (
+                <DownloadCard
+                  key={file.id}
+                  item={file}
+                  title={`${displayNumber} · ${segment.name}`}
+                  subtitle={file.version ?? undefined}
+                  ariaLabel={`Download segment ${displayNumber}, ${segment.name}`}
+                />
+              );
+            })}
           </div>
         ) : (
           <p className="mt-6 text-[#5f6c63]">Segment files aren&apos;t available right now — check back soon.</p>

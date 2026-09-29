@@ -5,3 +5,8 @@ import trailSegmentIndexData from "../../content/trail-segment-index.json";
 // Pure data, no Node APIs — safe to import from client components (unlike trail-segments.ts, which
 // touches the filesystem to load per-segment content and can't be bundled for the browser).
 export const trailSegmentIndex: { number: number; name: string; gpxId: string; slug: string }[] = trailSegmentIndexData;
+
+export function getTrailSegmentDisplayNumber(sourceNumber: number) {
+  const index = trailSegmentIndex.findIndex((segment) => segment.number === sourceNumber);
+  return index === -1 ? sourceNumber : index + 1;
+}

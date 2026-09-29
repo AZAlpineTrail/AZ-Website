@@ -25,7 +25,7 @@ import type { LucideIcon } from "lucide-react";
 import { ProtectedDownloadLink } from "@/components/auth/ProtectedDownloadLink";
 import { Lightbox, PhotoGallery } from "@/components/PhotoGallery";
 import type { SegmentRouteMapProps } from "@/components/SegmentRouteMap";
-import { trailSegmentIndex } from "@/lib/trail-segment-index";
+import { getTrailSegmentDisplayNumber, trailSegmentIndex } from "@/lib/trail-segment-index";
 import type { TrailSegmentNeighbor, TrailSegmentPageData } from "@/lib/trail-segments";
 
 const SegmentRouteMap = dynamic<SegmentRouteMapProps>(
@@ -156,7 +156,7 @@ export function TrailSegmentExperience({
           className="mx-auto w-full max-w-[1320px]"
         >
           <p className="az-kicker text-[#f1b65a]">
-            Segment {data.segmentCode ?? String(data.segmentNumber).padStart(2, "0")} · {data.status ?? "Status pending"}
+            Segment {getTrailSegmentDisplayNumber(data.segmentNumber).toString().padStart(2, "0")} · {data.status ?? "Status pending"}
           </p>
           <h1 className="mt-3 max-w-3xl font-serif text-[clamp(2.6rem,6vw,5.6rem)] font-semibold leading-[0.92] text-white">
             {data.title}

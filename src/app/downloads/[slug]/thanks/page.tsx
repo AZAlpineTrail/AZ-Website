@@ -69,16 +69,6 @@ export default async function DownloadThanksPage({
                   </p>
                 ) : null}
               </div>
-              <div className="flex flex-wrap gap-2 border-t border-[#d8ded4] p-5">
-                {[download.file_type, "Protected", "Terms accepted"].map((item) => (
-                  <span
-                    key={item}
-                    className="inline-flex min-h-9 items-center rounded-full border border-[#d8ded4] bg-white px-3 text-xs font-black uppercase tracking-[0.1em] text-[#173d2b]"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
               <div className="border-t border-[#d8ded4] p-5">
                 <a
                   href={downloadUrl}

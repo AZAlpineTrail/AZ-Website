@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { TrailSegmentExperience } from "@/components/TrailSegmentExperience";
+import { getTrailSegmentDisplayNumber } from "@/lib/trail-segment-index";
 import { getPublishedSlugs, getTrailSegmentNeighbors, getTrailSegmentPageData } from "@/lib/trail-segments";
 
 export function generateStaticParams() {
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!data) return {};
 
   return {
-    title: data.seo?.title || `${data.title} — Arizona Alpine Trail`,
+    title: `${data.title} — Arizona Alpine Trail Segment ${getTrailSegmentDisplayNumber(data.segmentNumber)}`,
     description: data.seo?.description,
   };
 }

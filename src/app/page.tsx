@@ -26,7 +26,9 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const [homePage, newsPosts] = await Promise.all([getHomePageData(), getNewsPosts()]);
-  const downloads = (homePage.downloads || []).slice(0, 3);
+  const downloads = (homePage.downloads || [])
+    .filter((download) => download.href !== "/downloads/azat-shapefile")
+    .slice(0, 3);
 
   return (
     <>

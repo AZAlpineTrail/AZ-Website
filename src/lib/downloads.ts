@@ -4,6 +4,7 @@ import { createSupabaseServerClient } from "@/supabase/server";
 
 export const DOWNLOAD_TERMS_VERSION = "azat-download-terms-2026-07-06";
 export const PROTECTED_DOWNLOADS_BUCKET = "protected-downloads";
+const HIDDEN_DOWNLOAD_SLUGS = new Set(["azat-shapefile"]);
 
 export type DownloadFile = {
   id: string;
@@ -82,7 +83,7 @@ export async function listActiveDownloads() {
   const supabase = await createSupabaseServerClient();
 
   if (!supabase) {
-    return fallbackDownloadFiles;
+    return fallbackDownloadFiles.filter((download) => !HIDDEN_DOWNLOAD_SLUGS.has(download.slug));
   }
 
   const { data, error } = await supabase
@@ -92,13 +93,17 @@ export async function listActiveDownloads() {
     .order("published_at", { ascending: false, nullsFirst: false });
 
   if (error || !data?.length) {
-    return fallbackDownloadFiles;
+    return fallbackDownloadFiles.filter((download) => !HIDDEN_DOWNLOAD_SLUGS.has(download.slug));
   }
 
-  return data as DownloadFile[];
+  return (data as DownloadFile[]).filter((download) => !HIDDEN_DOWNLOAD_SLUGS.has(download.slug));
 }
 
 export async function getActiveDownloadBySlug(slug: string) {
+  if (HIDDEN_DOWNLOAD_SLUGS.has(slug)) {
+    return null;
+  }
+
   const supabase = await createSupabaseServerClient();
 
   if (!supabase) {
@@ -120,6 +125,10 @@ export async function getActiveDownloadBySlug(slug: string) {
 }
 
 export async function getDownloadForStreaming(slug: string) {
+  if (HIDDEN_DOWNLOAD_SLUGS.has(slug)) {
+    notFound();
+  }
+
   const supabase = createSupabaseAdminClient();
 
   if (!supabase) {

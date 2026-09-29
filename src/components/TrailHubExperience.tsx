@@ -9,6 +9,7 @@ import { ArrowUpRight, Box, Download, Search, X } from "lucide-react";
 import { ProtectedDownloadLink } from "@/components/auth/ProtectedDownloadLink";
 import type { TrailTerrainMapProps } from "@/components/TrailTerrainMap";
 import { downloads as fullTrailDownloads } from "@/lib/content";
+import { getTrailSegmentDisplayNumber } from "@/lib/trail-segment-index";
 import type { TrailHubSegment } from "@/lib/trail-segments";
 
 const ratingLabels: Record<string, string> = {
@@ -203,7 +204,7 @@ export function TrailHubExperience({ segments }: { segments: TrailHubSegment[] }
                         }`}
                       >
                         <span className="w-6 shrink-0 font-mono text-xs font-black text-[#b74f32]">
-                          {item.number.toString().padStart(2, "0")}
+                          {getTrailSegmentDisplayNumber(item.number).toString().padStart(2, "0")}
                         </span>
                         <span className="min-w-0 flex-1 truncate text-base font-semibold text-[#13221a]">{item.name}</span>
                         <span className="shrink-0 font-mono text-[11px] font-bold text-[#5f6c63]">

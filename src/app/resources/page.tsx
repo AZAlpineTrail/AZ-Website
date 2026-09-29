@@ -27,7 +27,7 @@ export default function ResourcesPage() {
         href="/downloads"
         className="group inline-flex min-h-11 items-center gap-2 rounded-full border border-[#d8ded4] bg-[#fffdf7] px-4 text-sm font-semibold text-[#13221a] transition hover:border-[#b74f32] hover:text-[#b74f32] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b74f32]"
       >
-        Looking for GPX/KML/SHP files? See Downloads.
+        Looking for GPX or KML files? See Downloads.
         <ArrowUpRight size={16} className="shrink-0 transition group-hover:translate-x-0.5" aria-hidden="true" />
       </Link>
       <section className="mt-10 border-t border-[#d8ded4] pt-10" aria-labelledby="official-resources">
