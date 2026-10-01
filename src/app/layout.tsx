@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { AuthModalProvider } from "@/components/auth/AuthModal";
 import { QuickContact } from "@/components/QuickContact";
 import "./globals.css";
@@ -62,6 +63,7 @@ export default function RootLayout({
           <QuickContact />
         </Suspense>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
