@@ -87,7 +87,7 @@ export const fallbackRustysRoutePage: RustysRoutePageData = {
     },
     {
       label: "Mileage note",
-      text: "The core AZAT is about 700 miles. Rusty 1000 adds town connectors, fuel stops, sightseeing, and side roads.",
+      text: "The core AZAT loop is 704.5 miles. Rusty 1000 adds town connectors, fuel stops, sightseeing, and side roads.",
     },
   ],
   itineraryKicker: "Itinerary",
@@ -119,6 +119,18 @@ export const fallbackRustysRoutePage: RustysRoutePageData = {
 function mergeRustysRoutePage(data: RustysRoutePageData | null): RustysRoutePageData {
   if (!data?.heroTitle) return fallbackRustysRoutePage;
 
+  const fallbackMileageNote = fallbackRustysRoutePage.planningNotes?.find(
+    (note) => note.label === "Mileage note",
+  );
+  const planningNotes = (data.planningNotes?.length
+    ? data.planningNotes
+    : fallbackRustysRoutePage.planningNotes ?? []
+  ).map((note) => (note.label === "Mileage note" && fallbackMileageNote ? fallbackMileageNote : note));
+
+  if (fallbackMileageNote && !planningNotes.some((note) => note.label === "Mileage note")) {
+    planningNotes.push(fallbackMileageNote);
+  }
+
   return {
     ...fallbackRustysRoutePage,
     ...data,
@@ -127,7 +139,7 @@ function mergeRustysRoutePage(data: RustysRoutePageData | null): RustysRoutePage
     facts: data.facts?.length ? data.facts : fallbackRustysRoutePage.facts,
     downloadCta: data.downloadCta?.href ? data.downloadCta : fallbackRustysRoutePage.downloadCta,
     mapHighlights: data.mapHighlights?.length ? data.mapHighlights : fallbackRustysRoutePage.mapHighlights,
-    planningNotes: data.planningNotes?.length ? data.planningNotes : fallbackRustysRoutePage.planningNotes,
+    planningNotes,
     itineraryDays: data.itineraryDays?.length ? data.itineraryDays : fallbackRustysRoutePage.itineraryDays,
     finalCtaImage: data.finalCtaImage || fallbackRustysRoutePage.finalCtaImage,
     finalCtaImageAlt: data.finalCtaImageAlt || fallbackRustysRoutePage.finalCtaImageAlt,

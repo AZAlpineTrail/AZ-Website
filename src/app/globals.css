@@ -263,6 +263,17 @@ body {
   color: #173d2b;
 }
 
+/* Keep map controls reachable in short landscape viewports and clear of the
+   fixed comment launcher at the lower-right edge. */
+.az-map-experience .leaflet-top.leaflet-right {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.az-map-experience .leaflet-top.leaflet-right .leaflet-control {
+  margin-top: 0;
+}
+
 .az-map-experience .leaflet-popup-content-wrapper,
 .az-map-experience .leaflet-popup-tip {
   border-radius: 2px;

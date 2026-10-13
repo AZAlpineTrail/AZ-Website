@@ -7,7 +7,7 @@ import { getTrailHubSegments } from "@/lib/trail-segments";
 
 export const metadata: Metadata = {
   title: "The Trail",
-  description: "28 real segments across the 674-mile Arizona Alpine Trail loop, mapped from AZAT's own GPX survey.",
+  description: "28 unique segments across the 704.5-mile Arizona Alpine Trail loop, with Porter Mountain and Little Colorado River each used twice.",
   alternates: { canonical: "/trail" },
   openGraph: {
     title: "Arizona Alpine Trail Map and Segments",

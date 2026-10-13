@@ -1,11 +1,11 @@
 {
   "status": "Open",
-  "lengthMiles": 17.2,
+  "lengthMiles": 16.7,
   "minElevationFeet": 9016,
   "maxElevationFeet": 9410,
   "elevationGainFeet": 1805,
   "elevationLossFeet": 1776,
-  "trailRating": "more-difficult-blue",
+  "trailRating": "easier-green",
   "descriptionBody": [
     "The Little Colorado River segment is used for west to east and east to west travel when completing the full Alpine Trail loop. The segment extends between the junction of FR 117 and FR 117A and the junction of SR 273 and FR 8037 near the Big Lake-Greer plateau. The alignment traverses high meadows and mixed conifer forest with aspen, skirting the headwaters country of the Little Colorado River and trending toward the Greens Peak foothills. Notable points of interest include spur access toward Greens Peak from the FR 117 area, the Greer Lakes complex (Bunch, Tunnel, River Reservoirs), and nearby trailheads along the West Fork of the Little Colorado near Greer.",
     "This segment consists primarily of unpaved forest roads and designated OHV connectors with surfaces ranging from graded cinder/dirt to rocky two-track, with seasonal ruts and washboards—conditions can change quickly after summer storms or spring melt. High-clearance 4WD/OHV is recommended, though portions of FR 117 are typically maintained cinder when dry."
@@ -36,6 +36,6 @@
   },
   "seo": {
     "title": "Little Colorado River — Arizona Alpine Trail Segment 11",
-    "description": "17.2 miles through high meadows and conifer forest near Greer and the Big Lake-Greer plateau. More Difficult/Blue rated, high-clearance 4WD/OHV recommended."
+    "description": "16.7 miles through high meadows and conifer forest near Greer and the Big Lake-Greer plateau. Easier/Green rated."
   }
 }

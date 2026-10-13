@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { createSupabaseAdminClient } from "@/supabase/admin";
 import { createSupabaseServerClient } from "@/supabase/server";
+import { getTrailSegmentDisplayNumber, trailSegmentIndex } from "@/lib/trail-segment-index";
 
 export const DOWNLOAD_TERMS_VERSION = "azat-download-terms-2026-07-06";
 export const PROTECTED_DOWNLOADS_BUCKET = "protected-downloads";
@@ -151,4 +152,12 @@ export async function getDownloadForStreaming(slug: string) {
 
 export function gatedDownloadHref(slug: string) {
   return `/downloads/${slug}`;
+}
+
+export function canonicalDownloadFilename(download: Pick<DownloadFile, "slug" | "filename">) {
+  const segment = trailSegmentIndex.find((entry) => `${entry.slug}-gpx` === download.slug);
+  if (!segment) return download.filename;
+
+  const displayNumber = getTrailSegmentDisplayNumber(segment.number).replace("/", "-");
+  return `${displayNumber}-${segment.slug}.gpx`;
 }

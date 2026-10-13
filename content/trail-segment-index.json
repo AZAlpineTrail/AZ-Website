@@ -1,30 +1,424 @@
 [
-  { "number": 1, "name": "Rye Creek", "gpxId": "azat01-rye-creek", "slug": "rye-creek" },
-  { "number": 2, "name": "Tonto Basin", "gpxId": "azat02-tonto-basin", "slug": "tonto-basin" },
-  { "number": 3, "name": "Juniper Canyon", "gpxId": "azat03-juniper-canyon", "slug": "juniper-canyon" },
-  { "number": 4, "name": "Cherry Creek", "gpxId": "azat04-cherry-creek", "slug": "cherry-creek" },
-  { "number": 5, "name": "Canyon Point", "gpxId": "azat05-canyon-point", "slug": "canyon-point" },
-  { "number": 6, "name": "Legacy Ranch", "gpxId": "azat06-legacy-ranch", "slug": "legacy-ranch" },
-  { "number": 7, "name": "Deer Springs Lookout", "gpxId": "azat07-deer-springs-lookout", "slug": "deer-springs-lookout" },
-  { "number": 8, "name": "Border Line", "gpxId": "azat08-border-line", "slug": "border-line" },
-  { "number": 9, "name": "Porter Mountain", "gpxId": "azat09-porter-mountain", "slug": "porter-mountain" },
-  { "number": 10, "name": "Greens Peak", "gpxId": "azat10-greens-peak", "slug": "greens-peak" },
-  { "number": 11, "name": "Little Colorado River", "gpxId": "azat11-little-colorado-river", "slug": "little-colorado-river" },
-  { "number": 12, "name": "Black River", "gpxId": "azat12-black-river", "slug": "black-river" },
-  { "number": 13, "name": "Hannagan", "gpxId": "azat13-hannagan", "slug": "hannagan" },
-  { "number": 14, "name": "Balke Cabin", "gpxId": "azat14-balke-cabin", "slug": "balke-cabin" },
-  { "number": 15, "name": "Johns Canyon", "gpxId": "azat15-johns-canyon", "slug": "johns-canyon" },
-  { "number": 16, "name": "Mamie Creek", "gpxId": "azat16-mamie-creek", "slug": "mamie-creek" },
-  { "number": 17, "name": "Milligan Valley", "gpxId": "azat17-milligan-valley", "slug": "milligan-valley" },
-  { "number": 18, "name": "South Fork", "gpxId": "azat18-south-fork", "slug": "south-fork" },
-  { "number": 20, "name": "Carnero Lake", "gpxId": "azat20-canero-lake", "slug": "carnero-lake" },
-  { "number": 21, "name": "Land of the Pioneers", "gpxId": "azat21-land-of-the-pioneers", "slug": "land-of-the-pioneers" },
-  { "number": 23, "name": "Lone Pine Dam", "gpxId": "azat23-lone-pine-dam", "slug": "lone-pine-dam" },
-  { "number": 24, "name": "Maverick West", "gpxId": "azat24-maverick-west", "slug": "maverick-west" },
-  { "number": 25, "name": "Many Draws", "gpxId": "azat25-many-draws", "slug": "many-draws" },
-  { "number": 26, "name": "Chevelon Crossing", "gpxId": "azat26-chevelon-crossing", "slug": "chevelon-crossing" },
-  { "number": 27, "name": "Canyon Lands", "gpxId": "azat27-canyon-lands", "slug": "canyon-lands" },
-  { "number": 28, "name": "View After View", "gpxId": "azat28-view-after-view", "slug": "view-after-view" },
-  { "number": 29, "name": "The Rim", "gpxId": "azat29-the-rim", "slug": "the-rim" },
-  { "number": 30, "name": "Doll Baby", "gpxId": "azat30-doll-baby", "slug": "doll-baby" }
+  {
+    "number": 1,
+    "name": "Rye Creek",
+    "gpxId": "azat01-rye-creek",
+    "slug": "rye-creek",
+    "loopNumbers": [
+      1
+    ],
+    "lengthMiles": 25.4,
+    "minElevationFeet": 2761,
+    "maxElevationFeet": 5007,
+    "elevationGainFeet": 3357,
+    "elevationLossFeet": 5239,
+    "trailRating": "more-difficult-blue"
+  },
+  {
+    "number": 2,
+    "name": "Tonto Basin",
+    "gpxId": "azat02-tonto-basin",
+    "slug": "tonto-basin",
+    "loopNumbers": [
+      2
+    ],
+    "lengthMiles": 10.7,
+    "minElevationFeet": 2351,
+    "maxElevationFeet": 2868,
+    "elevationGainFeet": 1201,
+    "elevationLossFeet": 1658,
+    "trailRating": "easier-green"
+  },
+  {
+    "number": 3,
+    "name": "Juniper Canyon",
+    "gpxId": "azat03-juniper-canyon",
+    "slug": "juniper-canyon",
+    "loopNumbers": [
+      3
+    ],
+    "lengthMiles": 30.5,
+    "minElevationFeet": 2303,
+    "maxElevationFeet": 6418,
+    "elevationGainFeet": 7223,
+    "elevationLossFeet": 3243,
+    "trailRating": "more-difficult-blue"
+  },
+  {
+    "number": 4,
+    "name": "Cherry Creek",
+    "gpxId": "azat04-cherry-creek",
+    "slug": "cherry-creek",
+    "loopNumbers": [
+      4
+    ],
+    "lengthMiles": 38.5,
+    "minElevationFeet": 4547,
+    "maxElevationFeet": 6442,
+    "elevationGainFeet": 4717,
+    "elevationLossFeet": 5721,
+    "trailRating": "more-difficult-blue"
+  },
+  {
+    "number": 5,
+    "name": "Canyon Point",
+    "gpxId": "azat05-canyon-point",
+    "slug": "canyon-point",
+    "loopNumbers": [
+      5
+    ],
+    "lengthMiles": 44.1,
+    "minElevationFeet": 5253,
+    "maxElevationFeet": 7701,
+    "elevationGainFeet": 6019,
+    "elevationLossFeet": 3802,
+    "trailRating": "easier-green"
+  },
+  {
+    "number": 6,
+    "name": "Legacy Ranch",
+    "gpxId": "azat06-legacy-ranch",
+    "slug": "legacy-ranch",
+    "loopNumbers": [
+      6
+    ],
+    "lengthMiles": 24.5,
+    "minElevationFeet": 6796,
+    "maxElevationFeet": 7667,
+    "elevationGainFeet": 1769,
+    "elevationLossFeet": 2525,
+    "trailRating": "more-difficult-blue"
+  },
+  {
+    "number": 7,
+    "name": "Deer Springs Lookout",
+    "gpxId": "azat07-deer-springs-lookout",
+    "slug": "deer-springs-lookout",
+    "loopNumbers": [
+      7
+    ],
+    "lengthMiles": 21.7,
+    "minElevationFeet": 6474,
+    "maxElevationFeet": 7218,
+    "elevationGainFeet": 1956,
+    "elevationLossFeet": 1800,
+    "trailRating": "more-difficult-blue"
+  },
+  {
+    "number": 8,
+    "name": "Border Line",
+    "gpxId": "azat08-border-line",
+    "slug": "border-line",
+    "loopNumbers": [
+      8
+    ],
+    "lengthMiles": 26,
+    "minElevationFeet": 6267,
+    "maxElevationFeet": 7027,
+    "elevationGainFeet": 1600,
+    "elevationLossFeet": 2056,
+    "trailRating": "easier-green"
+  },
+  {
+    "number": 9,
+    "name": "Porter Mountain",
+    "gpxId": "azat09-porter-mountain",
+    "slug": "porter-mountain",
+    "loopNumbers": [
+      9,
+      22
+    ],
+    "lengthMiles": 8.9,
+    "minElevationFeet": 6526,
+    "maxElevationFeet": 7002,
+    "elevationGainFeet": 1012,
+    "elevationLossFeet": 644,
+    "trailRating": "more-difficult-blue"
+  },
+  {
+    "number": 10,
+    "name": "Greens Peak",
+    "gpxId": "azat10-greens-peak",
+    "slug": "greens-peak",
+    "loopNumbers": [
+      10
+    ],
+    "lengthMiles": 36.1,
+    "minElevationFeet": 6864,
+    "maxElevationFeet": 9566,
+    "elevationGainFeet": 4173,
+    "elevationLossFeet": 1654,
+    "trailRating": "more-difficult-blue"
+  },
+  {
+    "number": 11,
+    "name": "Little Colorado River",
+    "gpxId": "azat11-little-colorado-river",
+    "slug": "little-colorado-river",
+    "loopNumbers": [
+      11,
+      19
+    ],
+    "lengthMiles": 16.7,
+    "minElevationFeet": 9016,
+    "maxElevationFeet": 9410,
+    "elevationGainFeet": 1805,
+    "elevationLossFeet": 1776,
+    "trailRating": "easier-green"
+  },
+  {
+    "number": 12,
+    "name": "Black River",
+    "gpxId": "azat12-black-river",
+    "slug": "black-river",
+    "loopNumbers": [
+      12
+    ],
+    "lengthMiles": 25.5,
+    "minElevationFeet": 6828,
+    "maxElevationFeet": 9775,
+    "elevationGainFeet": 1424,
+    "elevationLossFeet": 3986,
+    "trailRating": "more-difficult-blue"
+  },
+  {
+    "number": 13,
+    "name": "Hannagan",
+    "gpxId": "azat13-hannagan",
+    "slug": "hannagan",
+    "loopNumbers": [
+      13
+    ],
+    "lengthMiles": 20.8,
+    "minElevationFeet": 6818,
+    "maxElevationFeet": 9206,
+    "elevationGainFeet": 3347,
+    "elevationLossFeet": 1232,
+    "trailRating": "more-difficult-blue"
+  },
+  {
+    "number": 14,
+    "name": "Balke Cabin",
+    "gpxId": "azat14-balke-cabin",
+    "slug": "balke-cabin",
+    "loopNumbers": [
+      14
+    ],
+    "lengthMiles": 15.5,
+    "minElevationFeet": 7422,
+    "maxElevationFeet": 8962,
+    "elevationGainFeet": 3527,
+    "elevationLossFeet": 4571,
+    "trailRating": "easier-green"
+  },
+  {
+    "number": 15,
+    "name": "Johns Canyon",
+    "gpxId": "azat15-johns-canyon",
+    "slug": "johns-canyon",
+    "loopNumbers": [
+      15
+    ],
+    "lengthMiles": 22.5,
+    "minElevationFeet": 7912,
+    "maxElevationFeet": 9463,
+    "elevationGainFeet": 2873,
+    "elevationLossFeet": 2789,
+    "trailRating": "more-difficult-blue"
+  },
+  {
+    "number": 16,
+    "name": "Mamie Creek",
+    "gpxId": "azat16-mamie-creek",
+    "slug": "mamie-creek",
+    "loopNumbers": [
+      16
+    ],
+    "lengthMiles": 14.9,
+    "minElevationFeet": 7759,
+    "maxElevationFeet": 8913,
+    "elevationGainFeet": 2113,
+    "elevationLossFeet": 1375,
+    "trailRating": "easier-green"
+  },
+  {
+    "number": 17,
+    "name": "Milligan Valley",
+    "gpxId": "azat17-milligan-valley",
+    "slug": "milligan-valley",
+    "loopNumbers": [
+      17
+    ],
+    "lengthMiles": 20.9,
+    "minElevationFeet": 7439,
+    "maxElevationFeet": 8895,
+    "elevationGainFeet": 2173,
+    "elevationLossFeet": 2454,
+    "trailRating": "more-difficult-blue"
+  },
+  {
+    "number": 18,
+    "name": "South Fork",
+    "gpxId": "azat18-south-fork",
+    "slug": "south-fork",
+    "loopNumbers": [
+      18
+    ],
+    "lengthMiles": 22,
+    "minElevationFeet": 8461,
+    "maxElevationFeet": 9516,
+    "elevationGainFeet": 2827,
+    "elevationLossFeet": 1865,
+    "trailRating": "more-difficult-blue"
+  },
+  {
+    "number": 20,
+    "name": "Carnero Lake",
+    "gpxId": "azat20-canero-lake",
+    "slug": "carnero-lake",
+    "loopNumbers": [
+      20
+    ],
+    "lengthMiles": 18.5,
+    "minElevationFeet": 7775,
+    "maxElevationFeet": 9371,
+    "elevationGainFeet": 1131,
+    "elevationLossFeet": 2728,
+    "trailRating": "more-difficult-blue"
+  },
+  {
+    "number": 21,
+    "name": "Land of the Pioneers",
+    "gpxId": "azat21-land-of-the-pioneers",
+    "slug": "land-of-the-pioneers",
+    "loopNumbers": [
+      21
+    ],
+    "lengthMiles": 24,
+    "minElevationFeet": 6880,
+    "maxElevationFeet": 7777,
+    "elevationGainFeet": 1476,
+    "elevationLossFeet": 2371,
+    "trailRating": "more-difficult-blue"
+  },
+  {
+    "number": 23,
+    "name": "Lone Pine Dam",
+    "gpxId": "azat23-lone-pine-dam",
+    "slug": "lone-pine-dam",
+    "loopNumbers": [
+      23
+    ],
+    "lengthMiles": 35.5,
+    "minElevationFeet": 5914,
+    "maxElevationFeet": 6547,
+    "elevationGainFeet": 2759,
+    "elevationLossFeet": 2941,
+    "trailRating": "more-difficult-blue"
+  },
+  {
+    "number": 24,
+    "name": "Maverick West",
+    "gpxId": "azat24-maverick-west",
+    "slug": "maverick-west",
+    "loopNumbers": [
+      24
+    ],
+    "lengthMiles": 20.6,
+    "minElevationFeet": 5973,
+    "maxElevationFeet": 6422,
+    "elevationGainFeet": 1236,
+    "elevationLossFeet": 1358,
+    "trailRating": "more-difficult-blue"
+  },
+  {
+    "number": 25,
+    "name": "Many Draws",
+    "gpxId": "azat25-many-draws",
+    "slug": "many-draws",
+    "loopNumbers": [
+      25
+    ],
+    "lengthMiles": 22.4,
+    "minElevationFeet": 6194,
+    "maxElevationFeet": 6604,
+    "elevationGainFeet": 2071,
+    "elevationLossFeet": 1825,
+    "trailRating": "more-difficult-blue"
+  },
+  {
+    "number": 26,
+    "name": "Chevelon Crossing",
+    "gpxId": "azat26-chevelon-crossing",
+    "slug": "chevelon-crossing",
+    "loopNumbers": [
+      26
+    ],
+    "lengthMiles": 22.1,
+    "minElevationFeet": 6142,
+    "maxElevationFeet": 6749,
+    "elevationGainFeet": 1654,
+    "elevationLossFeet": 1735,
+    "trailRating": "more-difficult-blue"
+  },
+  {
+    "number": 27,
+    "name": "Canyon Lands",
+    "gpxId": "azat27-canyon-lands",
+    "slug": "canyon-lands",
+    "loopNumbers": [
+      27
+    ],
+    "lengthMiles": 46,
+    "minElevationFeet": 6132,
+    "maxElevationFeet": 7868,
+    "elevationGainFeet": 3999,
+    "elevationLossFeet": 2580,
+    "trailRating": "more-difficult-blue"
+  },
+  {
+    "number": 28,
+    "name": "View After View",
+    "gpxId": "azat28-view-after-view",
+    "slug": "view-after-view",
+    "loopNumbers": [
+      28
+    ],
+    "lengthMiles": 27,
+    "minElevationFeet": 7258,
+    "maxElevationFeet": 7920,
+    "elevationGainFeet": 3327,
+    "elevationLossFeet": 3662,
+    "trailRating": "easier-green"
+  },
+  {
+    "number": 29,
+    "name": "The Rim",
+    "gpxId": "azat29-the-rim",
+    "slug": "the-rim",
+    "loopNumbers": [
+      29
+    ],
+    "lengthMiles": 14.7,
+    "minElevationFeet": 5333,
+    "maxElevationFeet": 7442,
+    "elevationGainFeet": 543,
+    "elevationLossFeet": 2542,
+    "trailRating": "easier-green"
+  },
+  {
+    "number": 30,
+    "name": "Doll Baby",
+    "gpxId": "azat30-doll-baby",
+    "slug": "doll-baby",
+    "loopNumbers": [
+      30
+    ],
+    "lengthMiles": 22.9,
+    "minElevationFeet": 3376,
+    "maxElevationFeet": 5680,
+    "elevationGainFeet": 2804,
+    "elevationLossFeet": 3587,
+    "trailRating": "more-difficult-blue"
+  }
 ]

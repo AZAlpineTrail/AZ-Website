@@ -91,8 +91,11 @@ export function TrailHubExperience({ segments }: { segments: TrailHubSegment[] }
         >
           <p className="az-kicker text-[#f1b65a]">The full trail</p>
           <h1 className="mt-3 max-w-3xl font-serif text-[clamp(2.6rem,5.6vw,5.4rem)] font-semibold leading-[0.94] text-white">
-            28 segments. One 674-mile loop.
+            28 unique segments. One 704.5-mile loop.
           </h1>
+          <p className="mt-5 max-w-2xl text-sm leading-6 text-white/70 sm:text-base">
+            The numbered loop has 30 legs: Porter Mountain is used as segments 09 and 22, and Little Colorado River as 11 and 19.
+          </p>
         </motion.div>
       </section>
 
@@ -203,7 +206,7 @@ export function TrailHubExperience({ segments }: { segments: TrailHubSegment[] }
                           isActive ? "bg-[#f0ede0]" : "hover:bg-[#f5f2e6]"
                         }`}
                       >
-                        <span className="w-6 shrink-0 font-mono text-xs font-black text-[#b74f32]">
+                        <span className="w-12 shrink-0 font-mono text-xs font-black text-[#b74f32]">
                           {getTrailSegmentDisplayNumber(item.number).toString().padStart(2, "0")}
                         </span>
                         <span className="min-w-0 flex-1 truncate text-base font-semibold text-[#13221a]">{item.name}</span>
@@ -218,7 +221,7 @@ export function TrailHubExperience({ segments }: { segments: TrailHubSegment[] }
                         <div className={`px-3 pb-3 ${isActive ? "bg-[#f0ede0]" : ""}`}>
                           <Link
                             href={`/trail/${item.slug}`}
-                            className="ml-9 inline-flex min-h-8 w-fit items-center gap-1.5 rounded-full bg-[#173d2b] px-3 text-xs font-black uppercase tracking-[0.1em] text-white transition hover:bg-[#b74f32] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b74f32]"
+                            className="ml-[3.75rem] inline-flex min-h-8 w-fit items-center gap-1.5 rounded-full bg-[#173d2b] px-3 text-xs font-black uppercase tracking-[0.1em] text-white transition hover:bg-[#b74f32] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b74f32]"
                           >
                             View segment
                             <ArrowUpRight size={13} aria-hidden="true" />

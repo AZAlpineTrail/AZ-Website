@@ -14,6 +14,16 @@ import { trailSegmentIndex } from "@/lib/trail-segment-index";
 
 const segmentByGpxId = new Map(trailSegmentIndex.map((entry) => [entry.gpxId, entry]));
 
+function withOfficialFacts(summary: (typeof routeSegmentSummaries)[number]) {
+  const official = segmentByGpxId.get(summary.id);
+  return {
+    ...summary,
+    distanceMiles: official?.lengthMiles ?? summary.distanceMiles,
+    minElevationFeet: official?.minElevationFeet ?? summary.minElevationFeet,
+    maxElevationFeet: official?.maxElevationFeet ?? summary.maxElevationFeet,
+  };
+}
+
 type MapStatus = "loading" | "ready" | "missing-token" | "error";
 
 const terrainSourceId = "mapbox-dem";
@@ -32,7 +42,7 @@ const routeGeoJson: GeoJSON.FeatureCollection<GeoJSON.LineString> = {
   features: routePreviewSegments.map((segment, index) => ({
     type: "Feature",
     properties: {
-      ...routeSegmentSummaries[index],
+      ...withOfficialFacts(routeSegmentSummaries[index]),
       segment: index + 1,
     },
     geometry: {
@@ -66,7 +76,7 @@ const fullBounds: mapboxgl.LngLatBoundsLike = [
 type ScreenPoint = { x: number; y: number };
 type NearestRouteSegment = {
   id: string;
-  properties: (typeof routeSegmentSummaries)[number];
+  properties: ReturnType<typeof withOfficialFacts>;
   distance: number;
 };
 
@@ -137,8 +147,9 @@ function findNearestRouteSegment(map: mapboxgl.Map, point: ScreenPoint) {
 
   for (let segmentIndex = 0; segmentIndex < routePreviewSegments.length; segmentIndex += 1) {
     const segment = routePreviewSegments[segmentIndex];
-    const properties = routeSegmentSummaries[segmentIndex];
-    if (!properties) continue;
+    const summary = routeSegmentSummaries[segmentIndex];
+    if (!summary) continue;
+    const properties = withOfficialFacts(summary);
 
     for (let index = 1; index < segment.length; index += 1) {
       const [startLat, startLng] = segment[index - 1];
@@ -236,7 +247,7 @@ export function TrailTerrainMap({ embedded = false, activeSegmentId, onSegmentSe
       new mapboxgl.NavigationControl({
         visualizePitch: true,
       }),
-      "bottom-right",
+      "right",
     );
 
     map.on("load", () => {

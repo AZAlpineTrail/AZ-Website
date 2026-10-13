@@ -22,6 +22,8 @@ SUPABASE_SERVICE_ROLE_KEY=
 4. Clicking "I Agree and Download" inserts a `download_acceptances` row with terms version `azat-download-terms-2026-07-06`.
 5. The confirmation page opens `/api/downloads/[slug]?token=...`, which validates the logged-in user, token, active download record, and token expiry before streaming the private Storage object.
 
+The downloads index also supports selecting up to 30 files. That path shows the same terms once, records an acceptance for every selected file, and streams one ZIP from `/api/downloads/bulk`. Segment filenames use the full loop-leg labels for shared files (`09-22-porter-mountain.gpx` and `11-19-little-colorado-river.gpx`).
+
 ## Supabase Dashboard Admin Workflow
 
 1. Open Supabase Dashboard for the AZ Website project.

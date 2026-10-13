@@ -5,8 +5,10 @@ export type FaqLink = {
 };
 
 export type FaqItem = {
+  id?: string;
   q: string;
   a: string;
+  sections?: { title: string; body: string }[];
   link?: FaqLink;
 };
 
@@ -33,12 +35,41 @@ export const faqCategories: FaqCategory[] = [
     title: "Vehicles, Licenses & Legal Access",
     items: [
       {
+        id: "ohv-decal",
+        q: "Do I need an Arizona OHV decal?",
+        a: "Yes, in most cases. An OHV designed by its manufacturer primarily for travel over unimproved terrain and weighing 2,500 pounds or less must display a valid Arizona OHV decal to operate on Arizona public and State Trust lands. The decal is valid for one year from its purchase date.",
+        sections: [
+          {
+            title: "Arizona residents",
+            body: "Purchase the decal through Arizona MVD or an authorized third-party MVD provider. At least one registered owner must first complete the free \"OHV Decal: Safe & Ethical Riding in Arizona\" course. Place the decal in the upper-left corner of the vehicle's Arizona license plate.",
+          },
+          {
+            title: "Non-Arizona residents",
+            body: "Purchase an Arizona nonresident OHV decal through an Arizona Game and Fish Department portal account. At least one registered owner must complete the same free course. Arizona does not accept OHV decals issued by another state. Place the decal on the left rear quarter panel of an OHV with three or more wheels, or on the left fork leg of a two-wheeled vehicle.",
+          },
+          {
+            title: "Road-use reminder",
+            body: "A nonresident decal permits operation on non-maintained roads and trails, including incidental crossings of maintained roads. It does not make the vehicle street legal. To operate on pavement or maintained dirt roads, the vehicle must meet Arizona's street-legal registration, insurance, licensing, and equipment requirements. Short-term visitors may not qualify for Arizona street-legal registration and should plan to trailer their OHV to an eligible trailhead.",
+          },
+        ],
+        link: {
+          label: "Check official decal requirements",
+          href: "https://www.azgfd.com/off-highway-vehicle/ohv-register-and-renew-your-license/ohv-decals/",
+          external: true,
+        },
+      },
+      {
         q: "What licenses and permits are required for Arizona residents?",
-        a: "Arizona vehicles must meet state and forest requirements, including an Arizona OHV license, liability insurance, and OHV offroad sticker. One registered owner must complete the free \"OHV Decal: Safe & Ethical Riding in Arizona\" course to purchase an OHV decal.",
+        a: "Arizona does not issue a separate \"OHV license.\" Operators must carry a valid driver's license wherever state motor-vehicle laws apply, including maintained roads. The vehicle must also have the registration, current OHV decal, liability insurance, and equipment required for where it will be operated. One registered owner must complete the free \"OHV Decal: Safe & Ethical Riding in Arizona\" course to purchase an OHV decal. Confirm current requirements with Arizona Game and Fish and MVD before riding.",
       },
       {
         q: "What licenses and permits are required for non-Arizona residents?",
-        a: "Out-of-state OHVs designed primarily for unimproved terrain and weighing 2,500 lbs or less must display a valid OHV decal to operate on public and state trust lands. Qualifying nonresident OHVs must obtain a nonresident decal and complete the required course. A nonresident decal is not the same as street-legal registration, and many short-term visitors won't qualify for one. Confirm requirements before bringing the vehicle to Arizona.",
+        a: "The older AZGFD bulletin said a nonresident owner could be exempt when the vehicle displayed a current home-state OHV decal or registration and remained in Arizona for no more than 30 consecutive days. That exemption is no longer current: Arizona Game and Fish says Arizona stopped accepting out-of-state OHV decals in 2019.\n\nVisitors whose OHV is designed primarily for unimproved terrain and weighs 2,500 pounds or less must purchase an Arizona nonresident OHV decal. As of January 1, 2025, at least one registered owner must create a free AZGFD portal account and complete the free \"OHV Decal: Safe & Ethical Riding in Arizona\" course. The nonresident decal permits operation on non-maintained roads and trails, with incidental crossings of maintained roads; it does not make the vehicle street legal. Short-term visitors generally cannot obtain Arizona street-legal registration unless they meet Arizona domicile, garaging, and insurance requirements. Confirm the current rules before bringing a vehicle to Arizona.",
+        link: {
+          label: "Check current nonresident requirements",
+          href: "https://www.azgfd.com/off-highway-vehicle/ohv-register-and-renew-your-license/ohv-decals/",
+          external: true,
+        },
       },
       {
         q: "What types of vehicles are appropriate?",
@@ -47,6 +78,10 @@ export const faqCategories: FaqCategory[] = [
       {
         q: "What about 50-inch gates, can my Jeep or full-size vehicle get through?",
         a: "Gate width and vehicle restrictions vary by location and can change. Follow posted restrictions and current land-manager maps rather than assuming any vehicle fits every gate.",
+      },
+      {
+        q: "What should I do when I encounter a gate?",
+        a: "Leave gates as you find them unless a posted sign instructs you to close the gate. If a sign says \"Close the Gate,\" close and secure it after passing through. Never force, damage, bypass, or alter a locked or closed gate; turn around if access is not clearly permitted.",
       },
       {
         q: "Are motorcycles okay?",
@@ -151,7 +186,7 @@ export const faqCategories: FaqCategory[] = [
       },
       {
         q: "How can I find a group to ride with?",
-        a: "Check the AZAT Facebook group/page for other riders planning trips, and local OHV clubs in gateway communities. AZAT doesn't currently match individual riders into groups directly.",
+        a: "Check the AZAT Facebook group/page for other riders planning trips, and local OHV clubs in towns along the route. AZAT doesn't currently match individual riders into groups directly.",
       },
       {
         q: "How difficult is the AZAT?",
@@ -209,11 +244,11 @@ export const faqCategories: FaqCategory[] = [
     items: [
       {
         q: "Where can I get gas, food, lodging, or repairs?",
-        a: "Use AZAT's gateway-community pages as a starting point, then verify services directly: hours, seasonal operations, and availability can change quickly.",
+        a: "Verify fuel, food, lodging, and repair services directly with providers before you ride. Hours, seasonal operations, and availability can change quickly.",
       },
       {
         q: "What's the distance between gas stations and hotels along the route?",
-        a: "Distances vary widely by segment and gateway community. Plan fuel range conservatively between towns rather than assuming a fixed interval, and reserve scarce lodging first.",
+        a: "Distances vary widely by segment and location. Plan fuel range conservatively between towns rather than assuming a fixed interval, and reserve scarce lodging first.",
       },
       {
         q: "Where can I park a truck and trailer?",
@@ -221,7 +256,7 @@ export const faqCategories: FaqCategory[] = [
       },
       {
         q: "Are guided rides available?",
-        a: "Check current AZAT resources, local businesses, clubs, and gateway communities.",
+        a: "Check current AZAT resources and verify details directly with local businesses, clubs, and public agencies along the route.",
       },
       {
         q: "Are business listings and discounts guaranteed to be current?",
@@ -245,7 +280,7 @@ export const faqCategories: FaqCategory[] = [
     items: [
       {
         q: "What is the Arizona Alpine Trail (AZAT)?",
-        a: "A developing network of more than 700 miles of connected routes across Arizona's Rim Country and White Mountains, running roughly from Payson to Hannagan Meadow. It is designed primarily for responsible OHV travel while connecting gateway communities and supporting rural tourism, using a mixture of forest roads, county roads, local streets, highways, and other existing routes. Important: the AZAT is a route network, not one continuously constructed trail. Individual roads and segments remain under the authority of their respective land managers and road agencies.",
+        a: "A 704.5-mile loop of connected routes across Arizona's Rim Country and White Mountains, running roughly from Payson to Hannagan Meadow. It is designed primarily for responsible OHV travel while connecting towns and supporting rural tourism, using a mixture of forest roads, county roads, local streets, highways, and other existing routes. Important: the AZAT is a route network, not one continuously constructed trail. Individual roads and segments remain under the authority of their respective land managers and road agencies.",
       },
       {
         q: "Is the AZAT complete and officially designated?",
@@ -253,14 +288,14 @@ export const faqCategories: FaqCategory[] = [
       },
       {
         q: "How long is the AZAT trail?",
-        a: "More than 700 miles, counting town-to-town trails; side trails add more. The exact total shifts with route version, connectors, and reroutes, so treat any published number as an estimate, not a fixed count.",
+        a: "The current official loop is 704.5 miles. It has 30 numbered trail legs but 28 unique segment files because Porter Mountain is used as segments 09 and 22, and Little Colorado River is used as segments 11 and 19. Future reroutes may change the total.",
       },
       {
         q: "What towns and communities are connected by the AZAT?",
         a: "Payson, Jake's Corner/Tonto Basin/Punkin Center, Young, Forest Lakes, Heber-Overgaard, Clay Springs, Linden, Snowflake, Taylor, Show Low, Pinetop-Lakeside, Greer, Springerville, Eagar, Nutrioso, Alpine, and Hannagan Meadow.",
       },
       {
-        q: "Why are gateway communities part of the project?",
+        q: "Why are towns and communities part of the project?",
         a: "They give riders access to fuel, meals, lodging, repairs, supplies, and local information, while responsible visitor spending creates economic value for the rural communities the route connects.",
       },
       {
@@ -316,7 +351,7 @@ export const faqCategories: FaqCategory[] = [
       },
       {
         q: "What does responsible travel mean on the AZAT?",
-        a: "Stay on routes open to your vehicle, travel at a safe and considerate speed, reduce dust and noise near homes and other users, leave gates as found, pack out waste, avoid wet or sensitive routes, respect wildlife and livestock, and support local communities without disrupting them.",
+        a: "Stay on routes open to your vehicle, travel at a safe and considerate speed, reduce dust and noise near homes and other users, and pack out waste. Leave gates as you find them unless a posted sign instructs you to close the gate; if it does, close and secure it after passing through. Avoid wet or sensitive routes, respect wildlife and livestock, and support local communities without disrupting them.",
       },
       {
         q: "Is TrailWatch an emergency service?",

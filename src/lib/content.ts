@@ -79,7 +79,7 @@ export const segments = [
     slug: "a-route",
     code: "A",
     status: "Preliminary",
-    mileage: "700+ mi",
+    mileage: "704.5 mi",
     description: "Primary loop planning route with town connectors and downloadable files.",
   },
   {
@@ -332,7 +332,7 @@ export const resourceCards = [
 ];
 
 export const stats = [
-  { label: "Planning loop", value: "700+ mi", icon: Route },
+  { label: "Planning loop", value: "704.5 mi", icon: Route },
   { label: "Route 1000 rhythm", value: "11 days", icon: CalendarDays },
   { label: "CMS content types", value: "14+", icon: Newspaper },
   { label: "Trail files", value: "GPX/KML", icon: Download },

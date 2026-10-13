@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { trackServerEvent } from "@/lib/server-analytics";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -50,6 +51,9 @@ export async function POST(request: Request) {
     console.error("Resend contact delivery failed:", error);
     return NextResponse.json({ error: "Message delivery failed." }, { status: 502 });
   }
+
+  const source = payload.source === "quick" ? "quick" : "contact_page";
+  await trackServerEvent("contact_submitted", { source });
 
   return NextResponse.json({
     ok: true,

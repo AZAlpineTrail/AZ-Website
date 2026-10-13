@@ -80,7 +80,17 @@ export function listSegmentContentSlugs(publicDir) {
 // there's no content.json yet — that's what marks a segment "not published" (a photo folder
 // alone doesn't publish a page; content.json is the switch).
 export function buildSegmentPageData(indexEntry, { publicDir }) {
-  const { slug, name, number } = indexEntry;
+  const {
+    slug,
+    name,
+    number,
+    lengthMiles,
+    minElevationFeet,
+    maxElevationFeet,
+    elevationGainFeet,
+    elevationLossFeet,
+    trailRating,
+  } = indexEntry;
   const json = readSegmentContentJson(slug, publicDir);
   if (!json) return null;
 
@@ -105,12 +115,12 @@ export function buildSegmentPageData(indexEntry, { publicDir }) {
     segmentCode: String(number).padStart(2, "0"),
     segmentNumber: number,
     status: json.status,
-    lengthMiles: json.lengthMiles,
-    minElevationFeet: json.minElevationFeet,
-    maxElevationFeet: json.maxElevationFeet,
-    elevationGainFeet: json.elevationGainFeet,
-    elevationLossFeet: json.elevationLossFeet,
-    trailRating: json.trailRating,
+    lengthMiles,
+    minElevationFeet,
+    maxElevationFeet,
+    elevationGainFeet,
+    elevationLossFeet,
+    trailRating,
     downloads,
     heroImage: images.heroImage,
     heroImageAlt: json.heroAlt ?? images.heroImageAlt,

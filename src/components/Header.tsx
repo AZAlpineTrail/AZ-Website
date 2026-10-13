@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useFocusTrap } from "@/lib/useFocusTrap";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Mail, Menu, Mountain, X } from "lucide-react";
+import { Mail, Map as MapIcon, Menu, Mountain, X } from "lucide-react";
 import { AuthHeaderControls } from "@/components/auth/AuthHeaderControls";
 import { openQuickContact } from "@/components/QuickContact";
 // Fire advisory disabled for now — see note near <FireAlertBanner> below.
@@ -32,6 +32,9 @@ export function Header() {
     setMenuOpen(false);
   }
   const on3DPage = pathname?.startsWith("/trail/3d");
+  const mapSwitch = on3DPage
+    ? { href: "/#trail-map", label: "2D Map", Icon: MapIcon }
+    : { href: "/trail/3d", label: "3D Map", Icon: Mountain };
   const navItems = [
     {
       label: "Trail",
@@ -159,16 +162,11 @@ export function Header() {
             </Link>
           ))}
           <Link
-            href="/trail/3d"
-            aria-current={on3DPage ? "page" : undefined}
-            className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2 font-mono text-[11px] font-black uppercase tracking-[0.12em] transition duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
-              on3DPage
-                ? "border-[#f1b65a] bg-[#13221a] text-[#f1b65a] shadow-[0_6px_18px_rgba(241,182,90,0.22)]"
-                : "border-[#f1b65a]/70 bg-gradient-to-b from-[#f6c877] to-[#e5a94f] text-[#13221a] shadow-[0_6px_18px_rgba(241,182,90,0.45)] hover:-translate-y-0.5 hover:from-[#f8d38c] hover:to-[#eab558] hover:shadow-[0_10px_26px_rgba(241,182,90,0.6)]"
-            }`}
+            href={mapSwitch.href}
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#f1b65a]/70 bg-gradient-to-b from-[#f6c877] to-[#e5a94f] px-4 py-2 font-mono text-[11px] font-black uppercase tracking-[0.12em] text-[#13221a] shadow-[0_6px_18px_rgba(241,182,90,0.45)] transition duration-200 hover:-translate-y-0.5 hover:from-[#f8d38c] hover:to-[#eab558] hover:shadow-[0_10px_26px_rgba(241,182,90,0.6)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
-            <Mountain size={14} aria-hidden="true" />
-            3D Map
+            <mapSwitch.Icon size={14} aria-hidden="true" />
+            {mapSwitch.label}
           </Link>
           <AuthHeaderControls />
         </div>
@@ -236,16 +234,11 @@ export function Header() {
                 </Link>
               ))}
               <Link
-                href="/trail/3d"
-                aria-current={on3DPage ? "page" : undefined}
-                className={`mt-2 flex min-h-14 items-center justify-center gap-2 rounded-full border px-4 font-mono text-xs font-black uppercase tracking-[0.12em] transition ${
-                  on3DPage
-                    ? "border-[#f1b65a] bg-[#13221a] text-[#f1b65a]"
-                    : "border-[#f1b65a]/70 bg-gradient-to-b from-[#f6c877] to-[#e5a94f] text-[#13221a]"
-                }`}
+                href={mapSwitch.href}
+                className="mt-2 flex min-h-14 items-center justify-center gap-2 rounded-full border border-[#f1b65a]/70 bg-gradient-to-b from-[#f6c877] to-[#e5a94f] px-4 font-mono text-xs font-black uppercase tracking-[0.12em] text-[#13221a] transition"
               >
-                <Mountain size={14} aria-hidden="true" />
-                3D Map
+                <mapSwitch.Icon size={14} aria-hidden="true" />
+                {mapSwitch.label}
               </Link>
               <button
                 type="button"

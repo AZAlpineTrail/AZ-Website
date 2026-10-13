@@ -30,8 +30,15 @@ export function SegmentRouteMap({ segmentId, label }: SegmentRouteMapProps) {
       const map = leaflet.map(container, {
         attributionControl: true,
         scrollWheelZoom: false,
-        zoomControl: true,
+        zoomControl: false,
       });
+
+      leaflet.control.zoom({ position: "topright" }).addTo(map);
+      const controlCorner = container.querySelector<HTMLElement>(".leaflet-top.leaflet-right");
+      if (controlCorner) {
+        controlCorner.style.top = "50%";
+        controlCorner.style.transform = "translateY(-50%)";
+      }
 
       leaflet
         .tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -95,5 +102,5 @@ export function SegmentRouteMap({ segmentId, label }: SegmentRouteMapProps) {
     };
   }, [ready]);
 
-  return <div ref={containerRef} className="absolute inset-0 z-0 h-full min-h-[320px] w-full" />;
+  return <div ref={containerRef} className="az-map-experience absolute inset-0 z-0 h-full min-h-[320px] w-full" />;
 }

@@ -19,7 +19,10 @@ export function ContactForm({ compact = false }: ContactFormProps) {
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
-        body: JSON.stringify(Object.fromEntries(formData)),
+        body: JSON.stringify({
+          ...Object.fromEntries(formData),
+          source: compact ? "quick" : "contact_page",
+        }),
         headers: { "Content-Type": "application/json" },
       });
 

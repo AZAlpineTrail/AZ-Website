@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { trackServerEvent } from "@/lib/server-analytics";
 import { createSupabaseServerClient } from "@/supabase/server";
 
 export type AuthFormState = {
@@ -89,7 +90,7 @@ export async function signUpAction(
   const callbackUrl = siteUrl
     ? `${siteUrl}/auth/callback?next=${encodeURIComponent(next)}`
     : undefined;
-  const { error: createUserError } = await supabase.auth.signUp({
+  const { data: signUpData, error: createUserError } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -107,6 +108,12 @@ export async function signUpAction(
     }
 
     return { status: "error", fields, message: createUserError.message };
+  }
+
+  // Supabase may intentionally return an obfuscated user for an existing
+  // address. A real new identity has at least one identity record.
+  if (signUpData.user?.identities?.length) {
+    await trackServerEvent("account_registered");
   }
 
   return {
@@ -146,6 +153,7 @@ export async function signInAction(
     return { status: "error", fields, message: error.message };
   }
 
+  await trackServerEvent("login_completed", { method: "password" });
   redirect(next);
 }
 
@@ -203,6 +211,7 @@ export async function verifyEmailCodeAction(
     return { status: "error", message: "That code is invalid or expired. Request a new one." };
   }
 
+  await trackServerEvent("login_completed", { method: "email_code" });
   redirect(next);
 }
 

@@ -78,6 +78,10 @@ function getFallbacksBySlug(): Record<string, TrailSegmentPageData> {
   }) as Record<string, TrailSegmentPageData>;
 }
 
+// These descriptions contain endpoint wording verified against the current master
+// spreadsheet. Keep the rest of each Sanity-authored page intact.
+const spreadsheetAlignedDescriptionSlugs = new Set(["hannagan", "johns-canyon", "south-fork"]);
+
 export function getPublishedSlugs(): string[] {
   return Object.keys(getFallbacksBySlug());
 }
@@ -115,15 +119,16 @@ export async function getTrailHubSegments(): Promise<TrailHubSegment[]> {
 
   return trailSegmentIndex.map((entry) => {
     const summary = routeSegmentSummaries.find((item) => item.id === entry.gpxId);
+    const official = fallbacksBySlug[entry.slug];
     return {
       number: entry.number,
       name: entry.name,
       gpxId: entry.gpxId,
       slug: entry.slug,
-      distanceMiles: summary?.distanceMiles ?? null,
-      minElevationFeet: summary?.minElevationFeet ?? null,
-      maxElevationFeet: summary?.maxElevationFeet ?? null,
-      trailRating: ratingsBySlug.get(entry.slug) ?? null,
+      distanceMiles: official?.lengthMiles ?? summary?.distanceMiles ?? null,
+      minElevationFeet: official?.minElevationFeet ?? summary?.minElevationFeet ?? null,
+      maxElevationFeet: official?.maxElevationFeet ?? summary?.maxElevationFeet ?? null,
+      trailRating: official?.trailRating ?? ratingsBySlug.get(entry.slug) ?? null,
       published: knownPublished.has(entry.slug),
     };
   });
@@ -143,6 +148,20 @@ function mergeTrailSegmentPage(data: TrailSegmentPageData | null, fallback: Trai
     amenities: data.amenities?.length ? data.amenities : fallback.amenities,
     pointsOfInterest: data.pointsOfInterest?.length ? data.pointsOfInterest : fallback.pointsOfInterest,
     gallery: data.gallery?.length ? data.gallery : fallback.gallery,
+    // Spreadsheet-backed route facts in the checked-in fallback remain authoritative even
+    // if an older Sanity document still contains stale mileage, elevation, or difficulty.
+    segmentCode: fallback.segmentCode,
+    segmentNumber: fallback.segmentNumber,
+    lengthMiles: fallback.lengthMiles,
+    minElevationFeet: fallback.minElevationFeet,
+    maxElevationFeet: fallback.maxElevationFeet,
+    elevationGainFeet: fallback.elevationGainFeet,
+    elevationLossFeet: fallback.elevationLossFeet,
+    trailRating: fallback.trailRating,
+    descriptionBody: spreadsheetAlignedDescriptionSlugs.has(fallback.slug?.current ?? "")
+      ? fallback.descriptionBody
+      : data.descriptionBody || fallback.descriptionBody,
+    seo: fallback.seo,
   };
 }
 

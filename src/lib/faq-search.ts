@@ -14,7 +14,8 @@ function buildIndex(): SearchRecord[] {
 
   faqCategories.forEach((category) => {
     category.items.forEach((item, index) => {
-      records.push({ type: "faq", id: `${category.id}-${index}`, category, item, title: item.q, body: item.a });
+      const sectionText = item.sections?.map((section) => `${section.title} ${section.body}`).join(" ") ?? "";
+      records.push({ type: "faq", id: `${category.id}-${index}`, category, item, title: item.q, body: `${item.a} ${sectionText}` });
     });
   });
 

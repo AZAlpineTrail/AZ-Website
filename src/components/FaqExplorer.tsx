@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, ChevronDown, PhoneCall, Search, X } from "lucide-react";
 import {
@@ -96,7 +97,7 @@ function QuestionRow({
   tokens?: string[];
 }) {
   return (
-    <details open={defaultOpen} className="group border-b border-[#d8ded4] last:border-b-0">
+    <details id={item.id} open={defaultOpen} className="group scroll-mt-28 border-b border-[#d8ded4] last:border-b-0">
       <summary
         className={`flex min-h-11 cursor-pointer list-none items-start justify-between gap-4 py-5 [&::-webkit-details-marker]:hidden ${
           isFirst ? "pt-0" : ""
@@ -111,6 +112,21 @@ function QuestionRow({
       </summary>
       <div className="max-w-[65ch] pb-5 text-[15px] leading-relaxed text-[#5f6c63]">
         {renderAnswerText(item.a, tokens)}
+        {item.sections ? (
+          <div className="mt-5 space-y-5">
+            {item.sections.map((section, index) => (
+              <section key={section.title} aria-labelledby={`${item.id ?? "faq"}-section-${index}`}>
+                <h4
+                  id={`${item.id ?? "faq"}-section-${index}`}
+                  className="font-semibold text-[#13221a]"
+                >
+                  {highlightText(section.title, tokens)}
+                </h4>
+                <div className="mt-1.5">{renderAnswerText(section.body, tokens)}</div>
+              </section>
+            ))}
+          </div>
+        ) : null}
         {item.link ? <FaqLink link={item.link} /> : null}
       </div>
     </details>
@@ -144,6 +160,33 @@ function CategoryBlock({
 export function FaqExplorer() {
   const [activeCategoryId, setActiveCategoryId] = useState(faqCategories[0].id);
   const [query, setQuery] = useState("");
+  const [decalRevealRequest, setDecalRevealRequest] = useState(0);
+  const answerPanelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (decalRevealRequest === 0) return;
+
+    const decalAnswer = document.getElementById("ohv-decal") as HTMLDetailsElement | null;
+    if (!decalAnswer) return;
+
+    decalAnswer.open = true;
+    window.history.replaceState(null, "", "#ohv-decal");
+    decalAnswer.scrollIntoView({ behavior: "smooth", block: "center" });
+    decalAnswer.querySelector("summary")?.focus({ preventScroll: true });
+  }, [activeCategoryId, decalRevealRequest, query]);
+
+  const revealDecalAnswer = () => {
+    setQuery("");
+    setActiveCategoryId("vehicles");
+    setDecalRevealRequest((request) => request + 1);
+  };
+
+  const selectCategory = (categoryId: string) => {
+    setActiveCategoryId(categoryId);
+    window.requestAnimationFrame(() => {
+      answerPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  };
 
   const trimmedQuery = query.trim();
   const isSearching = trimmedQuery.length > 0;
@@ -177,7 +220,7 @@ export function FaqExplorer() {
             type="button"
             role="tab"
             aria-selected={active}
-            onClick={() => setActiveCategoryId(category.id)}
+            onClick={() => selectCategory(category.id)}
             className={
               variant === "rail"
                 ? `min-h-10 rounded-sm px-3 py-2 text-left text-sm transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b74f32] ${
@@ -214,19 +257,41 @@ export function FaqExplorer() {
       </section>
 
       <section aria-labelledby="before-every-ride" className="mt-16 border-t border-[#d8ded4] pt-10">
-        <h2 id="before-every-ride" className="text-2xl font-semibold text-[#13221a] sm:text-3xl">
-          Before every ride
-        </h2>
-        <ul className="mt-5 grid gap-x-8 gap-y-3 sm:grid-cols-2">
-          {beforeEveryRide.map((line) => (
-            <li key={line} className="text-[15px] leading-relaxed text-[#5f6c63]">
-              {isSearching ? highlightText(line, tokens) : line}
-            </li>
-          ))}
-        </ul>
-        <p className="mt-6 max-w-[65ch] text-xs leading-relaxed text-[#5f6c63]">
-          {isSearching ? highlightText(legalDisclaimer, tokens) : legalDisclaimer}
-        </p>
+        <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_260px] md:items-center">
+          <div>
+            <h2 id="before-every-ride" className="text-2xl font-semibold text-[#13221a] sm:text-3xl">
+              Before every ride
+            </h2>
+            <ul className="mt-5 grid gap-x-8 gap-y-3 sm:grid-cols-2">
+              {beforeEveryRide.map((line) => (
+                <li key={line} className="text-[15px] leading-relaxed text-[#5f6c63]">
+                  {isSearching ? highlightText(line, tokens) : line}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-6 max-w-[65ch] text-xs leading-relaxed text-[#5f6c63]">
+              {isSearching ? highlightText(legalDisclaimer, tokens) : legalDisclaimer}
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={revealDecalAnswer}
+            className="group mx-auto block w-full max-w-[280px] cursor-pointer rounded-sm p-2 text-center transition-transform duration-200 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#b74f32] motion-reduce:transition-none"
+            aria-label="Check whether you need an Arizona OHV decal"
+          >
+            <Image
+              src="/images/ohv-decal-cropped.png"
+              alt="Arizona OHV decal"
+              width={620}
+              height={504}
+              className="h-auto w-full"
+            />
+            <span className="mt-3 block text-lg font-semibold leading-tight text-[#13221a]">
+              Do you have your OHV decal?
+            </span>
+          </button>
+        </div>
       </section>
 
       <div className="mt-14 lg:grid lg:grid-cols-[300px_1fr] lg:gap-16">
@@ -268,7 +333,7 @@ export function FaqExplorer() {
           </div>
         </aside>
 
-        <div className="mt-10 lg:mt-0" aria-live="polite">
+        <div ref={answerPanelRef} className="mt-10 scroll-mt-28 lg:mt-0" aria-live="polite">
           {isSearching ? (
             totalMatches > 0 ? (
               <div className="flex flex-col gap-10">

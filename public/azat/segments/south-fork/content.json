@@ -1,13 +1,13 @@
 {
   "status": "Open",
-  "lengthMiles": 21.3,
-  "minElevationFeet": 8437,
-  "maxElevationFeet": 9485,
+  "lengthMiles": 22.0,
+  "minElevationFeet": 8461,
+  "maxElevationFeet": 9516,
   "elevationGainFeet": 2827,
   "elevationLossFeet": 1865,
   "trailRating": "more-difficult-blue",
   "descriptionBody": [
-    "The South Fork segment extends between the junction of FR 58 (Milligan Valley Road) and FR 285 (Water Canyon Road) near Eagar and the junction of FR 273, FR 409, and FR 8037 on the Big Lake–Greer plateau in the Apache-Sitgreaves National Forests. The alignment crosses high meadows and mixed conifer forest of the Springerville Volcanic Field, skirting the South Fork Little Colorado River country and trending toward the Big Lake/Greer lakes region. Notable points of interest along or near the corridor include Saffel Canyon OHV Trailhead, a 50\" only trail just off Water Canyon Road, scenic meadow overlooks along FR 409, and easy access to the Big Lake recreation complex via the 273 corridor.",
+    "The South Fork segment extends between the junction of FR 85 and FR 285 (Water Canyon Road) near Eagar and the junction of FR 409 and SR 273 on the Big Lake–Greer plateau in the Apache-Sitgreaves National Forests. The alignment crosses high meadows and mixed conifer forest of the Springerville Volcanic Field, skirting the South Fork Little Colorado River country and trending toward the Big Lake/Greer lakes region. Notable points of interest along or near the corridor include Saffel Canyon OHV Trailhead, a 50\" only trail just off Water Canyon Road, scenic meadow overlooks along FR 409, and easy access to the Big Lake recreation complex via the 273 corridor.",
     "This segment consists primarily of unpaved forest roads and OHV connectors with surfaces ranging from graded dirt to rocky two-track, with seasonal ruts and washboards, especially after monsoon storms or spring melt. High-clearance 4WD/OHV is recommended."
   ],
   "amenities": ["Food", "Fuel", "Lodging", "Medical", "Repair"],
@@ -36,6 +36,6 @@
   },
   "seo": {
     "title": "South Fork — Arizona Alpine Trail Segment 18",
-    "description": "21.3 miles across the Big Lake–Greer plateau near Springerville. More Difficult/Blue rated, high-clearance 4WD/OHV recommended."
+    "description": "22.0 miles across the Big Lake–Greer plateau near Springerville. More Difficult/Blue rated, high-clearance 4WD/OHV recommended."
   }
 }

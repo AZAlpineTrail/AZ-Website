@@ -1,11 +1,5 @@
 {
   "status": "Open",
-  "lengthMiles": 0,
-  "minElevationFeet": 0,
-  "maxElevationFeet": 0,
-  "elevationGainFeet": 0,
-  "elevationLossFeet": 0,
-  "trailRating": "more-difficult-blue",
   "descriptionBody": [
     "First paragraph: the route in plain terms — where it starts/ends, what forest/land it crosses, notable landmarks.",
     "Second paragraph: surface and vehicle guidance — road type, hazards, what clearance/vehicle is recommended."
