@@ -236,7 +236,7 @@ export function RustysRouteExperience({ data = fallbackRustysRoutePage }: { data
             initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.28, ease: "easeOut" }}
-            className="text-center"
+            className="h-[5.75rem] text-center sm:h-auto"
           >
             <p className="font-mono text-xs font-black uppercase tracking-[0.14em] text-[#f0c477]">Day {activeVideo.day}</p>
             <h2 className="mt-2 font-serif text-3xl font-semibold leading-none text-white sm:text-5xl">{activeVideo.route}</h2>
