@@ -1,64 +1,61 @@
 "use client";
 
+import { useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
-import { Download, Fuel, Hotel, Route } from "lucide-react";
+import { ChevronLeft, ChevronRight, Download, Fuel, Hotel, Play, Route } from "lucide-react";
 
 import { ProtectedDownloadLink } from "@/components/auth/ProtectedDownloadLink";
-import type { LeafletRouteMapProps } from "@/components/LeafletRouteMap";
+import type { LeafletRouteMapProps, RouteDayStop } from "@/components/LeafletRouteMap";
 import { fallbackRustysRoutePage, type RustysRouteDay, type RustysRoutePageData } from "@/lib/rustys-route";
 
 const LeafletRouteMap = dynamic<LeafletRouteMapProps>(
   () => import("@/components/LeafletRouteMap").then((module) => module.LeafletRouteMap),
   {
     ssr: false,
-    loading: () => (
-      <div className="absolute inset-0 grid place-items-center bg-[#cad4c2] text-[#173d2b]">
-        <div className="rounded-full bg-[#fffdf7]/92 px-5 py-3 text-xs font-black uppercase tracking-[0.14em] shadow-xl">
-          Loading route map
-        </div>
-      </div>
-    ),
+    loading: () => <div className="absolute inset-0 bg-[#d7ddcf]" aria-label="Loading route map" />,
   },
 );
 
-const imageReveal = {
+const routeVideos = [
+  { day: "01", route: "Alpine to Greer", youtubeId: "rHT5JGnx5Ps" },
+  { day: "02", route: "Greer to Show Low", youtubeId: "xwVxz4e7kAU" },
+  { day: "03", route: "Show Low to Heber-Overgaard", youtubeId: "iu5ycbuwiI8" },
+  { day: "04", route: "Heber-Overgaard to Pine", youtubeId: "qF5sHvpWdjA" },
+  { day: "05", route: "Pine to Punkin Center", youtubeId: "egtjfV-EI-Y" },
+  { day: "06", route: "Punkin Center to Young", youtubeId: "ZwjQocZXyWA" },
+  { day: "07", route: "Young to Heber-Overgaard", youtubeId: "SzEknvyY2r4" },
+  { day: "08", route: "Heber-Overgaard to Show Low", youtubeId: "7TN7ccykx88" },
+  { day: "09", route: "Show Low to Greer", youtubeId: "jZsEbUxlnOs" },
+  { day: "10", route: "Greer to Hannagan Meadow", youtubeId: "Rl_neE4gKiY" },
+  { day: "11", route: "Hannagan Meadow to Alpine", youtubeId: "YLZ1xGGkvxM" },
+] as const;
+
+const routeDayStops: RouteDayStop[] = [
+  { day: "01", route: "Alpine to Greer", coordinates: { lat: 33.93, lng: -109.3 } },
+  { day: "02", route: "Greer to Show Low", coordinates: { lat: 34.18, lng: -109.75 } },
+  { day: "03", route: "Show Low to Heber-Overgaard", coordinates: { lat: 34.37, lng: -110.31 } },
+  { day: "04", route: "Heber-Overgaard to Pine", coordinates: { lat: 34.41, lng: -111.03 } },
+  { day: "05", route: "Pine to Punkin Center", coordinates: { lat: 34.14, lng: -111.4 } },
+  { day: "06", route: "Punkin Center to Young", coordinates: { lat: 33.99, lng: -111.13 } },
+  { day: "07", route: "Young to Heber-Overgaard", coordinates: { lat: 34.26, lng: -110.77 } },
+  { day: "08", route: "Heber-Overgaard to Show Low", coordinates: { lat: 34.28, lng: -110.31 } },
+  { day: "09", route: "Show Low to Greer", coordinates: { lat: 34.08, lng: -109.75 } },
+  { day: "10", route: "Greer to Hannagan Meadow", coordinates: { lat: 33.83, lng: -109.39 } },
+  { day: "11", route: "Hannagan Meadow to Alpine", coordinates: { lat: 33.75, lng: -109.23 } },
+];
+
+const quietReveal = {
   hidden: { opacity: 0, y: 16 },
   visible: { opacity: 1, y: 0 },
 };
 
-const quietContainer = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.08,
-    },
-  },
-};
-
-const quietReveal = {
-  hidden: { opacity: 0, y: 18 },
-  visible: { opacity: 1, y: 0 },
-};
-
-function DownloadButton({
-  cta = fallbackRustysRoutePage.downloadCta,
-  className = "",
-  colorClassName = "bg-[#e11f3f] text-white hover:bg-[#13221a] focus-visible:outline-[#e11f3f]",
-}: {
-  cta?: RustysRoutePageData["downloadCta"];
-  className?: string;
-  colorClassName?: string;
-}) {
+function DownloadButton({ cta = fallbackRustysRoutePage.downloadCta }: { cta?: RustysRoutePageData["downloadCta"] }) {
   return (
     <ProtectedDownloadLink
       href={cta?.href || "/downloads/arizona-alpine-trail-gpx"}
-      // colorClassName is a single prop (not merged with structural classes below) so a caller
-      // overriding color always fully replaces bg/text/hover — two classes for the same property
-      // concatenated via string interpolation don't reliably override each other, since Tailwind's
-      // cascade order depends on generation order, not where the class appears in the string.
-      className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-5 text-sm font-black uppercase tracking-[0.1em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${colorClassName} ${className}`}
+      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#b74f32] px-6 text-sm font-black uppercase tracking-[0.1em] text-white transition hover:bg-[#173d2b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b74f32] active:translate-y-px"
     >
       <Download size={17} aria-hidden="true" />
       {cta?.label || "Download GPX"}
@@ -66,197 +63,133 @@ function DownloadButton({
   );
 }
 
-function MobileItineraryRow({ day, reducedMotion }: { day: RustysRouteDay; reducedMotion: boolean | null }) {
+function MobileItineraryRow({ day }: { day: RustysRouteDay }) {
   return (
-    <motion.article
-      variants={quietReveal}
-      transition={{ duration: 0.28, ease: "easeOut" }}
-      initial={reducedMotion ? false : "hidden"}
-      whileInView="visible"
-      viewport={{ once: true, margin: "-60px" }}
-      className="border-t border-[#d8ded4] py-5 first:border-t-0"
-    >
+    <article className="border-b border-[#d8ded4] py-5">
       <div className="flex items-start gap-4">
-        <span className="font-mono text-sm font-black uppercase tracking-[0.14em] text-[#b74f32]">Day {day.day}</span>
+        <span className="font-mono text-xs font-black uppercase tracking-[0.14em] text-[#b74f32]">{day.day}</span>
         <div className="min-w-0 flex-1">
-          <h3 className="text-xl font-semibold leading-tight text-[#13221a]">{day.route}</h3>
-          {day.via ? <p className="mt-1 text-sm font-black uppercase tracking-[0.1em] text-[#9b5d2e]">{day.via}</p> : null}
+          <h3 className="text-lg font-semibold leading-tight text-[#13221a]">{day.route}</h3>
+          {day.via ? <p className="mt-1 text-xs font-black uppercase tracking-[0.1em] text-[#9b5d2e]">{day.via}</p> : null}
         </div>
       </div>
       <dl className="mt-4 grid grid-cols-3 gap-3 text-sm">
         <div>
-          <dt className="flex items-center gap-1.5 font-mono text-[10px] font-black uppercase tracking-[0.14em] text-[#788278]">
+          <dt className="flex items-center gap-1.5 font-mono text-[10px] font-black uppercase tracking-[0.12em] text-[#788278]">
             <Route size={13} aria-hidden="true" />
             Miles
           </dt>
           <dd className="mt-1 font-bold text-[#13221a]">{day.miles}</dd>
         </div>
         <div>
-          <dt className="flex items-center gap-1.5 font-mono text-[10px] font-black uppercase tracking-[0.14em] text-[#788278]">
+          <dt className="flex items-center gap-1.5 font-mono text-[10px] font-black uppercase tracking-[0.12em] text-[#788278]">
             <Fuel size={13} aria-hidden="true" />
             Fuel
           </dt>
           <dd className="mt-1 font-bold text-[#13221a]">{day.fuel}</dd>
         </div>
         <div>
-          <dt className="flex items-center gap-1.5 font-mono text-[10px] font-black uppercase tracking-[0.14em] text-[#788278]">
+          <dt className="flex items-center gap-1.5 font-mono text-[10px] font-black uppercase tracking-[0.12em] text-[#788278]">
             <Hotel size={13} aria-hidden="true" />
             Stay
           </dt>
           <dd className="mt-1 font-bold text-[#13221a]">{day.lodging}</dd>
         </div>
       </dl>
-    </motion.article>
+    </article>
   );
 }
 
 export function RustysRouteExperience({ data = fallbackRustysRoutePage }: { data?: RustysRoutePageData }) {
   const prefersReducedMotion = useReducedMotion();
-  const routeFacts = data.facts?.length ? data.facts : fallbackRustysRoutePage.facts || [];
-  const planningNotes = data.planningNotes?.length ? data.planningNotes : fallbackRustysRoutePage.planningNotes || [];
   const itineraryDays = data.itineraryDays?.length ? data.itineraryDays : fallbackRustysRoutePage.itineraryDays || [];
-  const mapHighlights = data.mapHighlights?.length ? data.mapHighlights : fallbackRustysRoutePage.mapHighlights || [];
+  const routeFacts = data.facts?.length ? data.facts : fallbackRustysRoutePage.facts || [];
+  const [activeVideoIndex, setActiveVideoIndex] = useState(0);
+  const activeVideo = routeVideos[activeVideoIndex];
+
+  function showPreviousVideo() {
+    setActiveVideoIndex((current) => (current - 1 + routeVideos.length) % routeVideos.length);
+  }
+
+  function showNextVideo() {
+    setActiveVideoIndex((current) => (current + 1) % routeVideos.length);
+  }
 
   return (
     <main id="main" className="overflow-hidden bg-[#f8f4e8] text-[#13221a]">
-      <section className="relative isolate bg-[#f8f4e8] px-5 pb-5 pt-24 sm:px-8 lg:pt-28">
+      <section className="px-5 pb-16 pt-28 sm:px-8 sm:pb-20 sm:pt-32 lg:pb-24 lg:pt-36">
         <motion.div
-          variants={quietContainer}
           initial={prefersReducedMotion ? false : "hidden"}
           animate="visible"
-          className="mx-auto grid min-h-[54svh] max-w-[1320px] content-end gap-5 lg:min-h-[58svh]"
+          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08 } } }}
+          className="mx-auto flex max-w-[1180px] flex-col items-center text-center"
         >
-          <div className="grid gap-5 lg:grid-cols-[minmax(0,0.72fr)_minmax(320px,0.28fr)] lg:items-end">
-            <motion.div variants={quietReveal} transition={{ duration: 0.36, ease: "easeOut" }}>
-              <p className="az-kicker text-[#9b5d2e]">{data.heroKicker || "Rusty 1000"}</p>
-              <h1 className="mt-3 max-w-4xl font-serif text-[clamp(2.7rem,5.8vw,5.8rem)] font-semibold leading-[0.92] tracking-normal text-[#13221a]">
-                {data.heroTitle}
-              </h1>
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-[#4f5d53] sm:text-xl">
-                {data.heroCopy}
-              </p>
-            </motion.div>
-
-            <motion.div
-              variants={quietReveal}
-              transition={{ duration: 0.36, ease: "easeOut" }}
-              className="grid gap-3 border-y border-[#d8ded4] py-4 lg:border-y-0 lg:border-l lg:py-0 lg:pl-6"
-            >
-              {routeFacts.map((fact) => (
-                <div key={fact.label} className="flex items-baseline justify-between gap-4 lg:block">
-                  <p className="font-mono text-sm font-black uppercase tracking-[0.14em] text-[#b74f32]">{fact.label}</p>
-                  <p className="mt-1 text-base font-semibold leading-6 text-[#4f5d53]">{fact.value}</p>
-                </div>
-              ))}
-              <DownloadButton cta={data.downloadCta} className="mt-2 w-full sm:w-auto lg:w-full" />
-            </motion.div>
-          </div>
-
-          <motion.div
-            variants={imageReveal}
+          <motion.h1
+            variants={quietReveal}
             transition={{ duration: 0.36, ease: "easeOut" }}
-            className="relative h-[18svh] min-h-32 overflow-hidden rounded-[6px] bg-[#173d2b] sm:h-[20svh] lg:h-[22svh]"
+            className="font-serif text-[clamp(3.4rem,7vw,6.5rem)] font-semibold leading-[0.9] tracking-normal text-[#173d2b]"
           >
-            <Image
-              src={data.heroImage || fallbackRustysRoutePage.heroImage || "/azat/photos/735761389_1318522053829180_4711200860303823554_n.jpg"}
-              alt={data.heroImageAlt || ""}
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,21,15,0.28),rgba(7,21,15,0.02)_56%,rgba(7,21,15,0.2))]" />
-          </motion.div>
-        </motion.div>
-      </section>
-
-      <section id="route-overview" className="bg-[#f8f4e8] px-5 py-8 sm:px-8 lg:py-12">
-        <div className="mx-auto max-w-[1320px]">
-          <motion.div
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="mb-4 flex flex-col gap-3 px-2 sm:flex-row sm:items-end sm:justify-between sm:px-0"
-          >
-            <div>
-              <p className="az-kicker text-[#9b5d2e]">{data.overviewKicker}</p>
-              <h2 className="mt-2 font-serif text-4xl font-semibold leading-none text-[#13221a] sm:text-5xl">{data.overviewTitle}</h2>
-            </div>
-            <p className="max-w-md text-sm font-semibold leading-6 text-[#5f6c63]">
-              {data.overviewCopy}
-            </p>
-          </motion.div>
+            {data.title || "Rusty 1000"}
+          </motion.h1>
 
           <motion.div
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.32, ease: "easeOut" }}
-            className="relative min-h-[420px] overflow-hidden rounded-[6px] border border-[#cfd7cb] bg-[#cad4c2] sm:min-h-[540px] xl:min-h-[680px]"
+            variants={quietReveal}
+            transition={{ duration: 0.36, ease: "easeOut" }}
+            className="mt-9 flex flex-col items-center gap-5 sm:flex-row sm:gap-0"
           >
-            <LeafletRouteMap
-              highlights={mapHighlights}
-              activeFlyTo={false}
-              openActivePopup={false}
-            />
-          </motion.div>
-        </div>
-      </section>
-
-      <section className="bg-[#f8f4e8] px-5 py-12 sm:px-8 lg:py-16">
-        <div className="mx-auto max-w-[1320px]">
-          <motion.div
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="border-y border-[#d8ded4] py-7"
-          >
-            <p className="az-kicker text-[#9b5d2e]">{data.planningKicker}</p>
-            <div className="mt-7 grid gap-x-10 gap-y-7 md:grid-cols-2">
-              {planningNotes.map((note) => (
-                <div key={note.label} className="grid gap-2 border-t border-[#d8ded4] pt-5 first:border-t-0 md:first:border-t md:first:pt-5">
-                  <p className="font-mono text-xs font-black uppercase tracking-[0.14em] text-[#b74f32]">{note.label}</p>
-                  <p className="max-w-xl text-2xl font-semibold leading-snug text-[#13221a]">{note.text}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      <section id="itinerary" className="bg-[#f8f4e8] px-5 py-14 sm:px-8 lg:py-20">
-        <div className="mx-auto max-w-[1180px]">
-          <motion.div
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="flex flex-col gap-5 border-b border-[#d8ded4] pb-7 sm:flex-row sm:items-end sm:justify-between"
-          >
-            <div>
-              <p className="az-kicker text-[#9b5d2e]">{data.itineraryKicker}</p>
-              <h2 className="mt-2 font-serif text-4xl font-semibold leading-none text-[#13221a] sm:text-5xl">{data.itineraryTitle}</h2>
-            </div>
-            <p className="max-w-xl text-base font-semibold leading-7 text-[#5f6c63]">
-              {data.lodgingNote}
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={quietContainer}
-            initial={prefersReducedMotion ? false : "hidden"}
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            className="mt-2 md:hidden"
-          >
-            {itineraryDays.map((day) => (
-              <MobileItineraryRow key={`${day.day}-${day.route}`} day={day} reducedMotion={prefersReducedMotion} />
+            {routeFacts.slice(0, 3).map((fact) => (
+              <p
+                key={fact.label}
+                className="px-7 font-mono text-sm font-black uppercase tracking-[0.12em] text-[#334c3f] sm:border-l sm:border-[#c6cec2] sm:first:border-l-0"
+              >
+                {fact.label}
+              </p>
             ))}
           </motion.div>
 
-          <div className="mt-8 hidden overflow-x-auto md:block">
+          <motion.div
+            variants={quietReveal}
+            transition={{ duration: 0.36, ease: "easeOut" }}
+            className="mt-8 flex flex-wrap items-center justify-center gap-3"
+          >
+            <DownloadButton cta={data.downloadCta} />
+            <a
+              href="#videos"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#bfc9bc] px-5 text-sm font-black uppercase tracking-[0.1em] text-[#173d2b] transition hover:border-[#b74f32] hover:text-[#b74f32] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b74f32] active:translate-y-px"
+            >
+              <span className="grid h-4 w-6 place-items-center rounded-[4px] bg-[#e11f3f] text-white" aria-hidden="true">
+                <Play size={10} fill="currentColor" strokeWidth={2} />
+              </span>
+              Watch on YouTube
+            </a>
+          </motion.div>
+
+        </motion.div>
+      </section>
+
+      <section className="px-5 pb-12 sm:px-8 lg:pb-16">
+        <div className="mx-auto max-w-[1180px]">
+          <motion.div
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="az-map-experience relative min-h-[430px] overflow-hidden rounded-[6px] border border-[#c7d0c3] bg-[#d7ddcf] sm:min-h-[540px] lg:min-h-[620px]"
+          >
+            <LeafletRouteMap dayStops={routeDayStops} />
+          </motion.div>
+        </div>
+      </section>
+
+      <section id="itinerary" className="px-5 pb-16 sm:px-8 lg:pb-24">
+        <div className="mx-auto max-w-[1180px]">
+          <div className="md:hidden">
+            {itineraryDays.map((day) => (
+              <MobileItineraryRow key={`${day.day}-${day.route}`} day={day} />
+            ))}
+          </div>
+
+          <div className="hidden overflow-x-auto md:block">
             <table className="w-full min-w-[880px] border-collapse text-left">
               <thead>
                 <tr className="border-b border-[#bfc9bc] font-mono text-[11px] font-black uppercase tracking-[0.16em] text-[#788278]">
@@ -267,22 +200,10 @@ export function RustysRouteExperience({ data = fallbackRustysRoutePage }: { data
                   <th scope="col" className="w-48 py-4">Lodging</th>
                 </tr>
               </thead>
-              <motion.tbody
-                variants={quietContainer}
-                initial={prefersReducedMotion ? false : "hidden"}
-                whileInView="visible"
-                viewport={{ once: true, margin: "-80px" }}
-              >
+              <tbody>
                 {itineraryDays.map((day) => (
-                  <motion.tr
-                    key={`${day.day}-${day.route}`}
-                    variants={quietReveal}
-                    transition={{ duration: 0.24, ease: "easeOut" }}
-                    className="border-b border-[#d8ded4] text-[#13221a]"
-                  >
-                    <td className="py-5 pr-4 align-top font-mono text-sm font-black uppercase tracking-[0.12em] text-[#b74f32]">
-                      {day.day}
-                    </td>
+                  <tr key={`${day.day}-${day.route}`} className="border-b border-[#d8ded4] text-[#13221a]">
+                    <td className="py-5 pr-4 align-top font-mono text-sm font-black uppercase tracking-[0.12em] text-[#b74f32]">{day.day}</td>
                     <td className="py-5 pr-4 align-top">
                       <p className="text-xl font-semibold leading-tight">{day.route}</p>
                       {day.via ? <p className="mt-1 text-xs font-black uppercase tracking-[0.12em] text-[#9b5d2e]">{day.via}</p> : null}
@@ -290,42 +211,73 @@ export function RustysRouteExperience({ data = fallbackRustysRoutePage }: { data
                     <td className="py-5 pr-4 align-top text-base font-bold">{day.miles}</td>
                     <td className="py-5 pr-4 align-top text-base font-semibold text-[#4f5d53]">{day.fuel}</td>
                     <td className="py-5 align-top text-base font-semibold text-[#4f5d53]">{day.lodging}</td>
-                  </motion.tr>
+                  </tr>
                 ))}
-              </motion.tbody>
+              </tbody>
             </table>
           </div>
         </div>
       </section>
 
-      <motion.section
-        initial={prefersReducedMotion ? false : { opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, margin: "-120px" }}
-        transition={{ duration: 0.36, ease: "easeOut" }}
-        className="relative isolate overflow-hidden bg-[#07150f] px-5 py-14 text-white sm:px-8 lg:py-20"
-      >
+      <section id="videos" className="relative isolate scroll-mt-16 overflow-hidden px-5 py-16 sm:px-8 sm:py-20 lg:py-24">
         <Image
-          src={data.finalCtaImage || fallbackRustysRoutePage.finalCtaImage || "/azat/photos/733890453_1316837243997661_6044422898535499635_n.jpg"}
-          alt={data.finalCtaImageAlt || ""}
+          src={data.heroImage || fallbackRustysRoutePage.heroImage || "/azat/photos/735761389_1318522053829180_4711200860303823554_n.jpg"}
+          alt=""
           fill
+          priority
           sizes="100vw"
-          className="absolute inset-0 -z-20 object-cover opacity-70"
+          className="absolute inset-0 -z-20 object-cover"
         />
-        <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(7,21,15,0.86),rgba(7,21,15,0.5)_55%,rgba(7,21,15,0.78))]" />
-        <div className="mx-auto flex max-w-[1180px] flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="az-kicker text-[#f0c477]">{data.finalCtaKicker}</p>
-            <h2 className="mt-3 max-w-2xl font-serif text-4xl font-semibold leading-none text-white sm:text-5xl">
-              {data.finalCtaTitle}
-            </h2>
+        <div className="absolute inset-0 -z-10 bg-[#07150f]/72" />
+
+        <div className="mx-auto max-w-[980px]">
+          <motion.div
+            key={activeVideo.youtubeId}
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.28, ease: "easeOut" }}
+            className="text-center"
+          >
+            <p className="font-mono text-xs font-black uppercase tracking-[0.14em] text-[#f0c477]">Day {activeVideo.day}</p>
+            <h2 className="mt-2 font-serif text-3xl font-semibold leading-none text-white sm:text-5xl">{activeVideo.route}</h2>
+          </motion.div>
+
+          <div className="relative mt-7 sm:px-14">
+            <button
+              type="button"
+              onClick={showPreviousVideo}
+              aria-label="Previous route video"
+              className="absolute left-2 top-1/2 z-10 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-[#fffdf7] text-[#173d2b] shadow-[0_8px_24px_rgba(23,61,43,0.2)] transition hover:bg-[#f0c477] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b74f32] active:scale-95 sm:left-0"
+            >
+              <ChevronLeft size={22} strokeWidth={2} aria-hidden="true" />
+            </button>
+
+            <div className="aspect-video overflow-hidden rounded-[6px] bg-[#07150f] shadow-[0_20px_50px_rgba(23,61,43,0.2)]">
+              <iframe
+                key={activeVideo.youtubeId}
+                src={`https://www.youtube-nocookie.com/embed/${activeVideo.youtubeId}?rel=0`}
+                title={`Day ${activeVideo.day}: ${activeVideo.route}`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="size-full border-0"
+              />
+            </div>
+
+            <button
+              type="button"
+              onClick={showNextVideo}
+              aria-label="Next route video"
+              className="absolute right-2 top-1/2 z-10 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-[#fffdf7] text-[#173d2b] shadow-[0_8px_24px_rgba(23,61,43,0.2)] transition hover:bg-[#f0c477] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b74f32] active:scale-95 sm:right-0"
+            >
+              <ChevronRight size={22} strokeWidth={2} aria-hidden="true" />
+            </button>
           </div>
-          <DownloadButton
-            cta={data.downloadCta}
-            colorClassName="bg-white text-[#13221a] hover:bg-[#f0c477] hover:text-[#13221a] focus-visible:outline-white"
-          />
+
+          <p className="mt-5 text-center font-mono text-xs font-black uppercase tracking-[0.14em] text-white">
+            {activeVideoIndex + 1} / {routeVideos.length}
+          </p>
         </div>
-      </motion.section>
+      </section>
     </main>
   );
 }

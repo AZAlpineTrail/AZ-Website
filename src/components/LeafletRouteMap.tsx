@@ -13,6 +13,15 @@ export type TrailSegmentMapItem = {
   status: "published" | "in-development";
 };
 
+export type RouteDayStop = {
+  day: string;
+  route: string;
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
+};
+
 export type LeafletRouteMapProps = {
   highlights?: HomeTrailHighlight[];
   activeHighlightId?: string;
@@ -22,6 +31,7 @@ export type LeafletRouteMapProps = {
   segments?: TrailSegmentMapItem[];
   activeSegmentId?: string;
   onSegmentSelect?: (id: string) => void;
+  dayStops?: RouteDayStop[];
 };
 
 function getHighlightId(highlight: HomeTrailHighlight, index: number) {
@@ -55,12 +65,13 @@ function drawTrailOverlay(
   segmentLayerRefs?: Map<string, Leaflet.Polyline>,
   onSegmentSelect?: (id: string) => void,
   highlightLayerRef?: { current: Leaflet.Polyline | null },
+  dayStops?: RouteDayStop[],
 ) {
   overlay.clearLayers();
   markerRefs.clear();
   segmentLayerRefs?.clear();
 
-  // One coherent trail line, always — the same legible three-layer style used everywhere
+  // One coherent trail line, always: the same legible three-layer style used everywhere
   // else on the site. Per-segment status (published/in development) is communicated in
   // the info panel below the map, not by giving each of the 28 lines its own color/dash.
   routePreviewSegments.forEach((segment) => {
@@ -77,7 +88,7 @@ function drawTrailOverlay(
   });
 
   if (segments?.length) {
-    // Wide, invisible hit targets per segment — generous click/tap area without
+    // Wide, invisible hit targets per segment give a generous click/tap area without
     // needing to visually thicken or recolor the real line.
     segments.forEach((item) => {
       const index = routeSegmentSummaries.findIndex((summary) => summary.id === item.id);
@@ -88,7 +99,7 @@ function drawTrailOverlay(
       const milesLabel = item.distanceMiles != null ? `${item.distanceMiles} mi` : "";
       const hit = leaflet
         .polyline(positions, { color: "#000000", weight: SEGMENT_HIT_WEIGHT, opacity: 0 })
-        .bindTooltip(`<strong>${escapeHtml(item.label)}</strong>${milesLabel ? ` — ${escapeHtml(milesLabel)}` : ""}`, {
+        .bindTooltip(`<strong>${escapeHtml(item.label)}</strong>${milesLabel ? ` - ${escapeHtml(milesLabel)}` : ""}`, {
           sticky: true,
         })
         .addTo(overlay);
@@ -140,6 +151,26 @@ function drawTrailOverlay(
 
     markerRefs.set(id, marker);
   });
+
+  dayStops?.forEach((stop) => {
+    const dayLabel = escapeHtml(stop.day.replace(/^0/, ""));
+    const routeLabel = escapeHtml(stop.route);
+    const icon = leaflet.divIcon({
+      className: "rustys-day-marker-shell",
+      html: `<span class="rustys-day-marker" style="display:grid;width:34px;height:34px;place-items:center;border:3px solid #fffdf7;border-radius:50%;background:#b74f32;box-shadow:0 2px 8px rgb(19 34 26 / 24%);color:#fffdf7;font-family:ui-monospace,monospace;font-size:12px;font-weight:900;line-height:1">${dayLabel}</span>`,
+      iconSize: [34, 34],
+      iconAnchor: [17, 17],
+    });
+
+    leaflet
+      .marker([stop.coordinates.lat, stop.coordinates.lng], {
+        icon,
+        keyboard: true,
+        title: `Day ${dayLabel}: ${stop.route}`,
+      })
+      .bindPopup(`<strong>Day ${dayLabel}</strong><br><span>${routeLabel}</span>`)
+      .addTo(overlay);
+  });
 }
 
 function updateHighlightMarkerStyles(markerRefs: Map<string, Leaflet.CircleMarker>, activeHighlightId?: string) {
@@ -185,6 +216,7 @@ export function LeafletRouteMap({
   segments,
   activeSegmentId,
   onSegmentSelect,
+  dayStops,
 }: LeafletRouteMapProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<Leaflet.Map | null>(null);
@@ -273,10 +305,11 @@ export function LeafletRouteMap({
       segmentLayerRefs.current,
       onSegmentSelect,
       highlightLayerRef,
+      dayStops,
     );
     updateActiveSegmentHighlight(highlightLayerRef.current, activeSegmentId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [highlights, onHighlightSelect, onSegmentSelect, ready, segments]);
+  }, [dayStops, highlights, onHighlightSelect, onSegmentSelect, ready, segments]);
 
   useEffect(() => {
     if (!ready || !segments?.length) return;
