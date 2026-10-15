@@ -26,9 +26,6 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const [homePage, newsPosts] = await Promise.all([getHomePageData(), getNewsPosts()]);
-  const downloads = (homePage.downloads || [])
-    .filter((download) => download.href !== "/downloads/azat-shapefile")
-    .slice(0, 3);
 
   return (
     <>
@@ -42,11 +39,7 @@ export default async function Home() {
           secondaryCta={homePage.secondaryCta}
         />
 
-        <TrailMap
-          title={homePage.mapTitle}
-          copy={homePage.mapCopy}
-          downloads={downloads}
-        />
+        <TrailMap />
 
         <MissionStatement
           statement={homePage.missionStatement}
