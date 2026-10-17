@@ -505,8 +505,26 @@ textarea {
 }
 
 @media (max-width: 640px) {
+  /* Static hero on phones: no scroll runway, tree line parked at its resting spot. */
   .az-scroll-hero {
-    height: 135svh;
+    height: auto;
+  }
+
+  .az-scroll-hero-stage {
+    position: relative;
+  }
+
+  .az-scroll-hero-ridge {
+    transform: translateY(24%);
+    will-change: auto;
+  }
+
+  .az-scroll-hero-cue {
+    display: none;
+  }
+
+  .az-scroll-hero-credit {
+    z-index: 6;
   }
 
   .az-scroll-hero-image img {
