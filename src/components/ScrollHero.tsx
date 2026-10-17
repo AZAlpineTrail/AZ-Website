@@ -6,6 +6,9 @@ import { useEffect, useRef, type PointerEvent } from "react";
 import { useReducedMotion } from "framer-motion";
 import { TrailSilhouette } from "./TrailSilhouette";
 
+// Phones (portrait or landscape) get a static hero; keep in sync with globals.css.
+const STATIC_HERO_QUERY = "(max-width: 767px), (pointer: coarse) and (max-height: 540px)";
+
 export function ScrollHero() {
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -16,9 +19,15 @@ export function ScrollHero() {
     const stage = stageRef.current;
     if (!section || !stage) return;
 
+    const staticHero = window.matchMedia(STATIC_HERO_QUERY);
     let frame = 0;
     const render = () => {
       frame = 0;
+      if (staticHero.matches) {
+        stage.style.setProperty("--hero-ridge-y", "24%");
+        stage.style.setProperty("--hero-cue-opacity", "0");
+        return;
+      }
       if (prefersReducedMotion) {
         stage.style.setProperty("--hero-ridge-y", "96%");
         stage.style.setProperty("--hero-cue-opacity", "1");
@@ -42,9 +51,11 @@ export function ScrollHero() {
     render();
     window.addEventListener("scroll", requestRender, { passive: true });
     window.addEventListener("resize", requestRender, { passive: true });
+    staticHero.addEventListener("change", requestRender);
     return () => {
       window.removeEventListener("scroll", requestRender);
       window.removeEventListener("resize", requestRender);
+      staticHero.removeEventListener("change", requestRender);
       if (frame) window.cancelAnimationFrame(frame);
     };
   }, [prefersReducedMotion]);

@@ -504,8 +504,9 @@ textarea {
   }
 }
 
-@media (max-width: 640px) {
-  /* Static hero on phones: no scroll runway, tree line parked at its resting spot. */
+/* Static hero on phones, portrait or landscape: no scroll runway, tree line parked
+   at its resting spot. Keep the query in sync with STATIC_HERO_QUERY in ScrollHero. */
+@media (max-width: 767px), (pointer: coarse) and (max-height: 540px) {
   .az-scroll-hero {
     height: auto;
   }
@@ -526,7 +527,9 @@ textarea {
   .az-scroll-hero-credit {
     z-index: 6;
   }
+}
 
+@media (max-width: 640px) {
   .az-scroll-hero-image img {
     object-position: 58% bottom;
   }
