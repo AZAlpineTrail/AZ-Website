@@ -26,20 +26,21 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const [homePage, newsPosts] = await Promise.all([getHomePageData(), getNewsPosts()]);
+  const downloads = (homePage.downloads || [])
+    .filter((download) => download.href !== "/downloads/azat-shapefile")
+    .slice(0, 3);
 
   return (
     <>
       <Header />
-      <main id="main" className="overflow-hidden bg-[#07150f] text-white">
-        <ScrollHero
-          title={homePage.heroTitle}
-          copy={homePage.heroCopy}
-          image={homePage.heroImage}
-          imageAlt={homePage.heroImageAlt}
-          secondaryCta={homePage.secondaryCta}
-        />
+      <main id="main" className="overflow-x-clip bg-[#07150f] text-white">
+        <ScrollHero />
 
-        <TrailMap />
+        <TrailMap
+          title={homePage.mapTitle}
+          copy={homePage.mapCopy}
+          downloads={downloads}
+        />
 
         <MissionStatement
           statement={homePage.missionStatement}

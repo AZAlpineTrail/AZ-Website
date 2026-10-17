@@ -2,117 +2,113 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { Download, Layers, MapPinned } from "lucide-react";
+import { useEffect, useRef, type PointerEvent } from "react";
+import { useReducedMotion } from "framer-motion";
+import { TrailSilhouette } from "./TrailSilhouette";
 
-import { ProtectedDownloadLink } from "@/components/auth/ProtectedDownloadLink";
-import { resolveDownloadHref } from "@/lib/download-links";
-import type { HomeCta } from "@/lib/home";
-
-type HeroStat = {
-  label: string;
-  value: string;
-};
-
-type ScrollHeroProps = {
-  title: string;
-  copy?: string;
-  image?: string;
-  imageAlt?: string;
-  secondaryCta?: HomeCta;
-  stats?: HeroStat[];
-};
-
-export function ScrollHero({
-  title,
-  copy,
-  image,
-  imageAlt,
-  secondaryCta,
-}: ScrollHeroProps) {
+export function ScrollHero() {
   const sectionRef = useRef<HTMLElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
 
-  const imageScale = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [1, 1] : [1, 1.02]);
-  const imageY = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [0, -8]);
-  const contentY = useTransform(scrollYProgress, [0, 0.86], prefersReducedMotion ? [0, 0] : [0, -20]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.72, 1], [1, 0.96, 0.74]);
+  useEffect(() => {
+    const section = sectionRef.current;
+    const stage = stageRef.current;
+    if (!section || !stage) return;
+
+    let frame = 0;
+    const render = () => {
+      frame = 0;
+      if (prefersReducedMotion) {
+        stage.style.setProperty("--hero-ridge-y", "96%");
+        stage.style.setProperty("--hero-cue-opacity", "1");
+        return;
+      }
+
+      const rect = section.getBoundingClientRect();
+      const distance = Math.max(section.offsetHeight - window.innerHeight, 1);
+      const progress = Math.min(Math.max(-rect.top / distance, 0), 1);
+      const ridgeY = 96 + (24 - 96) * progress;
+      const cueOpacity = 1 - Math.min(progress / 0.28, 1);
+
+      stage.style.setProperty("--hero-ridge-y", `${ridgeY}%`);
+      stage.style.setProperty("--hero-cue-opacity", String(cueOpacity));
+    };
+    const requestRender = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(render);
+    };
+
+    render();
+    window.addEventListener("scroll", requestRender, { passive: true });
+    window.addEventListener("resize", requestRender, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", requestRender);
+      window.removeEventListener("resize", requestRender);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, [prefersReducedMotion]);
+
+  const updateLight = (event: PointerEvent<HTMLElement>) => {
+    if (prefersReducedMotion || !stageRef.current) return;
+
+    const rect = stageRef.current.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width) * 100;
+    const y = ((event.clientY - rect.top) / rect.height) * 100;
+
+    stageRef.current.style.setProperty("--hero-light-x", `${x}%`);
+    stageRef.current.style.setProperty("--hero-light-y", `${y}%`);
+  };
+
+  const resetLight = () => {
+    stageRef.current?.style.setProperty("--hero-light-x", "50%");
+    stageRef.current?.style.setProperty("--hero-light-y", "48%");
+  };
 
   return (
-    <section ref={sectionRef} className="az-scroll-hero bg-[#07150f] text-white" aria-labelledby="home-hero-title">
-      <div className="az-scroll-hero-stage">
-        <motion.div
-          className="az-scroll-hero-image"
-          style={{
-            scale: imageScale,
-            y: imageY,
-            position: "absolute",
-            top: "-5vh",
-            right: "-4vw",
-            bottom: "-5vh",
-            left: "-4vw",
-          }}
-        >
+    <section
+      ref={sectionRef}
+      id="hero"
+      className="az-scroll-hero bg-[#07150f] text-white"
+      aria-labelledby="home-hero-title"
+      onPointerMove={updateLight}
+      onPointerLeave={resetLight}
+    >
+      <div ref={stageRef} className="az-scroll-hero-stage">
+        <div className="az-scroll-hero-image" aria-hidden="true">
           <Image
-            src={image || "/azat/photos/732464060_1314291140918938_8655586887586886350_n.jpg"}
-            alt={imageAlt || ""}
+            src="/azat/images/high-country-hero.jpg"
+            alt=""
             fill
             priority
             sizes="100vw"
             className="object-cover"
           />
-        </motion.div>
-        <div className="az-scroll-hero-scrim" />
-        <div className="az-scroll-hero-gradient" />
+        </div>
+        <div className="az-scroll-hero-scrim" aria-hidden="true" />
+        <div className="az-scroll-hero-light" aria-hidden="true" />
 
-        <motion.div className="az-scroll-hero-content az-scroll-hero-content--simple" style={{ y: contentY, opacity: contentOpacity }}>
-          <div className="az-hero-lockup">
-            <div className="az-hero-copy">
-              <div className="az-hero-logo">
-                <Image
-                  src="/azat/brand/azat-logo.png"
-                  alt="Arizona Alpine Trail"
-                  width={553}
-                  height={618}
-                  priority
-                  className="h-full w-auto object-contain"
-                />
-              </div>
-              <h1 id="home-hero-title" className="az-hero-title text-white">
-                {title}
-              </h1>
-              {copy ? <p className="mt-6 max-w-2xl text-lg leading-8 text-white/82 sm:text-xl">{copy}</p> : null}
-              <div className="mt-9 flex flex-col flex-wrap gap-3 sm:flex-row">
-                <Link
-                  href="/trail"
-                  className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-white px-6 text-sm font-black uppercase tracking-[0.1em] text-[#13221a] transition hover:bg-[#f0c477] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                >
-                  <MapPinned size={18} aria-hidden="true" />
-                  View Trail
-                </Link>
-                <Link
-                  href="/trail#segments"
-                  className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border-2 border-white px-6 text-sm font-black uppercase tracking-[0.1em] text-white transition hover:bg-white hover:text-[#13221a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                >
-                  <Layers size={18} aria-hidden="true" />
-                  View Segments
-                </Link>
-                <ProtectedDownloadLink
-                  href={resolveDownloadHref(secondaryCta?.href, "/downloads/arizona-alpine-trail-gpx")}
-                  className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-[#e11f3f] px-6 text-sm font-black uppercase tracking-[0.1em] text-white transition hover:bg-white hover:text-[#13221a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                >
-                  <Download size={18} aria-hidden="true" />
-                  {secondaryCta?.label || "Download GPX"}
-                </ProtectedDownloadLink>
-              </div>
-            </div>
-          </div>
-        </motion.div>
+        <div className="az-scroll-hero-content">
+          <h1 id="home-hero-title" className="az-hero-title text-white">
+            Ride the
+            <span>Arizona Alps</span>
+          </h1>
+          <Link className="az-hero-route-statement" href="#trail-map">
+            704 miles through Eastern Arizona
+          </Link>
+        </div>
+
+        <div className="az-scroll-hero-cue">
+          <span>Follow the trail</span>
+          <svg viewBox="0 0 28 36" aria-hidden="true">
+            <path d="M14 2v28M4 20l10 10 10-10" />
+          </svg>
+        </div>
+
+        <p className="az-scroll-hero-credit">Photo © childress.com</p>
+        <div className="az-scroll-hero-ridge" aria-hidden="true">
+          <TrailSilhouette />
+        </div>
       </div>
     </section>
   );

@@ -47,7 +47,7 @@ export function TrailLoop({ className = "" }: TrailLoopProps) {
 
   return (
     <div
-      className={`relative isolate aspect-[9/16] max-h-[76svh] w-full overflow-hidden rounded-[6px] border border-[#d8ded4] bg-[#07150f] shadow-[0_18px_44px_rgba(19,34,26,0.12)] xl:aspect-auto xl:h-full xl:max-h-none ${className}`}
+      className={`relative isolate aspect-[9/16] max-h-[76svh] w-full overflow-hidden rounded-[6px] bg-[#07150f] shadow-[0_18px_44px_rgba(19,34,26,0.12)] xl:aspect-auto xl:h-full xl:max-h-none ${className}`}
     >
       {prefersReducedMotion ? (
         <Image
