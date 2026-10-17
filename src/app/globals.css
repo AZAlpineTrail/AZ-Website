@@ -230,6 +230,8 @@ body {
   bottom: -2px;
   height: clamp(320px, 58vh, 580px);
   left: -2%;
+  /* Decorative; never block taps on the route button it overlaps. */
+  pointer-events: none;
   position: absolute;
   right: -2%;
   transform: translateY(var(--hero-ridge-y));
