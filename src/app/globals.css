@@ -142,7 +142,8 @@ body {
   top: 50%;
   transform: translate(-50%, -50%);
   width: min(92vw, 1120px);
-  z-index: 3;
+  /* Above the forest layer (5) so the title and route button are never covered. */
+  z-index: 6;
 }
 
 .az-scroll-hero-content .az-hero-title {
