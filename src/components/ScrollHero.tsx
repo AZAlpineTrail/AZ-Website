@@ -8,6 +8,7 @@ import { TrailSilhouette } from "./TrailSilhouette";
 
 // Phones (portrait or landscape) get a static hero; keep in sync with globals.css.
 const STATIC_HERO_QUERY = "(max-width: 767px), (pointer: coarse) and (max-height: 540px)";
+const HERO_STAGE_DRIFT = 0.12;
 
 export function ScrollHero() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -26,11 +27,13 @@ export function ScrollHero() {
       if (staticHero.matches) {
         stage.style.setProperty("--hero-ridge-y", "24%");
         stage.style.setProperty("--hero-cue-opacity", "0");
+        stage.style.setProperty("--hero-stage-y", "0px");
         return;
       }
       if (prefersReducedMotion) {
         stage.style.setProperty("--hero-ridge-y", "24%");
         stage.style.setProperty("--hero-cue-opacity", "0");
+        stage.style.setProperty("--hero-stage-y", "0px");
         return;
       }
 
@@ -39,9 +42,11 @@ export function ScrollHero() {
       const progress = Math.min(Math.max(-rect.top / distance, 0), 1);
       const ridgeY = 96 + (24 - 96) * progress;
       const cueOpacity = 1 - Math.min(progress / 0.28, 1);
+      const stageY = -window.innerHeight * HERO_STAGE_DRIFT * progress;
 
       stage.style.setProperty("--hero-ridge-y", `${ridgeY}%`);
       stage.style.setProperty("--hero-cue-opacity", String(cueOpacity));
+      stage.style.setProperty("--hero-stage-y", `${stageY}px`);
     };
     const requestRender = () => {
       if (frame) return;

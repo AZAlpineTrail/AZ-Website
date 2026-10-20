@@ -22,7 +22,7 @@ export function Header() {
   const menuCloseRef = useRef<HTMLButtonElement>(null);
   const menuPanelRef = useRef<HTMLDivElement>(null);
   const isInitialMenuRender = useRef(true);
-  const useSolidHeader = pathname !== "/" || scrolled || menuOpen;
+  const useFloatingMenu = scrolled || menuOpen;
 
   // Close the drawer on navigation. Adjusted during render (React's documented
   // pattern for state that depends on a changed prop) rather than in an effect,
@@ -60,7 +60,7 @@ export function Header() {
 
   useEffect(() => {
     const updateHeaderState = () => {
-      setScrolled(window.scrollY > 24);
+      setScrolled(window.scrollY > 72);
     };
 
     updateHeaderState();
@@ -116,61 +116,72 @@ export function Header() {
   return (
     <>
     <header
-      className={`fixed inset-x-0 top-0 z-50 text-white transition duration-300 ${
-        useSolidHeader
-          ? "border-b border-white/12 bg-[#07150f]/88 shadow-[0_10px_30px_rgba(0,0,0,0.16)] backdrop-blur-xl"
-          : "border-b border-white/0 bg-[#07150f]/8 shadow-none backdrop-blur-sm"
+      className={`pointer-events-none absolute inset-x-0 top-0 z-50 h-[152px] text-white sm:h-[184px] ${
+        pathname === "/"
+          ? "bg-gradient-to-b from-[#07150f]/52 via-[#07150f]/12 to-transparent"
+          : "bg-gradient-to-b from-[#07150f] via-[#07150f]/96 to-[#07150f]/82"
       }`}
     >
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-[#13221a]"
+        className="pointer-events-auto sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-[#13221a]"
       >
         Skip to main content
       </a>
-      <div className="mx-auto flex min-h-[72px] max-w-[1320px] items-center justify-between gap-2 px-3 sm:min-h-[88px] sm:gap-6 sm:px-8">
-        {/* The logo already reads "Arizona Alpine Trail", so no wordmark beside it. */}
+      <div className="relative mx-auto h-full max-w-[1320px] px-3 sm:px-8">
         <Link
           href="/"
           aria-label="Arizona Alpine Trail home"
-          className="flex shrink-0 items-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+          className="pointer-events-auto absolute left-1/2 top-2 flex -translate-x-1/2 items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:top-3"
         >
-          <span className={`grid size-14 place-items-center rounded-full p-1 transition duration-300 sm:size-[72px] ${
-            useSolidHeader ? "bg-white/88 shadow-[0_8px_22px_rgba(0,0,0,0.16)]" : "bg-white/70 shadow-none"
-          }`}>
-            <Image
-              src="/azat/brand/azat-logo.png"
-              alt=""
-              width={553}
-              height={618}
-              sizes="72px"
-              className="h-full w-auto object-contain"
-              priority
-            />
-          </span>
+          <Image
+            src="/azat/brand/azat-logo.png"
+            alt=""
+            width={553}
+            height={618}
+            sizes="(max-width: 639px) 136px, 168px"
+            className="h-[136px] w-auto object-contain drop-shadow-[0_8px_22px_rgba(0,0,0,0.42)] sm:h-[168px]"
+            priority
+          />
         </Link>
 
-        <div className="hidden items-center gap-1 lg:flex lg:gap-3">
-          {navItems.map((item) => (
+        <nav
+          aria-label="Primary"
+          className={`pointer-events-auto fixed left-5 top-7 hidden items-center gap-1 transition-[background-color,box-shadow,padding,border-radius] duration-300 ease-out lg:flex xl:left-8 ${
+            useFloatingMenu
+              ? "rounded-md bg-[#173d2b]/96 px-2 py-1.5 shadow-[0_12px_32px_rgba(0,0,0,0.28)] backdrop-blur-md"
+              : "px-0 py-1.5"
+          }`}
+        >
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={item.current ? "page" : undefined}
+                className={`inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-3 text-sm font-semibold transition hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
+                  item.current ? "bg-white/12 text-white" : "text-white/82"
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+        </nav>
+
+        <div
+          className={`pointer-events-auto fixed right-5 top-7 hidden items-center justify-end gap-3 transition-[background-color,box-shadow,padding,border-radius] duration-300 ease-out lg:flex xl:right-8 ${
+            useFloatingMenu
+              ? "rounded-md bg-[#173d2b]/96 px-2 py-1.5 shadow-[0_12px_32px_rgba(0,0,0,0.28)] backdrop-blur-md"
+              : "px-0 py-1.5"
+          }`}
+        >
             <Link
-              key={item.href}
-              href={item.href}
-              aria-current={item.current ? "page" : undefined}
-              className={`inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-3 text-sm font-semibold transition hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
-                item.current ? "text-white" : "text-white/78"
-              }`}
+              href={mapSwitch.href}
+              className="inline-flex items-center gap-1.5 rounded-full border border-[#f1b65a]/70 bg-gradient-to-b from-[#f6c877] to-[#e5a94f] px-4 py-2 font-mono text-[11px] font-black uppercase tracking-[0.12em] text-[#13221a] shadow-[0_6px_18px_rgba(241,182,90,0.32)] transition duration-200 hover:-translate-y-0.5 hover:from-[#f8d38c] hover:to-[#eab558] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
-              {item.label}
+              <mapSwitch.Icon size={14} aria-hidden="true" />
+              {mapSwitch.label}
             </Link>
-          ))}
-          <Link
-            href={mapSwitch.href}
-            className="inline-flex items-center gap-1.5 rounded-full border border-[#f1b65a]/70 bg-gradient-to-b from-[#f6c877] to-[#e5a94f] px-4 py-2 font-mono text-[11px] font-black uppercase tracking-[0.12em] text-[#13221a] shadow-[0_6px_18px_rgba(241,182,90,0.45)] transition duration-200 hover:-translate-y-0.5 hover:from-[#f8d38c] hover:to-[#eab558] hover:shadow-[0_10px_26px_rgba(241,182,90,0.6)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-          >
-            <mapSwitch.Icon size={14} aria-hidden="true" />
-            {mapSwitch.label}
-          </Link>
-          <AuthHeaderControls />
+            <AuthHeaderControls />
         </div>
 
         <button
@@ -180,12 +191,19 @@ export function Header() {
           aria-expanded={menuOpen}
           aria-controls="mobile-menu"
           aria-label={menuOpen ? "Close menu" : "Open menu"}
-          className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:hidden"
+          className={`pointer-events-auto fixed right-3 top-5 inline-flex min-h-11 items-center px-3 font-mono text-[11px] font-black uppercase tracking-[0.12em] text-white transition-[background-color,box-shadow,border-radius] duration-300 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:right-5 sm:top-7 lg:hidden ${
+            useFloatingMenu
+              ? "rounded-md bg-[#173d2b]/96 shadow-[0_10px_28px_rgba(0,0,0,0.28)] backdrop-blur-md"
+              : "rounded-full"
+          }`}
         >
-          <Menu size={22} aria-hidden="true" />
+          <Menu className="mr-2" size={20} aria-hidden="true" />
+          Menu
         </button>
       </div>
     </header>
+
+    {pathname !== "/" ? <div aria-hidden="true" className="h-[152px] bg-[#07150f] sm:h-[184px]" /> : null}
 
     <AnimatePresence>
       {menuOpen ? (

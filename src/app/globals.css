@@ -113,11 +113,14 @@ body {
   --hero-light-y: 48%;
   --hero-ridge-y: 96%;
   --hero-cue-opacity: 1;
+  --hero-stage-y: 0px;
   height: 100svh;
   min-height: 620px;
   overflow: hidden;
   position: sticky;
   top: 0;
+  transform: translateY(var(--hero-stage-y));
+  will-change: transform;
 }
 
 .az-scroll-hero-image {
@@ -193,6 +196,7 @@ body {
   align-items: center;
   background: var(--hero-handoff-color);
   display: flex;
+  margin-top: -12svh;
   padding: clamp(3rem, 6vh, 4rem) clamp(1.5rem, 6vw, 6rem) clamp(4rem, 7vh, 5rem);
   position: relative;
 }
@@ -581,6 +585,8 @@ textarea {
 
   .az-scroll-hero-stage {
     position: relative;
+    transform: none;
+    will-change: auto;
   }
 
   .az-scroll-hero-ridge {
@@ -590,6 +596,10 @@ textarea {
 
   .az-scroll-hero-cue {
     display: none;
+  }
+
+  .az-hero-supporting-panel {
+    margin-top: 0;
   }
 
 }
