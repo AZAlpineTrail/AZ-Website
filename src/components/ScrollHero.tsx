@@ -10,7 +10,7 @@ import { TrailSilhouette } from "./TrailSilhouette";
 const STATIC_HERO_QUERY = "(max-width: 767px), (pointer: coarse) and (max-height: 540px)";
 
 export function ScrollHero() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
@@ -29,8 +29,8 @@ export function ScrollHero() {
         return;
       }
       if (prefersReducedMotion) {
-        stage.style.setProperty("--hero-ridge-y", "96%");
-        stage.style.setProperty("--hero-cue-opacity", "1");
+        stage.style.setProperty("--hero-ridge-y", "24%");
+        stage.style.setProperty("--hero-cue-opacity", "0");
         return;
       }
 
@@ -78,48 +78,61 @@ export function ScrollHero() {
 
   return (
     <section
-      ref={sectionRef}
       id="hero"
       className="az-scroll-hero bg-[#07150f] text-white"
       aria-labelledby="home-hero-title"
       onPointerMove={updateLight}
       onPointerLeave={resetLight}
     >
-      <div ref={stageRef} className="az-scroll-hero-stage">
-        <div className="az-scroll-hero-image" aria-hidden="true">
-          <Image
-            src="/azat/images/high-country-hero.jpg"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
-        </div>
-        <div className="az-scroll-hero-scrim" aria-hidden="true" />
-        <div className="az-scroll-hero-light" aria-hidden="true" />
+      <div ref={sectionRef} className="az-scroll-hero-track">
+        <div ref={stageRef} className="az-scroll-hero-stage">
+          <div className="az-scroll-hero-image" aria-hidden="true">
+            <Image
+              src="/azat/images/high-country-hero.jpg"
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
+            />
+          </div>
+          <div className="az-scroll-hero-scrim" aria-hidden="true" />
+          <div className="az-scroll-hero-light" aria-hidden="true" />
 
-        <div className="az-scroll-hero-content">
-          <h1 id="home-hero-title" className="az-hero-title text-white">
-            Ride the
-            <span>Arizona Alps</span>
-          </h1>
-          <Link className="az-hero-route-statement" href="#trail-map">
-            704 miles through Eastern Arizona
-          </Link>
-        </div>
+          <div className="az-scroll-hero-content">
+            <h1 id="home-hero-title" className="az-hero-title text-white">
+              Ride the{" "}
+              <span>
+                Arizona <span className="az-hero-title-keep">High Pines</span>
+              </span>
+            </h1>
+            <Link className="az-hero-route-statement" href="#trail-map">
+              Explore the Routes →
+            </Link>
+          </div>
 
-        <div className="az-scroll-hero-cue">
-          <span>Follow the trail</span>
-          <svg viewBox="0 0 28 36" aria-hidden="true">
-            <path d="M14 2v28M4 20l10 10 10-10" />
-          </svg>
-        </div>
+          <div className="az-scroll-hero-cue">
+            <span>Follow the trail</span>
+            <svg viewBox="0 0 28 36" aria-hidden="true">
+              <path d="M14 2v28M4 20l10 10 10-10" />
+            </svg>
+          </div>
 
-        <p className="az-scroll-hero-credit">Photo © childress.com</p>
-        <div className="az-scroll-hero-ridge" aria-hidden="true">
-          <TrailSilhouette />
+          <div className="az-scroll-hero-ridge" aria-hidden="true">
+            <TrailSilhouette />
+          </div>
         </div>
+      </div>
+
+      <div className="az-hero-supporting-panel">
+        <p className="az-hero-supporting-copy">
+          <span className="az-hero-supporting-lead">
+            Explore high-country OHV routes along Arizona&rsquo;s most scenic alpine corridor.
+          </span>
+          <span className="az-hero-supporting-detail">
+            Discover mountain towns offering fuel, food, and lodging along the way.
+          </span>
+        </p>
       </div>
     </section>
   );

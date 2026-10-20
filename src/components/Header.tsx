@@ -128,23 +128,25 @@ export function Header() {
       >
         Skip to main content
       </a>
-      <div className="mx-auto flex min-h-15 max-w-[1320px] items-center justify-between gap-2 px-3 sm:gap-6 sm:px-8">
-        <Link href="/" className="group flex items-center gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
-          <span className={`grid size-11 place-items-center rounded-full p-1 transition duration-300 ${
+      <div className="mx-auto flex min-h-[72px] max-w-[1320px] items-center justify-between gap-2 px-3 sm:min-h-[88px] sm:gap-6 sm:px-8">
+        {/* The logo already reads "Arizona Alpine Trail", so no wordmark beside it. */}
+        <Link
+          href="/"
+          aria-label="Arizona Alpine Trail home"
+          className="flex shrink-0 items-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+        >
+          <span className={`grid size-14 place-items-center rounded-full p-1 transition duration-300 sm:size-[72px] ${
             useSolidHeader ? "bg-white/88 shadow-[0_8px_22px_rgba(0,0,0,0.16)]" : "bg-white/70 shadow-none"
-          }`} aria-hidden="true">
+          }`}>
             <Image
               src="/azat/brand/azat-logo.png"
               alt=""
               width={553}
               height={618}
+              sizes="72px"
               className="h-full w-auto object-contain"
               priority
             />
-          </span>
-          <span className="font-mono text-xs font-black uppercase leading-[1.05] tracking-[0.12em]">
-            Arizona
-            <span className="block">Alpine Trail</span>
           </span>
         </Link>
 
@@ -209,7 +211,7 @@ export function Header() {
             exit={prefersReducedMotion ? { opacity: 0 } : { x: "100%" }}
             transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="flex min-h-15 items-center justify-end px-3">
+            <div className="flex min-h-[72px] items-center justify-end px-3">
               <button
                 ref={menuCloseRef}
                 type="button"

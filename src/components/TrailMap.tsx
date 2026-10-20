@@ -1,12 +1,11 @@
 "use client";
 
-import dynamic from "next/dynamic";
+import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { Download, Mountain } from "lucide-react";
 
 import { ProtectedDownloadLink } from "@/components/auth/ProtectedDownloadLink";
-import type { LeafletRouteMapProps } from "@/components/LeafletRouteMap";
 import { TrailLoop } from "@/components/TrailLoop";
 import { resolveDownloadHref } from "@/lib/download-links";
 import type { HomeDownload, HomeMapLayer, HomeTrailHighlight } from "@/lib/home";
@@ -19,38 +18,28 @@ type TrailMapProps = {
   downloads?: HomeDownload[];
 };
 
-const LeafletRouteMap = dynamic<LeafletRouteMapProps>(
-  () => import("@/components/LeafletRouteMap").then((module) => module.LeafletRouteMap),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="absolute inset-0 grid place-items-center bg-[#cad4c2] text-[#173d2b]">
-        <div className="rounded-full bg-[#fffdf7]/90 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] shadow-xl">
-          Loading route map
-        </div>
-      </div>
-    ),
-  },
-);
-
-export function TrailMap({ highlights = [], downloads = [] }: TrailMapProps) {
+export function TrailMap({ downloads = [] }: TrailMapProps) {
   const prefersReducedMotion = useReducedMotion();
   const quietDownloads = downloads.slice(0, 3);
 
   return (
     <section id="trail-map" className="az-map-experience relative isolate overflow-hidden bg-[#07150f] text-white">
       <div className="mx-auto max-w-[1540px] px-3 py-3 sm:px-5 lg:px-8 xl:py-8">
-        <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_400px] xl:items-stretch">
+        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_386px] xl:items-stretch">
           <motion.div
             initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.36, ease: "easeOut" }}
-            className="relative min-h-[430px] overflow-hidden rounded-[6px] border border-[#cfd7cb] bg-[#cad4c2] shadow-[0_32px_80px_rgba(19,34,26,0.18)] sm:min-h-[520px] xl:min-h-[760px]"
+            className="relative aspect-[1465/1073] min-w-0 w-full overflow-hidden rounded-[6px] border border-[#cfd7cb] bg-[#dce8c8] shadow-[0_32px_80px_rgba(19,34,26,0.18)]"
           >
-            <div className="relative min-h-[430px] sm:min-h-[520px] xl:min-h-[760px]">
-              <LeafletRouteMap highlights={highlights} />
-            </div>
+            <Image
+              src="/azat/images/azat-region-map-clean.png"
+              alt="Arizona Alpine Trail regional route map showing Historic Route 66, Rim Country, Wild West, Deuce of Clubs, Heart of the Trail, and Bear Wallow"
+              fill
+              sizes="(min-width: 1280px) calc(100vw - 500px), 100vw"
+              className="scale-[1.06] object-cover"
+            />
 
             <div className="absolute left-16 top-3 z-[420] sm:left-auto sm:right-3">
               <motion.div
@@ -83,8 +72,8 @@ export function TrailMap({ highlights = [], downloads = [] }: TrailMapProps) {
             ) : null}
           </motion.div>
 
-          <div className="relative z-[430] xl:flex xl:min-h-[760px]">
-            <TrailLoop />
+          <div className="relative z-[430] h-full">
+            <TrailLoop className="xl:h-full xl:aspect-auto" />
           </div>
         </div>
       </div>

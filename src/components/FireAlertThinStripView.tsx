@@ -20,7 +20,7 @@ export function FireAlertThinStripView({ incidents }: { incidents: FireAlertInci
     <div
       role="status"
       aria-live="polite"
-      className="fixed inset-x-0 top-15 z-40 flex items-center justify-center gap-2.5 bg-[#e11f3f] px-4 py-2.5 text-center text-white shadow-[0_4px_18px_rgba(225,31,63,0.5)]"
+      className="fixed inset-x-0 top-[72px] z-40 sm:top-[88px] flex items-center justify-center gap-2.5 bg-[#e11f3f] px-4 py-2.5 text-center text-white shadow-[0_4px_18px_rgba(225,31,63,0.5)]"
     >
       <Flame size={17} aria-hidden="true" className="fire-alert-icon-flicker shrink-0" />
       <p className="min-w-0 truncate text-xs font-semibold sm:text-sm">

@@ -32,7 +32,23 @@
 }
 
 html {
+  background: var(--forest-deep);
   scroll-behavior: smooth;
+  scrollbar-color: rgba(230, 235, 220, 0.34) var(--forest-deep);
+}
+
+html::-webkit-scrollbar {
+  width: 10px;
+}
+
+html::-webkit-scrollbar-track {
+  background: var(--forest-deep);
+}
+
+html::-webkit-scrollbar-thumb {
+  background: rgba(230, 235, 220, 0.34);
+  border: 2px solid var(--forest-deep);
+  border-radius: 999px;
 }
 
 body {
@@ -83,6 +99,11 @@ body {
 }
 
 .az-scroll-hero {
+  background: var(--hero-handoff-color);
+  position: relative;
+}
+
+.az-scroll-hero-track {
   height: 150svh;
   position: relative;
 }
@@ -161,6 +182,58 @@ body {
   white-space: nowrap;
 }
 
+/* "High Pines" (the slogan) never splits across lines when the title wraps on phones. */
+.az-scroll-hero-content .az-hero-title .az-hero-title-keep {
+  display: inline;
+  white-space: nowrap;
+}
+
+/* A compact forest-floor pause between the tree reveal and the route map. */
+.az-hero-supporting-panel {
+  align-items: center;
+  background: var(--hero-handoff-color);
+  display: flex;
+  padding: clamp(3rem, 6vh, 4rem) clamp(1.5rem, 6vw, 6rem) clamp(4rem, 7vh, 5rem);
+  position: relative;
+}
+
+.az-hero-supporting-copy {
+  color: #e6ebdc;
+  font-family: Georgia, "Times New Roman", serif;
+  margin: 0 auto;
+  max-width: 1120px;
+  text-align: center;
+  text-shadow: 0 8px 28px rgba(0, 0, 0, 0.46);
+  text-wrap: balance;
+  width: 100%;
+}
+
+.az-hero-supporting-lead,
+.az-hero-supporting-detail {
+  display: block;
+}
+
+.az-hero-supporting-lead {
+  font-size: clamp(2.15rem, 4.6vw, 4.6rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-inline: auto;
+  max-width: 22ch;
+  text-wrap: balance;
+}
+
+.az-hero-supporting-detail {
+  color: #cbd7bd;
+  font-family: var(--font-sans), Arial, sans-serif;
+  font-size: clamp(1rem, 1.45vw, 1.25rem);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.65;
+  margin: clamp(2rem, 4vh, 3rem) auto 0;
+  max-width: 68ch;
+}
+
 .az-hero-route-statement {
   background: var(--forest);
   box-shadow: 8px 10px 0 rgba(8, 19, 13, 0.32);
@@ -171,7 +244,7 @@ body {
   font-weight: 900;
   letter-spacing: 0.1em;
   line-height: 1.2;
-  margin-top: clamp(1.75rem, 5vh, 3.25rem);
+  margin-top: clamp(1.25rem, 3vh, 2rem);
   padding: 0.7rem 1.1rem 0.75rem;
   text-decoration: none;
   text-transform: uppercase;
@@ -213,18 +286,6 @@ body {
   stroke: currentColor;
   stroke-width: 2;
   width: 1.5rem;
-}
-
-.az-scroll-hero-credit {
-  bottom: 1rem;
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 0.625rem;
-  left: 1.1rem;
-  letter-spacing: 0.08em;
-  margin: 0;
-  position: absolute;
-  text-transform: uppercase;
-  z-index: 4;
 }
 
 .az-scroll-hero-ridge {
@@ -514,6 +575,10 @@ textarea {
     height: auto;
   }
 
+  .az-scroll-hero-track {
+    height: 100svh;
+  }
+
   .az-scroll-hero-stage {
     position: relative;
   }
@@ -527,12 +592,13 @@ textarea {
     display: none;
   }
 
-  .az-scroll-hero-credit {
-    z-index: 6;
-  }
 }
 
 @media (max-width: 640px) {
+  .az-hero-supporting-panel {
+    padding: 3rem 1.5rem 3.5rem;
+  }
+
   .az-scroll-hero-image img {
     object-position: 58% bottom;
   }
@@ -543,7 +609,8 @@ textarea {
   }
 
   .az-scroll-hero-content .az-hero-title {
-    font-size: clamp(3.1rem, 16vw, 5rem);
+    /* Sized so "High Pines" fits on one line down to ~320px screens. */
+    font-size: clamp(2.5rem, 13vw, 5rem);
     line-height: 0.86;
   }
 
@@ -555,14 +622,23 @@ textarea {
     max-width: 88vw;
   }
 
-  .az-scroll-hero-cue {
-    bottom: 2.2rem;
+  .az-hero-supporting-copy {
+    max-width: 24rem;
   }
 
-  .az-scroll-hero-credit {
-    bottom: 0.65rem;
-    font-size: 0.5rem;
-    left: 0.65rem;
+  .az-hero-supporting-lead {
+    font-size: clamp(2rem, 10vw, 2.65rem);
+    line-height: 1.02;
+  }
+
+  .az-hero-supporting-detail {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-top: 2rem;
+  }
+
+  .az-scroll-hero-cue {
+    bottom: 2.2rem;
   }
 
   .az-photo-sequence article {
