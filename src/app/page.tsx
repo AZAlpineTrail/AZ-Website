@@ -32,7 +32,7 @@ export default async function Home() {
 
   return (
     <>
-      <Header />
+      <Header homeOverlay />
       <main id="main" className="overflow-x-clip bg-[#07150f] text-white">
         <ScrollHero />
 

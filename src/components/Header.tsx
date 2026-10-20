@@ -12,7 +12,7 @@ import { openQuickContact } from "@/components/QuickContact";
 // Fire advisory disabled for now — see note near <FireAlertBanner> below.
 // import { FireAlertBanner } from "@/components/FireAlertBanner";
 
-export function Header() {
+export function Header({ homeOverlay = false }: { homeOverlay?: boolean }) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -117,7 +117,7 @@ export function Header() {
     <>
     <header
       className={`pointer-events-none absolute inset-x-0 top-0 z-50 h-[152px] text-white sm:h-[184px] ${
-        pathname === "/"
+        homeOverlay
           ? "bg-gradient-to-b from-[#07150f]/52 via-[#07150f]/12 to-transparent"
           : "bg-gradient-to-b from-[#07150f] via-[#07150f]/96 to-[#07150f]/82"
       }`}
@@ -203,7 +203,7 @@ export function Header() {
       </div>
     </header>
 
-    {pathname !== "/" ? <div aria-hidden="true" className="h-[152px] bg-[#07150f] sm:h-[184px]" /> : null}
+    {!homeOverlay ? <div aria-hidden="true" className="h-[152px] bg-[#07150f] sm:h-[184px]" /> : null}
 
     <AnimatePresence>
       {menuOpen ? (
