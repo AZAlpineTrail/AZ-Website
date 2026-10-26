@@ -12,6 +12,7 @@ const directionsUrl =
 // End of event day in Arizona time (MST, no DST); the announcement disappears after this.
 const EVENT_ENDS_AT = new Date("2026-10-29T23:59:59-07:00").getTime();
 const SEEN_KEY = "azat-event-payson-2026-10-29-seen";
+const AUTO_OPEN_DELAY_MS = 6_000;
 const noopSubscribe = () => () => {};
 
 export function UpcomingEvent() {
@@ -34,7 +35,7 @@ export function UpcomingEvent() {
     } catch {}
     if (seen) return;
 
-    const timer = window.setTimeout(() => setOpen(true), 650);
+    const timer = window.setTimeout(() => setOpen(true), AUTO_OPEN_DELAY_MS);
     return () => window.clearTimeout(timer);
   }, [active]);
 
