@@ -160,7 +160,7 @@ export function Header({ homeOverlay = false }: { homeOverlay?: boolean }) {
 
         <motion.div
           aria-hidden={scrolled || on3DPage}
-          className={`fixed right-5 top-10 origin-right items-center gap-2 px-0 py-1.5 xl:right-8 ${
+          className={`absolute right-5 top-10 origin-right items-center gap-2 px-0 py-1.5 xl:right-8 ${
             on3DPage ? "hidden" : "hidden lg:flex"
           }`}
           initial={false}
