@@ -26,13 +26,11 @@ export function ScrollHero() {
       frame = 0;
       if (staticHero.matches) {
         stage.style.setProperty("--hero-ridge-y", "24%");
-        stage.style.setProperty("--hero-cue-opacity", "0");
         stage.style.setProperty("--hero-stage-y", "0px");
         return;
       }
       if (prefersReducedMotion) {
         stage.style.setProperty("--hero-ridge-y", "24%");
-        stage.style.setProperty("--hero-cue-opacity", "0");
         stage.style.setProperty("--hero-stage-y", "0px");
         return;
       }
@@ -41,11 +39,9 @@ export function ScrollHero() {
       const distance = Math.max(section.offsetHeight - window.innerHeight, 1);
       const progress = Math.min(Math.max(-rect.top / distance, 0), 1);
       const ridgeY = 96 + (24 - 96) * progress;
-      const cueOpacity = 1 - Math.min(progress / 0.28, 1);
       const stageY = -window.innerHeight * HERO_STAGE_DRIFT * progress;
 
       stage.style.setProperty("--hero-ridge-y", `${ridgeY}%`);
-      stage.style.setProperty("--hero-cue-opacity", String(cueOpacity));
       stage.style.setProperty("--hero-stage-y", `${stageY}px`);
     };
     const requestRender = () => {
@@ -111,16 +107,9 @@ export function ScrollHero() {
                 Arizona <span className="az-hero-title-keep">High Pines</span>
               </span>
             </h1>
-            <Link className="az-hero-route-statement" href="#trail-map">
-              Explore the Routes →
+            <Link className="az-hero-route-statement" href="#trail-intro">
+              Discover the Trail ↓
             </Link>
-          </div>
-
-          <div className="az-scroll-hero-cue">
-            <span>Follow the trail</span>
-            <svg viewBox="0 0 28 36" aria-hidden="true">
-              <path d="M14 2v28M4 20l10 10 10-10" />
-            </svg>
           </div>
 
           <div className="az-scroll-hero-ridge" aria-hidden="true">
@@ -129,7 +118,7 @@ export function ScrollHero() {
         </div>
       </div>
 
-      <div className="az-hero-supporting-panel">
+      <div id="trail-intro" className="az-hero-supporting-panel">
         <p className="az-hero-supporting-copy">
           <span className="az-hero-supporting-lead">
             Explore high-country OHV routes along Arizona&rsquo;s most scenic alpine corridor.

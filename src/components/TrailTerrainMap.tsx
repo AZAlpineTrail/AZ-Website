@@ -504,7 +504,7 @@ export function TrailTerrainMap({ embedded = false, activeSegmentId, onSegmentSe
       className={
         embedded
           ? "absolute inset-0 overflow-hidden bg-[#08130d] text-white"
-          : "relative h-[100svh] min-h-[680px] overflow-hidden bg-[#08130d] text-white"
+          : "relative h-[100dvh] overflow-hidden bg-[#08130d] text-white"
       }
     >
       <div className="absolute inset-0 h-full w-full">

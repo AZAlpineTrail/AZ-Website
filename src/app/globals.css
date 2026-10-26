@@ -2,6 +2,27 @@
 @import "leaflet/dist/leaflet.css";
 @import "mapbox-gl/dist/mapbox-gl.css";
 
+.az-fall-heading {
+  background-color: #07150f;
+  background-image:
+    linear-gradient(90deg, rgb(7 21 15 / 82%) 0%, rgb(7 21 15 / 54%) 54%, rgb(7 21 15 / 46%) 100%),
+    linear-gradient(180deg, rgb(7 21 15 / 18%) 0%, rgb(7 21 15 / 44%) 100%),
+    url("/azat/images/high-country-hero.jpg");
+  background-position: center 42%;
+  background-size: cover;
+}
+
+.az-liquid-menu {
+  background:
+    linear-gradient(145deg, rgb(31 65 46 / 79%) 0%, rgb(9 27 19 / 84%) 48%, rgb(6 19 13 / 90%) 100%);
+  box-shadow:
+    inset 1px 0 0 rgb(255 255 255 / 14%),
+    inset 0 1px 0 rgb(255 255 255 / 10%),
+    -20px 0 56px rgb(8 19 13 / 42%);
+  backdrop-filter: blur(30px) saturate(145%);
+  -webkit-backdrop-filter: blur(30px) saturate(145%);
+}
+
 :root {
   --background: #f7f8f4;
   --foreground: #13221a;
@@ -112,7 +133,6 @@ body {
   --hero-light-x: 50%;
   --hero-light-y: 48%;
   --hero-ridge-y: 96%;
-  --hero-cue-opacity: 1;
   --hero-stage-y: 0px;
   height: 100svh;
   min-height: 620px;
@@ -261,37 +281,6 @@ body {
   color: var(--forest-deep);
 }
 
-.az-scroll-hero-cue {
-  bottom: clamp(2.2rem, 6vh, 4.25rem);
-  color: white;
-  display: grid;
-  gap: 0.55rem;
-  justify-items: center;
-  left: 50%;
-  opacity: var(--hero-cue-opacity);
-  position: absolute;
-  transform: translateX(-50%);
-  z-index: 4;
-}
-
-.az-scroll-hero-cue span {
-  font-family: var(--font-geist-mono), ui-monospace, monospace;
-  font-size: 0.625rem;
-  font-weight: 900;
-  letter-spacing: 0.15em;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.az-scroll-hero-cue svg {
-  animation: trail-pulse 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
-  fill: none;
-  height: 2rem;
-  stroke: currentColor;
-  stroke-width: 2;
-  width: 1.5rem;
-}
-
 .az-scroll-hero-ridge {
   bottom: -2px;
   height: clamp(320px, 58vh, 580px);
@@ -308,18 +297,6 @@ body {
 .az-trail-silhouette {
   object-fit: cover;
   object-position: center top;
-}
-
-@keyframes trail-pulse {
-  0%,
-  100% {
-    opacity: 0.72;
-    transform: translateY(0);
-  }
-  45% {
-    opacity: 1;
-    transform: translateY(7px);
-  }
 }
 
 .az-soft-link {
@@ -592,10 +569,6 @@ textarea {
   .az-scroll-hero-ridge {
     transform: translateY(24%);
     will-change: auto;
-  }
-
-  .az-scroll-hero-cue {
-    display: none;
   }
 
   .az-hero-supporting-panel {

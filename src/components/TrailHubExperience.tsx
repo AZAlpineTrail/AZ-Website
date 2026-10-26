@@ -82,24 +82,8 @@ export function TrailHubExperience({ segments }: { segments: TrailHubSegment[] }
 
   return (
     <main id="main" className="overflow-hidden bg-[#f8f4e8] text-[#13221a]">
-      <section className="relative isolate bg-[#08130d] px-5 pb-10 pt-28 text-white sm:px-8 lg:pt-32">
-        <motion.div
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.36, ease: "easeOut" }}
-          className="mx-auto max-w-[1320px]"
-        >
-          <p className="az-kicker text-[#f1b65a]">The full trail</p>
-          <h1 className="mt-3 max-w-3xl font-serif text-[clamp(2.6rem,5.6vw,5.4rem)] font-semibold leading-[0.94] text-white">
-            28 unique segments. One 704.5-mile loop.
-          </h1>
-          <p className="mt-5 max-w-2xl text-sm leading-6 text-white/70 sm:text-base">
-            The numbered loop has 30 legs: Porter Mountain is used as segments 09 and 22, and Little Colorado River as 11 and 19.
-          </p>
-        </motion.div>
-      </section>
-
-      <section className="bg-[#f8f4e8] px-5 py-8 sm:px-8 lg:py-10">
+      <h1 className="sr-only">The Trail</h1>
+      <section className="bg-[#f8f4e8] px-5 pb-8 pt-24 sm:px-8 lg:pb-10 lg:pt-24">
         <div className="mx-auto flex max-w-[1320px] flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
           <div className="flex flex-wrap gap-3">
             {fullTrailDownloads.map((item) => (

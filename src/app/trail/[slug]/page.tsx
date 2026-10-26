@@ -35,7 +35,7 @@ export default async function TrailSegmentPage({ params }: { params: Promise<{ s
 
   return (
     <>
-      <Header />
+      <Header homeOverlay />
       <TrailSegmentExperience data={data} prev={neighbors.prev} next={neighbors.next} />
       <Footer />
     </>

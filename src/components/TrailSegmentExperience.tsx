@@ -148,7 +148,7 @@ export function TrailSegmentExperience({
 
   return (
     <main id="main" className="overflow-hidden bg-[#f8f4e8] text-[#13221a]">
-      <section className="relative isolate bg-[#08130d] px-5 pb-8 pt-28 text-white sm:px-8 lg:pt-32">
+      <section className="az-fall-heading relative isolate px-5 pb-8 pt-72 text-white sm:px-8 sm:pt-80">
         <motion.div
           initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}

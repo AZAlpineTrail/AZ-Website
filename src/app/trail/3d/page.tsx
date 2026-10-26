@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default function Trail3DPage() {
   return (
     <>
-      <Header />
+      <Header homeOverlay />
       <main id="main">
         <TrailTerrainMap />
       </main>

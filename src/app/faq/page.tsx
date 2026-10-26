@@ -17,10 +17,7 @@ export const metadata: Metadata = {
 
 export default function FAQPage() {
   return (
-    <PageShell
-      title="FAQ"
-      description="Everything riders ask before a trip: legal access, maps and downloads, planning, safety, services, and how AZAT works. Search or browse by category."
-    >
+    <PageShell title="FAQ">
       <FaqExplorer />
     </PageShell>
   );

@@ -47,10 +47,7 @@ export default async function DownloadsPage() {
   });
 
   return (
-    <PageShell
-      title="Downloads"
-      description="The complete trail files and every individual segment's GPX, in one place. This list updates automatically as new files are published — no need to look anywhere else."
-    >
+    <PageShell title="Downloads">
       <DownloadSelectionGrid overallFiles={overallItems} segmentFiles={segmentItems} />
     </PageShell>
   );

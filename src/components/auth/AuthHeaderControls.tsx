@@ -49,14 +49,14 @@ export function AuthHeaderControls({
             <Link
               href="/account"
               onClick={onNavigate}
-              className="flex min-h-14 items-center rounded-md px-3 text-lg font-semibold text-[#13221a] transition hover:bg-[#f2efe4] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b74f32]"
+              className="flex min-h-14 items-center rounded-md px-3 text-lg font-semibold text-white/82 transition hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               Account
             </Link>
             <form action={signOutAction}>
               <button
                 type="submit"
-                className="flex min-h-14 w-full items-center justify-center rounded-full border border-[#d8ded4] bg-white text-base font-black text-[#13221a] transition hover:border-[#b74f32] hover:text-[#b74f32] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b74f32]"
+                className="flex min-h-14 w-full items-center justify-center rounded-full border border-white/16 bg-white/10 text-base font-black text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-md transition hover:border-white/30 hover:bg-white hover:text-[#13221a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Log out
               </button>
@@ -67,14 +67,14 @@ export function AuthHeaderControls({
             <button
               type="button"
               onClick={() => openAuth("sign-in")}
-              className="flex min-h-14 items-center rounded-md px-3 text-lg font-semibold text-[#13221a] transition hover:bg-[#f2efe4] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b74f32]"
+              className="flex min-h-14 items-center rounded-md px-3 text-lg font-semibold text-white/82 transition hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               Log in
             </button>
             <button
               type="button"
               onClick={() => openAuth("sign-up")}
-              className="flex min-h-14 w-full items-center justify-center rounded-full bg-[#13221a] text-base font-black text-white transition hover:bg-[#b74f32] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b74f32]"
+              className="flex min-h-14 w-full items-center justify-center rounded-full border border-white/16 bg-white/10 text-base font-black text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-md transition hover:border-white/30 hover:bg-white hover:text-[#13221a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               Register
             </button>
