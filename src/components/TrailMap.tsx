@@ -1,11 +1,12 @@
 "use client";
 
-import Image from "next/image";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { Download, Mountain } from "lucide-react";
 
 import { ProtectedDownloadLink } from "@/components/auth/ProtectedDownloadLink";
+import type { LeafletRouteMapProps } from "@/components/LeafletRouteMap";
 import { resolveDownloadHref } from "@/lib/download-links";
 import type { HomeDownload, HomeMapLayer, HomeTrailHighlight } from "@/lib/home";
 
@@ -16,6 +17,18 @@ type TrailMapProps = {
   highlights?: HomeTrailHighlight[];
   downloads?: HomeDownload[];
 };
+
+const LeafletRouteMap = dynamic<LeafletRouteMapProps>(
+  () => import("@/components/LeafletRouteMap").then((module) => module.LeafletRouteMap),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="absolute inset-0 grid place-items-center bg-[#cad4c2] text-[#173d2b]" role="status">
+        Loading route map
+      </div>
+    ),
+  },
+);
 
 export function TrailMap({ downloads = [] }: TrailMapProps) {
   const prefersReducedMotion = useReducedMotion();
@@ -29,15 +42,9 @@ export function TrailMap({ downloads = [] }: TrailMapProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.36, ease: "easeOut" }}
-          className="relative aspect-[1465/1073] w-full overflow-hidden rounded-[6px] border border-[#cfd7cb] bg-[#dce8c8] shadow-[0_32px_80px_rgba(19,34,26,0.18)]"
+          className="relative min-h-[430px] w-full overflow-hidden rounded-[6px] border border-[#cfd7cb] bg-[#cad4c2] shadow-[0_32px_80px_rgba(19,34,26,0.18)] sm:min-h-[520px] xl:min-h-[660px]"
         >
-          <Image
-            src="/azat/images/azat-region-map-clean.png"
-            alt="Arizona Alpine Trail regional route map showing Historic Route 66, Rim Country, Wild West, Deuce of Clubs, Heart of the Trail, and Bear Wallow"
-            fill
-            sizes="(min-width: 1380px) 1256px, calc(100vw - 2rem)"
-            className="scale-[1.06] object-cover"
-          />
+          <LeafletRouteMap />
 
           <div className="absolute left-16 top-3 z-[420] sm:left-auto sm:right-3">
             <motion.div

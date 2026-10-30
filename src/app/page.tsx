@@ -6,7 +6,6 @@ import { MissionStatement } from "@/components/MissionStatement";
 import { NewsPreview } from "@/components/NewsPreview";
 import { ScrollHero } from "@/components/ScrollHero";
 import { TrailMap } from "@/components/TrailMap";
-import { UpcomingEvent } from "@/components/UpcomingEvent";
 import { getHomePageData } from "@/lib/home";
 import { getNewsPosts } from "@/lib/news";
 
@@ -61,7 +60,6 @@ export default async function Home() {
         <NewsPreview title={homePage.featuredNewsTitle} posts={newsPosts} />
       </main>
       <Footer />
-      <UpcomingEvent />
     </>
   );
 }
