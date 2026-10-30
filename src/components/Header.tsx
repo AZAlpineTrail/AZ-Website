@@ -197,39 +197,26 @@ export function Header({ homeOverlay = false }: { homeOverlay?: boolean }) {
               <AuthHeaderControls />
         </motion.div>
 
-        <motion.button
-          key={scrolled ? "collapsed-menu-trigger" : "mobile-menu-trigger"}
+        <button
           ref={menuTriggerRef}
           type="button"
           onClick={() => setMenuOpen((open) => !open)}
           aria-expanded={menuOpen}
           aria-controls="mobile-menu"
           aria-label={menuOpen ? "Close menu" : "Open menu"}
-          initial={
-            scrolled && !prefersReducedMotion
-              ? { opacity: 0, scale: 0.72, x: 20 }
-              : false
-          }
-          animate={{ opacity: 1, scale: 1, x: 0 }}
-          transition={{ duration: prefersReducedMotion ? 0.01 : 0.3, delay: scrolled ? 0.08 : 0, ease: [0.16, 1, 0.3, 1] }}
           className={`pointer-events-auto fixed z-[1] inline-flex min-h-14 items-center border border-white/16 bg-[#07150f]/74 px-5 font-mono text-xs font-black uppercase tracking-[0.14em] text-white shadow-[0_12px_32px_rgba(0,0,0,0.34),inset_0_1px_0_rgba(255,255,255,0.14),inset_0_-1px_0_rgba(255,255,255,0.04)] backdrop-blur-xl backdrop-saturate-150 transition-[top,right,background-color,box-shadow,border-radius] duration-300 hover:border-white/30 hover:bg-[#102a1e]/82 hover:shadow-[0_14px_36px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,255,255,0.18)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
             menuOpen ? "invisible" : ""
           } ${
-            useFloatingMenu
-              ? "right-3 top-3 rounded-full sm:right-5 sm:top-5 lg:right-8 lg:inline-flex"
-              : "right-3 top-7 rounded-full sm:right-5 sm:top-10 lg:hidden"
-          }`}
+            useFloatingMenu ? "lg:right-8 lg:inline-flex" : "lg:top-10 lg:hidden"
+          } right-3 top-3 rounded-full sm:right-5 sm:top-5 ${scrolled && !on3DPage ? "az-menu-collapsed" : ""}`}
         >
-          <motion.span
+          <span
             className="mr-2.5 inline-flex text-[#f1b65a]"
-            initial={scrolled && !prefersReducedMotion ? { rotate: -90, scale: 0.55 } : false}
-            animate={{ rotate: 0, scale: 1 }}
-            transition={{ duration: prefersReducedMotion ? 0.01 : 0.28, delay: scrolled ? 0.12 : 0, ease: [0.16, 1, 0.3, 1] }}
           >
             <Menu size={22} aria-hidden="true" />
-          </motion.span>
+          </span>
           Menu
-        </motion.button>
+        </button>
       </div>
     </header>
 

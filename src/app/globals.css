@@ -12,6 +12,27 @@
   background-size: cover;
 }
 
+/* Only desktop replaces the full navigation with an animated menu trigger. */
+@media (min-width: 64rem) and (prefers-reduced-motion: no-preference) {
+  .az-menu-collapsed {
+    animation: az-menu-collapse 0.3s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+  }
+
+  .az-menu-collapsed > span {
+    animation: az-menu-icon-collapse 0.28s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+  }
+}
+
+@keyframes az-menu-collapse {
+  from { opacity: 0; transform: translateX(20px) scale(0.72); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes az-menu-icon-collapse {
+  from { transform: rotate(-90deg) scale(0.55); }
+  to { transform: rotate(0) scale(1); }
+}
+
 .az-liquid-menu {
   background:
     linear-gradient(145deg, rgb(31 65 46 / 79%) 0%, rgb(9 27 19 / 84%) 48%, rgb(6 19 13 / 90%) 100%);
@@ -571,7 +592,7 @@ textarea {
   }
 
   .az-scroll-hero-ridge {
-    transform: translateY(24%);
+    transform: translateY(29%);
     will-change: auto;
   }
 

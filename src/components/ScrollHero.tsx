@@ -9,6 +9,8 @@ import { TrailSilhouette } from "./TrailSilhouette";
 // Phones (portrait or landscape) get a static hero; keep in sync with globals.css.
 const STATIC_HERO_QUERY = "(max-width: 767px), (pointer: coarse) and (max-height: 540px)";
 const HERO_STAGE_DRIFT = 0.12;
+// Keep the static CSS resting position in sync with this gentle tree reveal.
+const HERO_RIDGE_REST_Y = 29;
 
 export function ScrollHero() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -25,12 +27,12 @@ export function ScrollHero() {
     const render = () => {
       frame = 0;
       if (staticHero.matches) {
-        stage.style.setProperty("--hero-ridge-y", "24%");
+        stage.style.setProperty("--hero-ridge-y", `${HERO_RIDGE_REST_Y}%`);
         stage.style.setProperty("--hero-stage-y", "0px");
         return;
       }
       if (prefersReducedMotion) {
-        stage.style.setProperty("--hero-ridge-y", "24%");
+        stage.style.setProperty("--hero-ridge-y", `${HERO_RIDGE_REST_Y}%`);
         stage.style.setProperty("--hero-stage-y", "0px");
         return;
       }
@@ -38,7 +40,7 @@ export function ScrollHero() {
       const rect = section.getBoundingClientRect();
       const distance = Math.max(section.offsetHeight - window.innerHeight, 1);
       const progress = Math.min(Math.max(-rect.top / distance, 0), 1);
-      const ridgeY = 96 + (24 - 96) * progress;
+      const ridgeY = 96 + (HERO_RIDGE_REST_Y - 96) * progress;
       const stageY = -window.innerHeight * HERO_STAGE_DRIFT * progress;
 
       stage.style.setProperty("--hero-ridge-y", `${ridgeY}%`);
