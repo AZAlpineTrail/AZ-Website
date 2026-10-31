@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { useReducedMotion } from "framer-motion";
 import { TrailSilhouette } from "./TrailSilhouette";
 
@@ -12,15 +12,50 @@ const HERO_STAGE_DRIFT = 0.12;
 // Keep the static CSS resting position in sync with this gentle tree reveal.
 const HERO_RIDGE_REST_Y = 29;
 
-export function ScrollHero() {
+// Keep the original tree treatment available: <ScrollHero showTrees />.
+export function ScrollHero({ showTrees = false }: { showTrees?: boolean } = {}) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoEnabled, setVideoEnabled] = useState(false);
+
+  useEffect(() => {
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setVideoEnabled(!motion.matches);
+    update();
+    motion.addEventListener("change", update);
+    return () => motion.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    const stage = stageRef.current;
+    if (!videoEnabled || !video || !stage) return;
+    let inView = true;
+    const syncPlayback = () => {
+      if (inView && !document.hidden) {
+        video.play().catch(() => setVideoEnabled(false));
+      } else video.pause();
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      syncPlayback();
+    }, { threshold: 0.05 });
+    observer.observe(stage);
+    document.addEventListener("visibilitychange", syncPlayback);
+    syncPlayback();
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", syncPlayback);
+      video.pause();
+    };
+  }, [videoEnabled]);
 
   useEffect(() => {
     const section = sectionRef.current;
     const stage = stageRef.current;
-    if (!section || !stage) return;
+    if (!section || !stage || !showTrees) return;
 
     const staticHero = window.matchMedia(STATIC_HERO_QUERY);
     let frame = 0;
@@ -61,7 +96,7 @@ export function ScrollHero() {
       staticHero.removeEventListener("change", requestRender);
       if (frame) window.cancelAnimationFrame(frame);
     };
-  }, [prefersReducedMotion]);
+  }, [prefersReducedMotion, showTrees]);
 
   const updateLight = (event: PointerEvent<HTMLElement>) => {
     if (prefersReducedMotion || !stageRef.current) return;
@@ -82,6 +117,7 @@ export function ScrollHero() {
   return (
     <section
       id="hero"
+      data-trees={showTrees}
       className="az-scroll-hero bg-[#07150f] text-white"
       aria-labelledby="home-hero-title"
       onPointerMove={updateLight}
@@ -91,13 +127,25 @@ export function ScrollHero() {
         <div ref={stageRef} className="az-scroll-hero-stage">
           <div className="az-scroll-hero-image" aria-hidden="true">
             <Image
-              src="/azat/images/high-country-hero.jpg"
+              src="/azat/video/autumn-hero-poster.jpg"
               alt=""
               fill
               priority
               sizes="100vw"
               className="object-cover"
             />
+            {videoEnabled && <video
+              ref={videoRef}
+              className="az-hero-video"
+              src="/azat/video/autumn-hero.mp4"
+              poster="/azat/video/autumn-hero-poster.jpg"
+              muted
+              loop
+              playsInline
+              preload="none"
+              onError={() => setVideoEnabled(false)}
+              tabIndex={-1}
+            />}
           </div>
           <div className="az-scroll-hero-scrim" aria-hidden="true" />
           <div className="az-scroll-hero-light" aria-hidden="true" />
@@ -114,9 +162,9 @@ export function ScrollHero() {
             </Link>
           </div>
 
-          <div className="az-scroll-hero-ridge" aria-hidden="true">
+          {showTrees ? <div className="az-scroll-hero-ridge" aria-hidden="true">
             <TrailSilhouette />
-          </div>
+          </div> : <div className="az-hero-handoff" aria-hidden="true" />}
         </div>
       </div>
 

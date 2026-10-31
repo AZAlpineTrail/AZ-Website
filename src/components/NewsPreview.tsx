@@ -1,7 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
-import { NewsCard } from "@/components/NewsCard";
+import styles from "./NewsPreview.module.css";
 import { formatNewsDate, type NewsPost } from "@/lib/news";
 
 type NewsPreviewProps = {
@@ -13,31 +14,38 @@ export function NewsPreview({ title = "Latest News", posts = [] }: NewsPreviewPr
   if (!posts.length) return null;
 
   return (
-    <section id="news" className="bg-[#fffdf7] px-5 py-12 text-[#13221a] sm:px-8 lg:py-14">
-      <div className="mx-auto max-w-[1320px]">
+    <section id="news" aria-labelledby="home-news-title" className={styles.section}>
+      <div className={styles.inner}>
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <h2 className="font-serif text-3xl font-semibold leading-tight sm:text-4xl">{title}</h2>
+          <h2 id="home-news-title" className="font-serif text-3xl font-semibold leading-tight sm:text-4xl">{title}</h2>
           <Link
             href="/news"
-            className="inline-flex min-h-11 items-center gap-2 font-mono text-xs font-black uppercase tracking-[0.14em] text-[#173d2b] transition hover:text-[#b74f32]"
+            className={styles.allPosts}
           >
             View all posts
             <ArrowRight size={14} aria-hidden="true" />
           </Link>
         </div>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-3">
-          {posts.slice(0, 3).map((post) => (
-            <NewsCard
-              key={post.slug}
-              href={`/news/${post.slug}`}
-              title={post.title}
-              dateLabel={formatNewsDate(post.date)}
-              excerpt={post.excerpt}
-              image={post.heroImage}
-              imageAlt={post.heroImageAlt}
-              imageFit={post.heroImageContain ? "contain" : "cover"}
-            />
+        <div className={styles.stories}>
+          {posts.slice(0, 3).map((post, index) => (
+            <Link key={post.slug} href={`/news/${post.slug}`} className={`${styles.story} ${index === 0 ? styles.featured : ""}`}>
+              <div className={`${styles.image} ${post.heroImageContain ? styles.contain : ""}`}>
+                {post.heroImage ? <Image
+                  src={post.heroImage}
+                  alt={post.heroImageAlt || post.title}
+                  fill
+                  sizes={index === 0 ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 180px, 112px"}
+                  className={post.heroImageContain ? "object-contain" : "object-cover"}
+                /> : null}
+              </div>
+              <div className={styles.copy}>
+                <p className={styles.date}>{formatNewsDate(post.date)}</p>
+                <h3>{post.title}</h3>
+                {index === 0 && post.excerpt ? <p className={styles.excerpt}>{post.excerpt}</p> : null}
+                <span className={styles.read}>Read article <ArrowRight size={14} aria-hidden="true" /></span>
+              </div>
+            </Link>
           ))}
         </div>
       </div>

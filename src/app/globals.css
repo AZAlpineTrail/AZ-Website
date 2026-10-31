@@ -239,6 +239,7 @@ body {
   align-items: center;
   background: var(--hero-handoff-color);
   display: flex;
+  flex-direction: column;
   margin-top: -12svh;
   padding: clamp(3rem, 6vh, 4rem) clamp(1.5rem, 6vw, 6rem) clamp(4rem, 7vh, 5rem);
   position: relative;
@@ -677,4 +678,114 @@ textarea {
     display: none;
   }
 
+}
+
+/* Trail-guide cards: photography above warm, sage paper. */
+.itinerary-heading.az-section-title {
+  margin: 0 auto;
+  max-width: 1000px;
+  font-size: clamp(2.25rem, 4.6vw, 4rem);
+  font-weight: 700;
+  line-height: 1.05;
+  text-align: center;
+  text-wrap: balance;
+}
+.itinerary-intro { margin: 16px auto 0; color: var(--stone); font-size: 1rem; line-height: 1.6; text-align: center; }
+.itinerary-stage { --itinerary-width: min(350px, 82vw); position: relative; max-width: 1320px; margin: 28px auto 0; }
+.itinerary-rail {
+  position: relative;
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 20px calc((100% - var(--itinerary-width)) / 2) 28px;
+  clip-path: inset(0 32px);
+  scroll-snap-type: x mandatory;
+
+  scrollbar-width: none;
+  cursor: grab;
+  touch-action: pan-x pan-y;
+  user-select: none;
+}
+.itinerary-rail::-webkit-scrollbar { display: none; }
+.itinerary-rail:focus-visible { outline: 2px solid var(--sun); outline-offset: -3px; }
+.itinerary-rail.is-dragging { cursor: grabbing; }
+.itinerary-slide { flex: 0 0 var(--itinerary-width); scroll-snap-align: center; }
+.itinerary-cover {
+  position: relative;
+  min-height: 438px;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #e5e7d8;
+  color: var(--forest-deep);
+  transform: perspective(1000px) translateY(var(--card-lift, 0px)) scale(var(--card-scale, 0.91)) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 350ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 350ms;
+}
+.itinerary-slide[data-active="true"] .itinerary-cover { --card-scale: 1; }
+.itinerary-image-window { position: relative; height: 218px; overflow: hidden; background: var(--forest); }
+.itinerary-photo { pointer-events: none; transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1); }
+.itinerary-cover.is-preview { background: var(--forest-deep); }
+.itinerary-cover.is-preview .itinerary-image-window { position: absolute; inset: 0; height: 100%; }
+.itinerary-cover.is-preview .itinerary-photo { filter: blur(3px) saturate(0.65); transform: scale(1.08); opacity: 0.28; transition: transform 650ms; }
+.itinerary-cover.is-preview::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(7 21 15 / 10%) 10%, rgb(7 21 15 / 25%) 40%, rgb(7 21 15 / 95%) 100%); pointer-events: none; }
+.itinerary-teaser-copy { position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; text-align: center; }
+.itinerary-teaser-copy .itinerary-question { color: rgb(255 253 247 / 65%); font-size: 6rem; font-weight: 700; line-height: 1; }
+.itinerary-teaser-copy .itinerary-teaser-label { color: var(--stone); font-size: 1.4rem; font-weight: 700; line-height: 1.1; }
+.itinerary-card-body { padding: 22px; }
+.itinerary-card-body .az-section-title { font-size: 2rem; font-weight: 700; line-height: 1.05; }
+.itinerary-route-facts { display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; margin: 22px 0 0; padding: 0; }
+.itinerary-route-facts dt { color: #4d6051; font-family: var(--font-geist-mono), monospace; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+.itinerary-route-facts dd { display: flex; align-items: baseline; gap: 6px; margin-top: 7px; font-family: var(--font-geist-sans), sans-serif; color: var(--forest); font-size: 2rem; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+.itinerary-route-facts dd span { color: #80552c; font-size: 0.85rem; font-weight: 600; }
+.itinerary-start { display: flex; align-items: center; gap: 5px; margin-top: 16px; color: #3d5140; font-size: 13px; }
+.itinerary-start svg { margin-right: 3px; }
+.itinerary-start strong { color: var(--forest-deep); font-weight: 750; }
+.itinerary-card-action { display: flex; align-items: center; justify-content: space-between; margin-top: 22px; color: var(--forest); font-size: 14px; font-weight: 750; }
+.itinerary-card-action svg { transition: transform 250ms; }
+.itinerary-controls { display: flex; justify-content: center; gap: 18px; margin-top: 8px; }
+.itinerary-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border: 1px solid rgb(216 222 212 / 45%);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--paper);
+  cursor: pointer;
+  transition: background-color 180ms, transform 180ms;
+}
+.itinerary-arrow:hover { background: var(--pine); }
+.itinerary-arrow:focus-visible { outline: 2px solid var(--sun); outline-offset: 3px; }
+@media (max-width: 639px) {
+  .itinerary-rail { gap: 8px; clip-path: inset(0 12px); }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .itinerary-slide:hover .itinerary-cover { --card-lift: -5px; box-shadow: 0 18px 38px rgb(0 0 0 / 28%); }
+  .itinerary-slide:hover .itinerary-cover:not(.is-preview) .itinerary-photo { transform: translate(var(--photo-x, 0px), var(--photo-y, 0px)) scale(1.065); }
+  .itinerary-slide:hover .itinerary-card-action svg { transform: translate(3px, -3px); }
+  .itinerary-arrow:hover { transform: translateY(-3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .itinerary-cover, .itinerary-arrow, .itinerary-photo, .itinerary-card-action svg { transition: none; }
+}
+
+@media (max-width: 359px) {
+  .itinerary-route-facts dd { font-size: 1.65rem; gap: 4px; }
+}
+
+.az-hero-video { position: absolute; inset: 0; height: 100%; width: 100%; object-fit: cover; object-position: center; filter: saturate(0.92) contrast(1.03); }
+
+/* Video-led hero: retain the tree styling above for the optional showTrees mode. */
+.az-scroll-hero[data-trees="false"] .az-scroll-hero-track { height: auto; }
+.az-scroll-hero[data-trees="false"] .az-scroll-hero-stage { position: relative; transform: none; will-change: auto; }
+.az-scroll-hero[data-trees="false"] .az-hero-supporting-panel { margin-top: 0; }
+.az-hero-handoff {
+  position: absolute;
+  inset: auto 0 0;
+  height: 42%;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgb(7 21 15 / 0%) 0%, rgb(7 21 15 / 15%) 20%, rgb(7 21 15 / 65%) 64%, var(--hero-handoff-color) 100%);
 }

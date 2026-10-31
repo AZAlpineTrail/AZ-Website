@@ -1,0 +1,138 @@
+/* A quiet journal continuation: one lead photograph and two compact stories on the same forest surface. */
+.section {
+  background: #07150f;
+  color: var(--paper);
+  padding: 0 2rem clamp(4rem, 6vw, 6rem);
+}
+
+.inner {
+  max-width: 1256px;
+  margin-inline: auto;
+  padding-top: clamp(2rem, 4vw, 3.5rem);
+}
+
+.allPosts {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  color: var(--sun);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.stories {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 2rem 3rem;
+  margin-top: 2rem;
+}
+
+.story {
+  display: grid;
+  grid-template-columns: minmax(110px, 34%) 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  align-content: start;
+}
+
+.featured {
+  grid-row: span 2;
+  grid-template-columns: 1fr;
+}
+
+.image {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--forest);
+}
+
+.featured .image {
+  aspect-ratio: 16 / 9;
+}
+
+.contain {
+  background: var(--stone);
+}
+
+.date {
+  color: #b9c5ba;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.copy h3 {
+  margin-top: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+
+.featured h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.625rem, 2.3vw, 2rem);
+}
+
+.excerpt {
+  margin-top: 0.75rem;
+  color: #b9c5ba;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+
+.read {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  color: var(--sun);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.story:hover h3,
+.allPosts:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.story:focus-visible,
+.allPosts:focus-visible {
+  outline: 2px solid var(--sun);
+  outline-offset: 6px;
+}
+
+@media (max-width: 47.99rem) {
+  .section {
+    padding-inline: 1.25rem;
+  }
+
+  .stories {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .featured {
+    grid-row: auto;
+  }
+
+  .story {
+    gap: 1rem;
+  }
+
+  .story:not(.featured) {
+    padding-top: 2rem;
+    border-top: 1px solid #304238;
+  }
+
+  .copy h3 {
+    font-size: 1.125rem;
+  }
+
+  .featured h3 {
+    font-size: 1.625rem;
+  }
+}

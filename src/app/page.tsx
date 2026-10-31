@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { ItineraryFeature } from "@/components/ItineraryFeature";
-import { MissionStatement } from "@/components/MissionStatement";
+import { RiderTestimonials } from "@/components/RiderTestimonials";
 import { NewsPreview } from "@/components/NewsPreview";
 import { ScrollHero } from "@/components/ScrollHero";
 import { TrailMap } from "@/components/TrailMap";
@@ -42,12 +42,7 @@ export default async function Home() {
           downloads={downloads}
         />
 
-        <MissionStatement
-          statement={homePage.missionStatement}
-          attribution={homePage.missionAttribution}
-          image={homePage.missionImage}
-          imageAlt={homePage.missionImageAlt}
-        />
+        <RiderTestimonials />
 
         <ItineraryFeature
           title={homePage.itineraryTitle}

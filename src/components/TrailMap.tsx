@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { Download, Mountain } from "lucide-react";
+import { ArrowUpRight, Download, Mountain } from "lucide-react";
 
 import { ProtectedDownloadLink } from "@/components/auth/ProtectedDownloadLink";
 import type { LeafletRouteMapProps } from "@/components/LeafletRouteMap";
@@ -76,6 +76,15 @@ export function TrailMap({ downloads = [] }: TrailMapProps) {
             </div>
           ) : null}
         </motion.div>
+        <div className="flex justify-center px-2 pt-8 text-center sm:pt-10">
+          <Link
+            href="/trail"
+            className="inline-flex min-h-12 max-w-full items-center justify-center gap-3 py-3 text-lg font-bold text-[#fffdf7] underline decoration-[#fffdf7]/40 underline-offset-8 transition-colors hover:text-[#f1b65a] hover:decoration-[#f1b65a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f1b65a] sm:text-2xl"
+          >
+            Ready to ride? Explore all 28 trail segments
+            <ArrowUpRight size={24} aria-hidden="true" className="shrink-0" />
+          </Link>
+        </div>
       </div>
     </section>
   );
