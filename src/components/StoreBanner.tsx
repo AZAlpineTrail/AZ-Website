@@ -10,9 +10,10 @@ export function StoreBanner() {
       <Image
         src="/azat/shop/store-banner.webp"
         alt="Take the trail with you. AZAT performance tees and hoodie, available now in the AZAT Store."
-        width={2000}
-        height={500}
+        width={3840}
+        height={960}
         sizes="100vw"
+        quality={90}
         className="block h-auto w-full transition-opacity duration-200 group-hover:opacity-90 motion-reduce:transition-none"
       />
     </Link>
