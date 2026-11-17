@@ -142,7 +142,7 @@ export const faqCategories: FaqCategory[] = [
       {
         q: "Is a printed map available for sale?",
         a: "Check the Shop page for current print-map availability.",
-        link: { label: "Shop", href: "/shop" },
+        link: { label: "Shop", href: "/store" },
       },
       {
         q: "What's the best app to use for navigation?",
@@ -269,7 +269,7 @@ export const faqCategories: FaqCategory[] = [
       {
         q: "Is AZAT merchandise (SWAG) available?",
         a: "Check the Shop page for current merchandise availability.",
-        link: { label: "Shop", href: "/shop" },
+        link: { label: "Shop", href: "/store" },
       },
     ],
   },

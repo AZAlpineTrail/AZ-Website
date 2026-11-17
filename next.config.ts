@@ -66,11 +66,12 @@ const townRedirects = [
 ];
 
 const commerceRedirects = [
-  { source: "/checkout", destination: "/cart" },
-  { source: "/product-category/uncategorized", destination: "/shop" },
-  { source: "/product-category/clothing", destination: "/shop" },
-  { source: "/product-category/housewares", destination: "/shop" },
-  { source: "/product/:slug", destination: "/shop" },
+  { source: "/checkout", destination: "/store" },
+  { source: "/cart", destination: "/store" },
+  { source: "/shop", destination: "/store" },
+  { source: "/shop/:path*", destination: "/store" },
+  { source: "/product-category/:path*", destination: "/store" },
+  { source: "/product/:slug", destination: "/store" },
 ];
 
 const newsRedirects = [

@@ -53,8 +53,8 @@ export function Header() {
     },
     {
       label: "Shop",
-      href: "/shop",
-      current: pathname === "/shop",
+      href: "/store",
+      current: pathname === "/store",
     },
   ];
 

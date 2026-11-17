@@ -13,7 +13,7 @@ const staticRoutes = [
   "/news",
   "/resources",
   "/rustys-route-1000",
-  "/shop",
+  "/store",
   "/trail",
   "/trail/3d",
 ];

@@ -8,7 +8,7 @@ const footerLinks = [
   { label: "Resources", href: "/resources" },
   { label: "Itineraries", href: "/#itineraries" },
   { label: "FAQ", href: "/faq" },
-  { label: "Shop", href: "/shop" },
+  { label: "Shop", href: "/store" },
 ];
 
 const socialLinks = [

@@ -5,6 +5,7 @@ import { ItineraryFeature } from "@/components/ItineraryFeature";
 import { MissionStatement } from "@/components/MissionStatement";
 import { NewsPreview } from "@/components/NewsPreview";
 import { ScrollHero } from "@/components/ScrollHero";
+import { StoreBanner } from "@/components/StoreBanner";
 import { TrailMap } from "@/components/TrailMap";
 import { getHomePageData } from "@/lib/home";
 import { getNewsPosts } from "@/lib/news";
@@ -47,6 +48,8 @@ export default async function Home() {
           copy={homePage.mapCopy}
           downloads={downloads}
         />
+
+        <StoreBanner />
 
         <MissionStatement
           statement={homePage.missionStatement}
